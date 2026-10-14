@@ -58,3 +58,23 @@ enviar también el popup y quitar el atajo/panel o filtrar `e.target` en inputs.
 - Three.js r128 (≈600 KB) se carga de forma bloqueante en el `<head>`: añadir
   `defer` o cargarlo tras el primer render para mejorar el LCP.
 - Faltan `robots.txt` y `sitemap.xml` al publicar.
+
+## Estado tras el rediseño (2026-10-14)
+
+Resuelto en el nuevo `index.html`:
+- Formulario con `fetch` real y mensajes honestos: solo muestra éxito si el
+  servidor responde OK. Mientras `FORM_ENDPOINT` esté vacío, avisa de que no se
+  envió.
+- Eliminados: popup del 20 %, panel Shift+A, toasts falsos y "2 spots left".
+- Fuentes válidas (Raleway, Inter, Space Grotesk, JetBrains Mono).
+- FAQ con `<details>`, labels asociados, foco visible, `prefers-reduced-motion`,
+  cursor nativo y drawer con Escape y foco atrapado.
+- JSON-LD `ProfessionalService`, Open Graph, favicon y meta description de
+  ~150 caracteres. Three.js se carga como módulo diferido; si la CDN falla, la
+  página sigue funcionando.
+
+Pendiente (necesita datos tuyos), en el bloque `SITE CONFIG` del script:
+- `FORM_ENDPOINT` (Formspree u otro), `BOOKING_URL` (el Calendly actual da 404)
+  y `CONTACT_EMAIL`.
+- Confirmar que los testimonios y las cifras ("500+") son reales.
+- `canonical`, `robots.txt` y `sitemap.xml` cuando haya dominio.
