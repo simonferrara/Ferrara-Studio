@@ -606,6 +606,7 @@ footer{background:var(--ink);color:#fff;border-radius:2.5rem 2.5rem 0 0;overflow
               <option>As soon as possible</option><option>Within 2 weeks</option><option>Within a month</option><option>No rush, planning ahead</option>
             </select></div>
           <div class="field full"><label for="f-msg">Tell us about your project</label><textarea id="f-msg" name="message" rows="4" placeholder="What does your business do? What's missing from your current site?"></textarea></div>
+          <input type="hidden" name="_subject" value="New quote request — ferrarastudio.net">
           <input class="hp" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
         </div>
         <div class="form-foot">
@@ -684,7 +685,7 @@ let THREE = null;
 // FORM_ENDPOINT: your Formspree URL, e.g. 'https://formspree.io/f/abcdwxyz'
 // BOOKING_URL:   your Calendly (or similar) link — hidden while empty
 // CONTACT_EMAIL: shown in the footer — hidden while empty
-const FORM_ENDPOINT = '';
+const FORM_ENDPOINT = 'https://formspree.io/f/xwlvwpjd';
 const BOOKING_URL = '';
 const CONTACT_EMAIL = 'simon@ferrarastudio.net';
 
@@ -1404,11 +1405,16 @@ form.addEventListener('submit', async e => {
   setStatus('Sending…');
   try {
     const res = await fetch(FORM_ENDPOINT, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
-    if (!res.ok) throw new Error('HTTP ' + res.status);
+    if (!res.ok) {
+      const data = await res.json().catch(() => ({}));
+      const msg = (data.errors || []).map(er => er.message).filter(Boolean).join(' ');
+      throw new Error(msg || 'HTTP ' + res.status);
+    }
     form.reset();
     setStatus('Quote request received! We\'ll send your custom quote within 24 hours.', 'ok');
-  } catch {
-    setStatus('Something went wrong sending your request. Please try again in a moment.', 'err');
+  } catch (err) {
+    const detail = err && err.message && !err.message.startsWith('HTTP') ? ' (' + err.message + ')' : '';
+    setStatus('Something went wrong sending your request' + detail + '. Please try again, or email us at ' + CONTACT_EMAIL + '.', 'err');
   } finally {
     submitBtn.disabled = false;
   }
