@@ -1,0 +1,1508 @@
+<!DOCTYPE html>
+<html lang="it"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ferrara Studio — Studio creativo con IA: siti web, video IA e serie</title>
+<meta name="description" content="Ferrara Studio è Simon + un team di IA. Creiamo siti web, video con IA e serie originali con IA per i brand: gusto umano, velocità IA. Siti online in 7 giorni, da $799.">
+<meta name="theme-color" content="#0E2AC5">
+<link rel="canonical" href="https://ferrarastudio.net/it/">
+<link rel="alternate" hreflang="en" href="https://ferrarastudio.net/">
+<link rel="alternate" hreflang="es" href="https://ferrarastudio.net/es/">
+<link rel="alternate" hreflang="it" href="https://ferrarastudio.net/it/">
+<link rel="alternate" hreflang="x-default" href="https://ferrarastudio.net/">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ferrarastudio.net/it/">
+<meta property="og:title" content="Ferrara Studio — Gusto umano. Velocità IA.">
+<meta property="og:description" content="Uno studio creativo con IA: siti web, video con IA e serie originali per i brand.">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3CradialGradient id='g' cx='50%25' cy='30%25' r='70%25'%3E%3Cstop offset='0' stop-color='%235175ff'/%3E%3Cstop offset='.55' stop-color='%230e2ac5'/%3E%3Cstop offset='1' stop-color='%23020b40'/%3E%3C/radialGradient%3E%3C/defs%3E%3Ccircle cx='32' cy='32' r='30' fill='url(%23g)'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700;900&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Inter:wght@300;400;500;600;700&amp;family=Raleway:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "Ferrara Studio",
+  "url": "https://ferrarastudio.net/",
+  "sameAs": ["https://www.instagram.com/ferrarastudio.ai/"],
+  "description": "AI creative studio: custom websites, AI video and original AI series for brands. Websites delivered in 7 days.",
+  "areaServed": "US",
+  "priceRange": "$799 - $2,997",
+  "makesOffer": [
+    {"@type": "Offer", "name": "Starter — 1-page landing site", "price": "799", "priceCurrency": "USD"},
+    {"@type": "Offer", "name": "Business — 5–8 page website", "price": "1997", "priceCurrency": "USD"},
+    {"@type": "Offer", "name": "Premium + Store", "price": "2997", "priceCurrency": "USD"}
+  ]
+}
+</script>
+<script type="importmap">
+{ "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js" } }
+</script>
+<style>
+:root{
+  --font-sans:"Inter",system-ui,sans-serif;
+  --font-display:"Space Grotesk",system-ui,sans-serif;
+  --font-mono:"JetBrains Mono",ui-monospace,monospace;
+  --font-raleway:"Raleway",system-ui,sans-serif;
+  --ink:#0a0a0a;--n700:#404040;--n500:#737373;--n400:#a3a3a3;--n100:#f5f5f5;
+  --accent:#0E2AC5;--accent-80:rgba(14,42,197,.8);
+  --orb:radial-gradient(circle at 50% 30%,#5175ff 0%,#0e2ac5 55%,#020b40 100%);
+  --ease:cubic-bezier(0.16,1,0.3,1);
+  --glass-shadow:inset 0 1.5px 2px rgba(255,255,255,0.7),0 8px 30px rgba(0,0,0,0.04);
+}
+html,body{margin:0;padding:0;width:100%;}
+*,*::before,*::after{box-sizing:border-box;}
+body{overflow-x:hidden;-webkit-font-smoothing:antialiased;color:#1a1a1a;background:#f7fafc;font-family:var(--font-sans);}
+h1,h2,h3,p{margin:0;}
+a{color:inherit;text-decoration:none;}
+button{font:inherit;color:inherit;}
+svg.i{width:16px;height:16px;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+::-webkit-scrollbar{width:8px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:rgba(14,42,197,0.18);border-radius:99px;}
+::-webkit-scrollbar-thumb:hover{background:rgba(14,42,197,0.32);}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px;}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+.skip{position:fixed;left:16px;top:-60px;z-index:200;background:var(--ink);color:#fff;padding:10px 16px;border-radius:99px;font:500 14px var(--font-raleway);}
+.skip:focus{top:16px;}
+
+/* LAYERS */
+#bg{position:fixed;inset:0;z-index:-10;transition:background 1.2s cubic-bezier(0.65,0,0.35,1);
+  background:radial-gradient(circle at center,#ffffff 0%,#ecefff 35%,#c2d1ff 100%);}
+#stage{position:fixed;inset:0;z-index:0;pointer-events:none;}
+#stage canvas{display:block;width:100%;height:100%;pointer-events:none;}
+main,footer{position:relative;z-index:10;}
+
+/* LOADER */
+#loader{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;
+  background:radial-gradient(circle at 50% 42%,#ffffff 0%,#eef2ff 45%,#dbe4ff 100%);transition:opacity .55s cubic-bezier(0.65,0,0.35,1);}
+#loader.leaving{opacity:0;pointer-events:none;}
+#loader.gone{display:none;}
+#loader>*{opacity:0;transform:translateY(18px);filter:blur(6px);animation:ldIn .9s cubic-bezier(.34,1.3,.5,1) forwards;}
+#loader>*:nth-child(1){animation-delay:.1s}
+#loader>*:nth-child(2){animation-delay:.26s}
+#loader>*:nth-child(3){animation-delay:.42s}
+@keyframes ldIn{to{opacity:1;transform:none;filter:blur(0)}}
+.ld-status{font:400 10px var(--font-mono);letter-spacing:.28em;text-transform:uppercase;color:#6b7bb5;}
+.ld-track{width:clamp(180px,32vw,280px);height:2px;background:rgba(14,42,197,0.14);border-radius:99px;overflow:hidden;}
+.ld-fill{height:100%;width:0;background:linear-gradient(90deg,#5175ff 0%,#0e2ac5 100%);box-shadow:0 0 14px rgba(47,105,255,0.55);border-radius:99px;transition:width .45s var(--ease);}
+.ld-count{font:700 11px var(--font-mono);letter-spacing:.1em;color:#0e2ac5;font-variant-numeric:tabular-nums;}
+
+/* HEADER */
+header{position:fixed;top:0;left:0;right:0;z-index:30;height:80px;padding:0 24px;display:flex;align-items:center;justify-content:space-between;
+  pointer-events:none;opacity:0;transform:translateY(-16px);transition:opacity .8s var(--ease),transform .8s var(--ease);}
+body.revealed header{opacity:1;transform:none;}
+header::before{content:"";position:absolute;inset:0;z-index:-1;background:rgba(247,250,252,.72);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);
+  border-bottom:1px solid rgba(10,10,10,.06);opacity:0;transition:opacity .4s;}
+header.solid::before{opacity:1;}
+header>*{pointer-events:auto;}
+.wordmark{font:900 18px var(--font-display);letter-spacing:.25em;color:var(--ink);}
+.nav{display:none;gap:48px;font:500 14px var(--font-raleway);}
+.nav a{transition:opacity .2s;}
+.nav a:hover{opacity:.6;}
+.hdr-r{display:flex;align-items:center;gap:10px;}
+.glass-btn{width:40px;height:40px;border-radius:99px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.4);background:rgba(255,255,255,.2);
+  -webkit-backdrop-filter:blur(24px);backdrop-filter:blur(24px);box-shadow:var(--glass-shadow);cursor:pointer;transition:background .2s;color:var(--ink);}
+.glass-btn:hover{background:rgba(255,255,255,.3);}
+.pill{display:inline-flex;align-items:center;gap:12px;padding:6px 6px 6px 20px;border-radius:99px;font:500 13px var(--font-raleway);color:var(--ink);
+  background:rgba(255,255,255,.12);-webkit-backdrop-filter:blur(24px);backdrop-filter:blur(24px);
+  border:1px solid rgba(255,255,255,.1);border-top-color:rgba(255,255,255,.9);border-bottom-color:rgba(255,255,255,.85);box-shadow:var(--glass-shadow);}
+.lang{display:flex;align-items:center;gap:2px;padding:4px;border-radius:99px;border:1px solid rgba(255,255,255,.4);background:rgba(255,255,255,.2);
+  -webkit-backdrop-filter:blur(24px);backdrop-filter:blur(24px);box-shadow:var(--glass-shadow);}
+.lang a{min-width:30px;height:30px;padding:0 6px;border-radius:99px;display:grid;place-items:center;font:600 11px var(--font-mono);letter-spacing:.06em;color:var(--n700);transition:background .2s,color .2s;}
+.lang a:hover{background:rgba(255,255,255,.5);}
+.lang a[aria-current="page"]{background:var(--ink);color:#fff;}
+.hdr-r .pill{white-space:nowrap;}
+@media (max-width:520px){.hdr-r .pill{font-size:0;gap:0;padding:4px;}}
+@media (min-width:768px) and (max-width:1180px){.nav{gap:22px;font-size:13px;}}
+@media (min-width:768px) and (max-width:960px){.hdr-r .pill{font-size:0;gap:0;padding:4px;}}
+.orb{width:32px;height:32px;border-radius:99px;display:grid;place-items:center;background:var(--orb);color:#fff;transition:transform .3s var(--ease);}
+.pill:hover .orb{transform:scale(1.05);}
+.orb svg.i{width:14px;height:14px;}
+
+/* TYPE HELPERS */
+.label{font:400 11px var(--font-mono);letter-spacing:.25em;text-transform:uppercase;color:var(--accent-80);}
+.h-xl{font:500 2.6rem/1.0 var(--font-raleway);letter-spacing:-.025em;color:var(--ink);}
+.body-lg{font:500 16px/1.55 var(--font-raleway);color:var(--n700);}
+
+/* SCENE SECTIONS */
+.scene-sec{min-height:100svh;pointer-events:none;position:relative;}
+.scene-sec .pe{pointer-events:auto;}
+
+/* 01 HERO */
+#hero{display:flex;align-items:flex-end;padding:0 24px 48px;}
+.hero-row{width:100%;display:flex;flex-direction:column;justify-content:space-between;gap:32px;opacity:0;transition:opacity .6s;}
+body.revealed .hero-row{opacity:1;}
+.hero-l{display:flex;flex-direction:column;gap:14px;align-items:flex-start;}
+.eyebrow{font:500 12px var(--font-raleway);letter-spacing:.05em;text-transform:uppercase;color:var(--accent);margin-bottom:16px;}
+.hero-h1{font:500 2.6rem/.95 var(--font-raleway);letter-spacing:-.05em;color:var(--ink);}
+.hero-r{font:500 15px/1.35 var(--font-raleway);}
+.hero-r .credit{margin-top:20px;font:400 10px var(--font-mono);letter-spacing:.18em;text-transform:uppercase;color:var(--n500);}
+.hero-r .pill{margin-top:22px;}
+.scroll-cue{display:none;margin-top:16px;align-items:center;gap:8px;color:var(--n500);font:400 10px var(--font-mono);letter-spacing:.2em;text-transform:uppercase;animation:pulse 2s cubic-bezier(.4,0,.6,1) infinite;}
+.scroll-cue svg.i{width:14px;height:14px;}
+@keyframes pulse{50%{opacity:.5}}
+.in{opacity:0;transform:translateY(var(--y,14px));transition:opacity var(--d,.8s) var(--ease),transform var(--d,.8s) var(--ease);transition-delay:var(--delay,0s);}
+body.revealed .in{opacity:1;transform:none;}
+
+/* 02 DROP */
+#drop{display:flex;align-items:center;padding:128px 24px 160px;}
+.grid12{display:grid;grid-template-columns:1fr;gap:40px;width:100%;align-items:start;}
+.cards{display:flex;flex-direction:column;gap:14px;}
+.gcard{position:relative;border-radius:1.4rem;padding:1px;background:linear-gradient(to bottom,rgba(255,255,255,.8),rgba(255,255,255,.3),rgba(255,255,255,.1));
+  box-shadow:0 14px 40px -12px rgba(14,42,197,0.18);transition:transform .3s var(--ease);}
+.gcard:hover{transform:translateY(-2px);}
+.gcard-in{position:relative;border-radius:1.35rem;background:rgba(255,255,255,.25);-webkit-backdrop-filter:blur(24px);backdrop-filter:blur(24px);padding:20px 24px;overflow:hidden;}
+.gcard-in::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,rgba(255,255,255,.9),transparent);}
+.gc-top{display:flex;align-items:center;gap:10px;font:400 10px var(--font-mono);}
+.gc-top .k{text-transform:uppercase;letter-spacing:.15em;color:var(--n400);}
+.dot{width:6px;height:6px;border-radius:99px;margin-left:auto;background:radial-gradient(circle at 35% 30%,#5175ff,#0e2ac5);box-shadow:0 0 8px rgba(47,105,255,0.6);}
+.gc-v{margin-top:10px;font:600 18px var(--font-raleway);color:var(--ink);}
+.gc-d{margin-top:4px;font:400 13px var(--font-sans);color:var(--n500);}
+
+/* 03 SHAPE */
+#shape{display:flex;flex-direction:column;justify-content:space-between;padding:144px 24px;}
+.shape-b{align-self:flex-end;max-width:384px;text-align:left;}
+.hint{margin-top:28px;display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:99px;border:1px solid rgba(255,255,255,.55);
+  background:rgba(255,255,255,.35);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);color:var(--n700);
+  font:400 10px var(--font-mono);letter-spacing:.2em;text-transform:uppercase;}
+.hint svg.i{width:14px;height:14px;}
+
+/* 04 RELEASE */
+#release{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:144px 24px;}
+#release .wrap{max-width:768px;}
+.h-rel{font:500 2.8rem/1.0 var(--font-raleway);letter-spacing:-.025em;color:var(--ink);margin-top:28px;}
+
+/* CONTENT SECTIONS */
+.sec{padding:120px 24px;max-width:1280px;margin:0 auto;}
+.sec-head{display:flex;flex-direction:column;gap:24px;margin-bottom:56px;max-width:720px;}
+.steps{display:grid;grid-template-columns:1fr;gap:14px;}
+.step-n{font:500 56px/1 var(--font-raleway);letter-spacing:-.04em;color:var(--accent);}
+.step-t{margin-top:18px;font:600 20px var(--font-raleway);color:var(--ink);}
+.step-d{margin-top:8px;font:400 14px/1.55 var(--font-sans);color:var(--n500);}
+.step-day{margin-top:18px;font:400 10px var(--font-mono);letter-spacing:.2em;text-transform:uppercase;color:var(--accent-80);}
+.tiers{display:grid;grid-template-columns:1fr;gap:14px;align-items:stretch;}
+.tier .gcard-in{height:100%;display:flex;flex-direction:column;padding:28px;}
+.tier.dark .gcard-in{background:rgba(10,10,10,.92);color:#fff;}
+.tier.dark .gcard-in::before{background:linear-gradient(to right,transparent,rgba(81,117,255,.8),transparent);}
+.tier-name{display:flex;align-items:center;justify-content:space-between;font:400 10px var(--font-mono);letter-spacing:.2em;text-transform:uppercase;color:var(--n500);}
+.tier.dark .tier-name{color:rgba(255,255,255,.5);}
+.badge{padding:4px 10px;border-radius:99px;background:var(--orb);color:#fff;letter-spacing:.15em;}
+.price{margin-top:18px;font:500 52px/1 var(--font-raleway);letter-spacing:-.04em;}
+.price small{font:400 11px var(--font-mono);letter-spacing:.1em;color:var(--n500);display:block;margin-top:8px;text-transform:uppercase;}
+.tier.dark .price small{color:rgba(255,255,255,.5);}
+.tier-d{margin-top:16px;font:400 14px/1.55 var(--font-sans);color:var(--n500);}
+.tier.dark .tier-d{color:rgba(255,255,255,.6);}
+.feats{list-style:none;padding:0;margin:22px 0 28px;display:flex;flex-direction:column;gap:10px;font:500 14px var(--font-raleway);}
+.feats li{display:flex;gap:10px;align-items:flex-start;}
+.feats svg.i{width:14px;height:14px;margin-top:2px;color:var(--accent);}
+.tier.dark .feats svg.i{color:#7f9bff;}
+.tier .cta{margin-top:auto;}
+[hidden]{display:none!important;}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:14px 22px;border-radius:99px;font:600 14px var(--font-raleway);
+  border:1px solid rgba(10,10,10,.12);background:rgba(255,255,255,.5);cursor:pointer;transition:background .2s,transform .2s var(--ease);}
+.btn:hover{background:rgba(255,255,255,.85);}
+.btn.solid{background:var(--ink);color:#fff;border-color:var(--ink);}
+.btn.solid:hover{background:#222;}
+.tier.dark .btn{background:var(--orb);color:#fff;border:none;}
+.care{margin-top:14px;}
+.care .gcard-in{display:flex;flex-direction:column;gap:18px;padding:24px 28px;}
+.care-p{font:500 32px/1 var(--font-raleway);letter-spacing:-.03em;}
+.care-p small{font:400 10px var(--font-mono);letter-spacing:.15em;text-transform:uppercase;color:var(--n500);margin-left:6px;}
+.chips{display:flex;flex-wrap:wrap;gap:10px;}
+.chip{display:inline-flex;align-items:center;gap:12px;padding:12px 18px;border-radius:99px;border:1px solid rgba(255,255,255,.6);background:rgba(255,255,255,.35);
+  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);font:500 15px var(--font-raleway);color:var(--ink);}
+.chip span{font:400 10px var(--font-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--n500);}
+.quotes{display:grid;grid-template-columns:1fr;gap:14px;}
+.quote .gcard-in{padding:28px;height:100%;display:flex;flex-direction:column;gap:22px;}
+.quote q{font:500 18px/1.45 var(--font-raleway);color:var(--ink);quotes:"“" "”";}
+.quote .who{margin-top:auto;font:600 14px var(--font-raleway);}
+.quote .who span{display:block;margin-top:4px;font:400 10px var(--font-mono);letter-spacing:.15em;text-transform:uppercase;color:var(--n500);}
+.faq-wrap{display:grid;grid-template-columns:1fr;gap:40px;}
+.faq{display:flex;flex-direction:column;gap:10px;}
+.faq details{border-radius:1.1rem;background:rgba(255,255,255,.35);border:1px solid rgba(255,255,255,.6);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);}
+.faq summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 22px;font:600 16px var(--font-raleway);color:var(--ink);}
+.faq summary::-webkit-details-marker{display:none;}
+.faq summary svg.i{transition:transform .3s var(--ease);color:var(--accent);}
+.faq details[open] summary svg.i{transform:rotate(45deg);}
+.faq details p{padding:0 22px 22px;font:400 14px/1.6 var(--font-sans);color:var(--n700);}
+.guar .gcard-in{padding:28px;}
+.guar h3{margin-top:14px;font:500 28px/1.05 var(--font-raleway);letter-spacing:-.02em;color:var(--ink);}
+.guar p{margin-top:14px;font:400 14px/1.6 var(--font-sans);color:var(--n700);}
+
+/* QUOTE FORM */
+.form-card .gcard-in{padding:28px;}
+.fgrid{display:grid;grid-template-columns:1fr;gap:16px;}
+.field{display:flex;flex-direction:column;gap:8px;}
+.field label{font:400 10px var(--font-mono);letter-spacing:.18em;text-transform:uppercase;color:var(--n700);}
+.field input,.field select,.field textarea{width:100%;font:500 15px var(--font-raleway);color:var(--ink);padding:14px 16px;border-radius:12px;
+  border:1px solid rgba(10,10,10,.14);background:rgba(255,255,255,.65);transition:border-color .2s,box-shadow .2s;}
+.field input::placeholder,.field textarea::placeholder{color:#6b6b6b;}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(14,42,197,.18);}
+.field textarea{resize:vertical;min-height:110px;}
+.full{grid-column:1/-1;}
+.form-foot{margin-top:22px;display:flex;flex-direction:column;gap:14px;align-items:flex-start;}
+.form-note{font:400 12px var(--font-sans);color:var(--n500);}
+#form-status{font:500 14px/1.5 var(--font-raleway);}
+#form-status.ok{color:#0b6b2f;}
+#form-status.err{color:#b3261e;}
+.hp{position:absolute;left:-9999px;}
+
+/* FOOTER */
+footer{background:var(--ink);color:#fff;border-radius:2.5rem 2.5rem 0 0;overflow:hidden;}
+.bloom{position:absolute;border-radius:99px;filter:blur(40px);pointer-events:none;}
+.bloom.a{width:28rem;height:28rem;top:-10rem;right:-8rem;background:radial-gradient(circle,#2f69ff66 0%,transparent 65%);}
+.bloom.b{width:32rem;height:32rem;bottom:-14rem;left:-10rem;background:radial-gradient(circle,#5175ff44 0%,transparent 65%);}
+.marquee{border-bottom:1px solid rgba(255,255,255,.1);padding:20px 0;overflow:hidden;}
+.track{display:inline-flex;white-space:nowrap;animation:mq 26s linear infinite;font:500 clamp(28px,6vw,64px) var(--font-raleway);color:rgba(255,255,255,.9);}
+.track span{display:inline-flex;align-items:center;gap:32px;padding-left:32px;}
+.track span::after{content:"";width:10px;height:10px;border-radius:99px;background:#2f69ff;}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.f-body{position:relative;padding:64px 24px 40px;}
+.f-grid{display:grid;grid-template-columns:1fr;gap:48px;}
+.f-label{font:400 11px var(--font-mono);letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,.4);}
+.f-h{margin-top:20px;font:500 2.25rem/.95 var(--font-raleway);letter-spacing:-.025em;}
+.f-cta{margin-top:32px;display:inline-flex;align-items:center;gap:18px;padding:8px 8px 8px 28px;border-radius:99px;border:1px solid rgba(255,255,255,.15);
+  background:rgba(255,255,255,.05);font:500 16px var(--font-raleway);transition:background .2s;}
+.f-cta:hover{background:rgba(255,255,255,.1);}
+.f-cta .orb{width:40px;height:40px;}
+.f-cta .orb svg.i{width:16px;height:16px;transition:transform .3s var(--ease);}
+.f-cta:hover .orb svg.i{transform:rotate(45deg);}
+.f-cols{display:grid;grid-template-columns:repeat(2,1fr);gap:32px;}
+.f-col h3{font:400 10px var(--font-mono);letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,.4);}
+.f-col ul{list-style:none;padding:0;margin:18px 0 0;display:flex;flex-direction:column;gap:12px;}
+.f-col a{display:inline-flex;align-items:center;gap:6px;font:500 15px var(--font-raleway);color:rgba(255,255,255,.75);transition:color .2s;}
+.f-col a:hover{color:#fff;}
+.f-col a svg.i{width:12px;height:12px;opacity:0;transform:translate(-4px,4px);transition:opacity .2s,transform .2s;}
+.f-col a:hover svg.i{opacity:1;transform:none;}
+.f-bar{margin-top:80px;padding-top:28px;border-top:1px solid rgba(255,255,255,.1);display:flex;flex-wrap:wrap;align-items:center;gap:14px;}
+.f-bar .wm{font:900 16px var(--font-display);letter-spacing:.22em;}
+.f-bar .bd{width:6px;height:6px;border-radius:99px;background:#2f69ff;}
+.f-bar small{font:400 11px var(--font-mono);color:rgba(255,255,255,.4);}
+
+/* REVEAL */
+[data-reveal]{opacity:0;transform:translateY(42px);filter:blur(8px);transition:opacity 1.5s var(--ease),transform 1.5s var(--ease),filter 1.5s var(--ease);}
+[data-reveal].shown{opacity:1;transform:none;filter:blur(0);}
+[data-fade]{opacity:0;transform:translateY(24px);transition:opacity .7s var(--ease),transform .7s var(--ease);}
+[data-fade].shown{opacity:1;transform:none;}
+
+/* DRAWER */
+#scrim{position:fixed;inset:0;z-index:40;background:rgba(10,10,10,.2);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);opacity:0;pointer-events:none;transition:opacity .4s;}
+#scrim.open{opacity:.4;pointer-events:auto;}
+#drawer{position:fixed;top:0;right:0;bottom:0;z-index:50;width:100%;max-width:100%;padding:32px;background:rgba(255,255,255,.95);
+  -webkit-backdrop-filter:blur(24px);backdrop-filter:blur(24px);border-left:1px solid var(--n100);transform:translateX(100%);visibility:hidden;
+  transition:transform .65s cubic-bezier(.22,1.12,.36,1),visibility 0s .65s;display:flex;flex-direction:column;overflow-y:auto;}
+#drawer.open{transform:none;visibility:visible;transition:transform .65s cubic-bezier(.22,1.12,.36,1),visibility 0s;}
+.dr-top{display:flex;align-items:center;justify-content:space-between;}
+.dr-title{display:flex;align-items:center;gap:10px;font:900 14px var(--font-display);letter-spacing:.2em;text-transform:uppercase;color:var(--ink);}
+.dr-x{width:36px;height:36px;border-radius:99px;border:1px solid var(--n100);background:#fff;display:grid;place-items:center;cursor:pointer;}
+.dr-note{margin-top:18px;font:italic 400 12px/1.6 var(--font-mono);color:var(--n400);}
+.dr-sec{margin-top:32px;display:flex;align-items:center;gap:8px;font:700 10px var(--font-mono);letter-spacing:.2em;text-transform:uppercase;color:var(--ink);}
+.themes{margin-top:16px;display:grid;grid-template-columns:1fr;gap:10px;}
+.theme{text-align:left;border-radius:12px;border:1px solid #e5e5e5;background:#fff;padding:16px;cursor:pointer;transition:transform .25s var(--ease),background .25s,color .25s;}
+.theme[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink);transform:scale(1.02);}
+.theme .tn{display:flex;align-items:center;justify-content:space-between;font:700 12px var(--font-sans);}
+.theme .sw{width:12px;height:12px;border-radius:99px;}
+.theme .td{margin-top:6px;font:400 10px/1.5 var(--font-sans);opacity:.65;}
+.dr-foot{margin-top:auto;padding-top:32px;display:flex;flex-direction:column;gap:8px;font:400 9px var(--font-mono);letter-spacing:.12em;color:var(--n400);}
+.dr-foot div{display:flex;justify-content:space-between;}
+.reset{margin-top:14px;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px;border-radius:12px;border:1px solid #e5e5e5;background:#fff;cursor:pointer;
+  font:500 12px var(--font-sans);color:var(--ink);}
+
+/* BREAKPOINTS */
+@media (min-width:640px){
+  .hero-h1{font-size:3.75rem;}
+  .h-xl{font-size:3.75rem;}
+  .h-rel{font-size:4.5rem;}
+  .fgrid{grid-template-columns:1fr 1fr;}
+  .f-cols{grid-template-columns:repeat(3,1fr);}
+  #drawer{width:420px;}
+  .themes{grid-template-columns:1fr 1fr;}
+  .care .gcard-in{flex-direction:row;align-items:center;justify-content:space-between;}
+}
+@media (min-width:768px){
+  header{height:96px;padding:0 48px;}
+  .wordmark{font-size:20px;}
+  .nav{display:flex;}
+  .glass-btn{width:44px;height:44px;}
+  .hdr-r{gap:12px;}
+  .pill{font-size:14px;padding-left:24px;}
+  #hero{padding:0 48px 56px;}
+  .hero-row{flex-direction:row;align-items:flex-end;}
+  .eyebrow{font-size:14px;margin-bottom:24px;}
+  .hero-h1{font-size:90px;line-height:.95;}
+  .hero-r{width:260px;flex:none;}
+  .scroll-cue{display:inline-flex;}
+  #drop{padding:160px 48px;}
+  .h-xl{font-size:80px;line-height:.92;}
+  .body-lg{font-size:19px;}
+  #shape{padding:176px 48px;}
+  .shape-b{text-align:right;}
+  #release{padding:176px 48px;}
+  .h-rel{font-size:88px;line-height:.92;}
+  .sec{padding:160px 48px;}
+  .steps{grid-template-columns:repeat(3,1fr);}
+  .quotes{grid-template-columns:repeat(3,1fr);}
+  footer{border-radius:4rem 4rem 0 0;}
+  .f-body{padding:96px 48px 40px;}
+  .f-h{font-size:3.75rem;}
+  .f-cta{font-size:18px;}
+  .f-bar{margin-top:112px;}
+}
+@media (min-width:1024px){
+  .grid12{grid-template-columns:repeat(12,1fr);gap:64px;}
+  .grid12 .c7{grid-column:span 7;}
+  .grid12 .c5{grid-column:span 5;padding-top:12px;}
+  .tiers{grid-template-columns:repeat(3,1fr);}
+  .faq-wrap{grid-template-columns:7fr 5fr;gap:64px;}
+  .f-grid{grid-template-columns:repeat(12,1fr);}
+  .f-grid .c5{grid-column:span 5;}
+  .f-grid .c7{grid-column:span 7;}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;transition-delay:0s!important;}
+  [data-reveal],[data-fade]{opacity:1;transform:none;filter:none;}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Vai al contenuto</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-sliders" viewBox="0 0 24 24"><line x1="21" x2="14" y1="4" y2="4"></line><line x1="10" x2="3" y1="4" y2="4"></line><line x1="21" x2="12" y1="12" y2="12"></line><line x1="8" x2="3" y1="12" y2="12"></line><line x1="21" x2="16" y1="20" y2="20"></line><line x1="12" x2="3" y1="20" y2="20"></line><line x1="14" x2="14" y1="2" y2="6"></line><line x1="8" x2="8" y1="10" y2="14"></line><line x1="16" x2="16" y1="18" y2="22"></line></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"></path></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 5v14"></path><path d="m19 12-7 7-7-7"></path></symbol>
+  <symbol id="i-pointer" viewBox="0 0 24 24"><path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z"></path><path d="m13 13 6 6"></path></symbol>
+  <symbol id="i-upright" viewBox="0 0 24 24"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"></path></symbol>
+  <symbol id="i-reset" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"></path></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M5 12h14"></path><path d="M12 5v14"></path></symbol>
+</svg>
+
+<div id="bg" aria-hidden="true"></div>
+<div id="stage" aria-hidden="true"><canvas id="gl"></canvas></div>
+
+<div id="loader" role="status" aria-live="polite">
+  <div class="ld-status" id="ld-status">Calibrazione del campo gravitazionale</div>
+  <div class="ld-track"><div class="ld-fill" id="ld-fill"></div></div>
+  <div class="ld-count" id="ld-count">000%</div>
+</div>
+
+<header>
+  <a href="#hero" class="wordmark" aria-label="Ferrara Studio — torna su">FERRARA</a>
+  <nav class="nav" aria-label="Principale">
+    <a href="#services">Servizi</a>
+    <a href="#process">Processo</a>
+    <a href="#pricing">Prezzi</a>
+    <a href="#faq">FAQ</a>
+    <a href="#quote">Contatti</a>
+  </nav>
+  <div class="hdr-r">
+    <nav class="lang" aria-label="Language">
+      <a href="/" hreflang="en" lang="en" data-lang="en">EN</a>
+      <a href="/es/" hreflang="es" lang="es" data-lang="es">ES</a>
+      <a href="/it/" hreflang="it" lang="it" data-lang="it" aria-current="page">IT</a>
+    </nav>
+    <button class="glass-btn" id="open-drawer" type="button" aria-label="Apri i controlli dello studio" aria-controls="drawer" aria-expanded="false"><svg class="i"><use href="#i-sliders"></use></svg></button>
+    <a class="pill" href="#quote">Inizia un progetto <span class="orb"><svg class="i"><use href="#i-chev"></use></svg></span></a>
+  </div>
+</header>
+
+<main id="main">
+  <!-- 01 HERO -->
+  <section id="hero" class="scene-sec" aria-labelledby="hero-h">
+    <div class="hero-row">
+      <div class="hero-l pe">
+        <p class="eyebrow in" style="--delay:.15s">[ Studio creativo con IA ]</p>
+        <h1 id="hero-h" class="hero-h1 in" style="--y:22px;--delay:.28s;--d:1s">Gusto umano.<br>Velocità IA.</h1>
+      </div>
+      <div class="hero-r pe in" style="--delay:.45s">
+        <p>Ferrara Studio è Simon + un team di IA. Creiamo siti web, video con IA e serie originali per brand che vogliono distinguersi.</p>
+        <a class="pill" href="#services">Scopri cosa facciamo <span class="orb"><svg class="i"><use href="#i-chev"></use></svg></span></a>
+        <p class="credit">© 2026 — Un umano · tante IA</p>
+        <a href="#drop" class="scroll-cue"><svg class="i"><use href="#i-down"></use></svg>Scorri</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 DROP -->
+  <section id="drop" class="scene-sec" aria-labelledby="drop-h">
+    <div class="grid12">
+      <div class="c7 pe">
+        <p class="label" data-reveal="">[ 02 — Lo studio ]</p>
+        <h2 id="drop-h" class="h-xl" style="margin-top:24px" data-reveal="" data-delay=".1">Un umano.<br>Tante IA.</h2>
+        <p class="body-lg" style="margin-top:32px;max-width:512px" data-reveal="" data-delay=".2">Simon definisce la direzione e il gusto. L'IA fa il lavoro pesante: codice, immagini, video, animazioni. Insieme consegniamo in pochi giorni quello che a un team richiedeva settimane, senza sembrare l'IA di tutti gli altri.</p>
+      </div>
+      <div class="c5 cards pe" data-reveal="" data-delay=".25">
+        <div class="gcard"><div class="gcard-in"><div class="gc-top"><span>01</span><span class="k">Direzione</span><span class="dot"></span></div><p class="gc-v">Direzione creativa umana</p><p class="gc-d">Ogni idea, inquadratura e riga è scelta da una persona, non da un prompt.</p></div></div>
+        <div class="gcard"><div class="gcard-in"><div class="gc-top"><span>02</span><span class="k">Produzione</span><span class="dot"></span></div><p class="gc-v">Un team di IA su ogni progetto</p><p class="gc-d">Modelli di codice, immagine, video e voce che lavorano in parallelo.</p></div></div>
+        <div class="gcard"><div class="gcard-in"><div class="gc-top"><span>03</span><span class="k">Velocità</span><span class="dot"></span></div><p class="gc-v">Giorni, non mesi</p><p class="gc-d">Siti online in 7 giorni. $0 finché non approvi.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 SHAPE -->
+  <section id="shape" class="scene-sec" aria-labelledby="shape-h">
+    <div class="pe">
+      <p class="label" data-reveal="">[ 03 — Il mestiere ]</p>
+      <h2 id="shape-h" class="h-xl" style="margin-top:24px;max-width:672px" data-reveal="" data-delay=".1">Prima il caos, poi la forma.</h2>
+    </div>
+    <div class="shape-b pe">
+      <p class="body-lg" data-reveal="" data-delay=".15">Ogni progetto nasce da idee, riferimenti e atmosfere sparse. Li trasformiamo in qualcosa di chiaro (un sito, un video, un personaggio) che assomiglia a te e a nessun altro.</p>
+      <div data-reveal="" data-delay=".28"><span class="hint"><svg class="i"><use href="#i-pointer"></use></svg>Scorrilo</span></div>
+    </div>
+  </section>
+
+  <!-- 04 RELEASE -->
+  <section id="release" class="scene-sec" aria-labelledby="rel-h">
+    <div class="wrap pe">
+      <p class="label" data-reveal="">[ 04 — Lancio ]</p>
+      <h2 id="rel-h" class="h-rel" data-reveal="" data-delay=".12">E poi,<br>va online.</h2>
+      <p class="body-lg" style="margin:32px auto 0;max-width:448px" data-reveal="" data-delay=".24">Un sito online in 7 giorni. Uno spot pronto per il tuo feed. Un episodio pronto da pubblicare. Fatto da un umano, potenziato dall'IA.</p>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services" class="sec" aria-labelledby="serv-h">
+    <div class="sec-head">
+      <p class="label" data-reveal="">[ 05 — Servizi ]</p>
+      <h2 id="serv-h" class="h-xl" data-reveal="" data-delay=".1">Tre modi<br>di lavorare.</h2>
+    </div>
+    <div class="tiers">
+      <div class="gcard tier" data-reveal=""><div class="gcard-in">
+        <p class="tier-name"><span>01 · Siti web</span></p>
+        <p class="price">Da $799<small>Online in 7 giorni</small></p>
+        <p class="tier-d">Siti su misura, pensati per lo smartphone, con 3D, animazioni e testi che convertono. $0 finché non approvi il design.</p>
+        <ul class="feats">
+          <li><svg class="i"><use href="#i-check"></use></svg>Design su misura, niente template</li>
+          <li><svg class="i"><use href="#i-check"></use></svg>Pensato per smartphone e veloce</li>
+          <li><svg class="i"><use href="#i-check"></use></svg>SEO, analytics e hosting configurati</li>
+        </ul>
+        <a class="btn cta" href="#pricing">Vedi i prezzi dei siti</a>
+      </div></div>
+      <div class="gcard tier dark" data-reveal="" data-delay=".1"><div class="gcard-in">
+        <p class="tier-name"><span>02 · Video e spot con IA</span><span class="badge">Novità</span></p>
+        <p class="price">Su misura<small>Preventivo in 24 ore</small></p>
+        <p class="tier-d">Video brevi con IA per il tuo brand: video di prodotto, spot e reel per Instagram, TikTok e YouTube.</p>
+        <ul class="feats">
+          <li><svg class="i"><use href="#i-check"></use></svg>Concept, sceneggiatura e storyboard</li>
+          <li><svg class="i"><use href="#i-check"></use></svg>Scene, animazioni e suono generati con IA</li>
+          <li><svg class="i"><use href="#i-check"></use></svg>Versioni verticali pronte da pubblicare</li>
+        </ul>
+        <a class="btn cta" href="#quote" data-package="Video e spot con IA">Chiedi un preventivo <svg class="i"><use href="#i-chev"></use></svg></a>
+      </div></div>
+      <div class="gcard tier" data-reveal="" data-delay=".2"><div class="gcard-in">
+        <p class="tier-name"><span>03 · Serie e personaggi con IA</span></p>
+        <p class="price">Serie con IA<small>Realizzate con Seedance e altro</small></p>
+        <p class="tier-d">Simon crea il video con IA di <em>El secreto de Adán</em>, una serie di AI See You Films. Ora disponibile anche per brand che vogliono una mascotte, una storia o una serie tutta loro.</p>
+        <ul class="feats">
+          <li><svg class="i"><use href="#i-check"></use></svg>Design e coerenza dei personaggi</li>
+          <li><svg class="i"><use href="#i-check"></use></svg>Video IA, personaggi, camera e prompt di Simon</li>
+          <li><svg class="i"><use href="#i-check"></use></svg>Serie di brand e collaborazioni</li>
+        </ul>
+        <a class="btn cta" href="#quote" data-package="Serie e personaggi con IA">Raccontaci la tua storia</a>
+        <a id="series-link" class="btn" href="#" target="_blank" rel="noopener" style="margin-top:10px" hidden="">Unisciti alla serie</a>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section id="process" class="sec" aria-labelledby="proc-h">
+    <div class="sec-head">
+      <p class="label" data-reveal="">[ 06 — Processo ]</p>
+      <h2 id="proc-h" class="h-xl" data-reveal="" data-delay=".1">Semplice come 1, 2, 3.</h2>
+    </div>
+    <div class="steps">
+      <div class="gcard" data-reveal=""><div class="gcard-in"><p class="step-n">01</p><h3 class="step-t">Compila il brief</h3><p class="step-d">Dicci cosa vuoi creare: un sito, un video, una serie. Un brief breve, senza competenze tecniche.</p><p class="step-day">→ Giorno 1</p></div></div>
+      <div class="gcard" data-reveal="" data-delay=".1"><div class="gcard-in"><p class="step-n">02</p><h3 class="step-t">Umano + IA lo costruiscono</h3><p class="step-d">Simon dirige, il team di IA produce. Vedi un'anteprima completa e chiedi modifiche. Non paghi finché non ti piace davvero.</p><p class="step-day">→ Giorni 2–6</p></div></div>
+      <div class="gcard" data-reveal="" data-delay=".2"><div class="gcard-in"><p class="step-n">03</p><h3 class="step-t">Lancio</h3><p class="step-d">Mettiamo online il tuo sito o ti consegniamo i file finali pronti da pubblicare, con una guida a tutto.</p><p class="step-day">→ Giorno 7</p></div></div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="pricing" class="sec" aria-labelledby="price-h">
+    <div class="sec-head">
+      <p class="label" data-reveal="">[ 07 — Prezzi dei siti ]</p>
+      <h2 id="price-h" class="h-xl" data-reveal="" data-delay=".1">Trasparenti.<br>Nessuna sorpresa.</h2>
+    </div>
+    <div class="tiers">
+      <div class="gcard tier" data-reveal=""><div class="gcard-in">
+        <p class="tier-name"><span>Starter · Landing page</span></p>
+        <p class="price">$799<small>Pagamento unico · 7 giorni</small></p>
+        <p class="tier-d">Una pagina efficace che porta a una sola azione: una chiamata, una prenotazione o una richiesta di preventivo. Ideale per artigiani e negozi locali.</p>
+        <ul class="feats">
+          <li><svg class="i"><use href="#i-check"></use></svg>Design su misura, niente template</li>
+          <li><svg class="i"><use href="#i-check"></use></svg>Pensata per smartphone e responsive</li>
+          <li><svg class="i"><use href="#i-check"></use></svg>Modulo di contatto + Google Maps</li>
+          <li><svg class="i"><use href="#i-check"></use></svg>SEO di base</li>
+          <li><svg class="i"><use href="#i-check"></use></svg>2 giri di modifiche</li>
+        </ul>
+        <a class="btn cta" href="#quote" data-package="Landing page — $799">Inizia</a>
+      </div></div>
+      <div class="gcard tier dark" data-reveal="" data-delay=".1"><div class="gcard-in">
+        <p class="tier-name"><span>Business · Sito completo</span><span class="badge">Il più scelto</span></p>
+        <p class="price">$1,997<small>Pagamento unico · 7 giorni</small></p>
+        <p class="tier-d">Un sito premium completo: Home, Chi siamo, Servizi, Galleria, Contatti. Per ristoranti, studi legali e immobiliari.</p>
+        <ul class="feats">
+          <li><svg class="i"><use href="#i-check"></use></svg>5–8 pagine totalmente su misura</li>
+          <li><svg class="i"><use href="#i-check"></use></svg>Sistema di prenotazioni</li>
+          <li><svg class="i"><use href="#i-check"></use></svg>SEO completa su ogni pagina</li>
+          <li><svg class="i"><use href="#i-check"></use></svg>Google Analytics + Search Console</li>
+          <li><svg class="i"><use href="#i-check"></use></svg>Modifiche illimitate fino all'approvazione</li>
+          <li><svg class="i"><use href="#i-check"></use></svg>Formazione di 30 minuti</li>
+        </ul>
+        <a class="btn cta" href="#quote" data-package="Sito multipagina — $1,997">Inizia <svg class="i"><use href="#i-chev"></use></svg></a>
+      </div></div>
+      <div class="gcard tier" data-reveal="" data-delay=".2"><div class="gcard-in">
+        <p class="tier-name"><span>Premium + Negozio</span></p>
+        <p class="price">$2,997<small>Pagamento unico · 10 giorni</small></p>
+        <p class="tier-d">Tutto il piano Business più un negozio Shopify o WooCommerce: ordini online, vendita di prodotti o prenotazione di appuntamenti.</p>
+        <ul class="feats">
+          <li><svg class="i"><use href="#i-check"></use></svg>Tutto il piano Business</li>
+          <li><svg class="i"><use href="#i-check"></use></svg>Fino a 20 prodotti caricati</li>
+          <li><svg class="i"><use href="#i-check"></use></svg>Pagamenti con Stripe</li>
+          <li><svg class="i"><use href="#i-check"></use></svg>Recupero dei carrelli abbandonati</li>
+          <li><svg class="i"><use href="#i-check"></use></svg>Conferme d'ordine via email</li>
+        </ul>
+        <a class="btn cta" href="#quote" data-package="Negozio online — $2,997">Inizia</a>
+      </div></div>
+    </div>
+    <div class="gcard care" data-reveal=""><div class="gcard-in">
+      <div>
+        <p class="tier-name"><span>Continuativo · Piano di manutenzione mensile</span></p>
+        <p class="tier-d" style="max-width:560px">2 ore di modifiche al mese, monitoraggio di sicurezza e velocità, un report mensile di analytics e assistenza prioritaria con risposta entro 24 ore.</p>
+      </div>
+      <p class="care-p">$297<small>/ mese · disdici quando vuoi</small></p>
+    </div></div>
+  </section>
+
+  <!-- INDUSTRIES -->
+  <section id="industries" class="sec" aria-labelledby="ind-h">
+    <div class="sec-head">
+      <p class="label" data-reveal="">[ 08 — Siti per settore ]</p>
+      <h2 id="ind-h" class="h-xl" data-reveal="" data-delay=".1">Conosciamo il tuo<br>settore a fondo.</h2>
+    </div>
+    <ul class="chips" style="list-style:none;padding:0;margin:0" data-reveal="" data-delay=".15">
+      <li class="chip">Ristoranti <span>Media $1,200</span></li>
+      <li class="chip">Studi legali <span>Media $2,500</span></li>
+      <li class="chip">Immobiliari <span>Media $1,800</span></li>
+      <li class="chip">Imprese edili <span>Media $999</span></li>
+      <li class="chip">Dentisti e studi medici <span>Media $2,200</span></li>
+      <li class="chip">Centri estetici <span>Media $1,500</span></li>
+      <li class="chip">Palestre e fitness <span>Media $1,200</span></li>
+      <li class="chip">Officine e servizi auto <span>Media $899</span></li>
+    </ul>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section id="work" class="sec" aria-labelledby="work-h">
+    <div class="sec-head">
+      <p class="label" data-reveal="">[ 09 — Clienti ]</p>
+      <h2 id="work-h" class="h-xl" data-reveal="" data-delay=".1">I risultati<br>parlano da soli.</h2>
+    </div>
+    <div class="quotes">
+      <figure class="gcard quote" style="margin:0" data-reveal=""><div class="gcard-in"><q>Da zero presenza online a 3–5 richieste di prenotazione a settimana solo dal sito. I $1,200 spesi meglio di sempre.</q><figcaption class="who">Marco Rossi<span>Grande Pizza NYC · Ristorante</span></figcaption></div></figure>
+      <figure class="gcard quote" style="margin:0" data-reveal="" data-delay=".1"><div class="gcard-in"><q>Il mio vecchio sito sembrava del 2009. Ora i clienti lo citano già alla prima chiamata. Vale ogni dollaro.</q><figcaption class="who">James Morris<span>Morris Law Group · Atlanta</span></figcaption></div></figure>
+      <figure class="gcard quote" style="margin:0" data-reveal="" data-delay=".2"><div class="gcard-in"><q>Consegnato in 6 giorni. È in prima pagina per le imprese edili della mia città. Ricevo 2–3 contatti a settimana senza pagare pubblicità.</q><figcaption class="who">Derek Chen<span>Peak Contractors · Los Angeles</span></figcaption></div></figure>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="sec" aria-labelledby="faq-h">
+    <div class="sec-head">
+      <p class="label" data-reveal="">[ 10 — FAQ ]</p>
+      <h2 id="faq-h" class="h-xl" data-reveal="" data-delay=".1">Domande<br>frequenti.</h2>
+    </div>
+    <div class="faq-wrap">
+      <div class="faq" data-reveal="">
+        <details><summary>Cosa significa davvero “umano + IA”?<svg class="i"><use href="#i-plus"></use></svg></summary><p>Simon cura strategia, gusto e direzione di ogni progetto. L'IA si occupa della produzione (codice, immagini, video e animazioni), così ottieni un lavoro da studio in giorni invece che in settimane, controllato da una persona a ogni passo.</p></details>
+        <details><summary>Posso usare il video con IA per scopi commerciali?<svg class="i"><use href="#i-plus"></use></svg></summary><p>Sì. Ricevi i file finali per spot, social e sito del tuo brand. Usiamo solo strumenti i cui termini consentono l'uso commerciale e non imitiamo mai persone reali o altri brand.</p></details>
+        <details><summary>Avrò davvero il mio sito in 7 giorni?<svg class="i"><use href="#i-plus"></use></svg></summary><p>Sì: 7 giorni lavorativi da quando riceviamo il tuo brief. Se mai ritardassimo per motivi nostri, ti rimborsiamo $100 per ogni giorno di ritardo.</p></details>
+        <details><summary>Servono competenze tecniche?<svg class="i"><use href="#i-plus"></use></svg></summary><p>Nessuna. Compili un brief di 10 domande sulla tua attività e pensiamo noi a tutto: design, testi, hosting, collegamento del dominio e configurazione. Tu approvi solo il risultato.</p></details>
+        <details><summary>E se non mi piace il risultato?<svg class="i"><use href="#i-plus"></use></svg></summary><p>Non paghi un solo dollaro finché non approvi il design. Business e Premium includono modifiche illimitate; Starter include 2 giri. Se dopo le modifiche non sei davvero soddisfatto, ti rimborsiamo al 100%.</p></details>
+        <details><summary>Chi scrive i testi?<svg class="i"><use href="#i-plus"></use></svg></summary><p>Noi. Ci dai le informazioni chiave nel brief e scriviamo tutti i testi, i titoli e le call to action. Se preferisci, puoi anche mandarci i tuoi testi.</p></details>
+        <details><summary>Il mio sito comparirà su Google?<svg class="i"><use href="#i-plus"></use></svg></summary><p>Ogni sito include la SEO on-page: meta title, descrizioni, struttura dei titoli, testi alternativi delle immagini e dati strutturati. Business e Premium includono Google Analytics e Search Console.</p></details>
+        <details><summary>Cosa succede quando il sito è online?<svg class="i"><use href="#i-plus"></use></svg></summary><p>Il sito è completamente tuo. Ti consegniamo tutte le credenziali e un video tutorial. Puoi aggiungere il piano di manutenzione mensile a $297/mese per aggiornamenti, monitoraggio e assistenza.</p></details>
+      </div>
+      <div class="gcard guar" data-reveal="" data-delay=".15"><div class="gcard-in">
+        <p class="label">[ Garanzia ]</p>
+        <h3>La garanzia di 30 giorni.</h3>
+        <p>Non paghi un solo dollaro finché non approvi il design. Se dopo le modifiche non sei del tutto soddisfatto, per qualsiasi motivo, ti rimborsiamo il 100%. Ogni progetto, sempre.</p>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- QUOTE -->
+  <section id="quote" class="sec" aria-labelledby="quote-h">
+    <div class="sec-head">
+      <p class="label" data-reveal="">[ 11 — Inizia un progetto ]</p>
+      <h2 id="quote-h" class="h-xl" data-reveal="" data-delay=".1">Hai un'idea?<br>Realizziamola.</h2>
+      <p class="body-lg" data-reveal="" data-delay=".2">Un sito, uno spot con IA, una serie tutta tua: raccontaci cosa hai in mente. Preventivo su misura in 24 ore. Niente chiamate, nessuna pressione.</p>
+    </div>
+    <div class="gcard form-card" data-reveal="" data-delay=".1"><div class="gcard-in">
+      <form id="qform" novalidate="">
+        <div class="fgrid">
+          <div class="field"><label for="f-name">Il tuo nome *</label><input id="f-name" name="name" autocomplete="name" required="" placeholder="Mario Rossi"></div>
+          <div class="field"><label for="f-biz">Nome dell'attività</label><input id="f-biz" name="business" autocomplete="organization" placeholder="Ristorante Rossi"></div>
+          <div class="field"><label for="f-email">Email *</label><input id="f-email" name="email" type="email" autocomplete="email" required="" placeholder="mario@tuaattivita.it"></div>
+          <div class="field"><label for="f-ind">Il tuo settore *</label>
+            <select id="f-ind" name="industry" required="">
+              <option value="">Scegli il tuo settore…</option>
+              <option>Ristorante / Food &amp; Beverage</option><option>Studio legale / Servizi legali</option><option>Immobiliare</option>
+              <option>Impresa edile / Costruzioni</option><option>Dentista / Medico</option><option>Centro estetico / Bellezza</option>
+              <option>Palestra / Fitness</option><option>Servizi auto</option><option>Brand / E-commerce</option><option>Creator / Media</option><option>Altro</option>
+            </select></div>
+          <div class="field"><label for="f-pkg">Di cosa hai bisogno?</label>
+            <select id="f-pkg" name="package">
+              <option value="">Scegli un servizio…</option>
+              <option>Landing page — $799</option><option>Sito multipagina — $1,997</option><option>Negozio online — $2,997</option><option>Video e spot con IA</option><option>Serie e personaggi con IA</option><option>Non lo so ancora, mi serve un consiglio</option>
+            </select></div>
+          <div class="field"><label for="f-budget">Il tuo budget</label>
+            <select id="f-budget" name="budget">
+              <option value="">Scegli una fascia…</option>
+              <option>Meno di $1,000</option><option>$1,000–$2,500</option><option>$2,500–$5,000</option><option>$5,000+</option><option>Non so</option>
+            </select></div>
+          <div class="field full"><label for="f-time">Per quando ti serve?</label>
+            <select id="f-time" name="timeline">
+              <option value="">Scegli i tempi…</option>
+              <option>Il prima possibile</option><option>Entro 2 settimane</option><option>Entro un mese</option><option>Nessuna fretta, sto pianificando</option>
+            </select></div>
+          <div class="field full"><label for="f-msg">Raccontaci il tuo progetto</label><textarea id="f-msg" name="message" rows="4" placeholder="Cosa vuoi creare? Un sito, un video, un personaggio: condividi link o riferimenti se ne hai."></textarea></div>
+          <input type="hidden" name="_subject" value="New project request — ferrarastudio.net">
+          <input class="hp" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
+        </div>
+        <div class="form-foot">
+          <button class="btn solid" type="submit" id="f-submit">Invia la richiesta <svg class="i"><use href="#i-chev"></use></svg></button>
+          <p class="form-note">I tuoi dati restano privati. Preventivo su misura in 24 ore.</p>
+          <p id="form-status" role="status" aria-live="polite"></p>
+        </div>
+      </form>
+    </div></div>
+  </section>
+</main>
+
+<footer aria-labelledby="f-h">
+  <div class="bloom a" aria-hidden="true"></div>
+  <div class="bloom b" aria-hidden="true"></div>
+  <div class="marquee" aria-hidden="true">
+    <div class="track">
+      <span>Gusto umano</span><span>Velocità IA</span><span>Siti web</span><span>Video IA</span><span>Serie originali</span>
+      <span>Gusto umano</span><span>Velocità IA</span><span>Siti web</span><span>Video IA</span><span>Serie originali</span>
+    </div>
+  </div>
+  <div class="f-body">
+    <div class="f-grid">
+      <div class="c5" data-fade="">
+        <p class="f-label">[ Creiamo insieme ]</p>
+        <h2 id="f-h" class="f-h">Un umano.<br>Tante IA.<br>Il tuo progetto.</h2>
+        <a class="f-cta" href="#quote">Inizia un progetto <span class="orb"><svg class="i"><use href="#i-upright"></use></svg></span></a>
+      </div>
+      <div class="c7 f-cols">
+        <div class="f-col" data-fade=""><h3>Studio</h3><ul>
+          <li><a href="#services">Servizi<svg class="i"><use href="#i-upright"></use></svg></a></li>
+          <li><a href="#process">Processo<svg class="i"><use href="#i-upright"></use></svg></a></li>
+          <li><a href="#pricing">Prezzi<svg class="i"><use href="#i-upright"></use></svg></a></li>
+          <li><a href="#work">Clienti<svg class="i"><use href="#i-upright"></use></svg></a></li>
+          <li><a href="#faq">FAQ<svg class="i"><use href="#i-upright"></use></svg></a></li>
+        </ul></div>
+        <div class="f-col" data-fade="" data-delay=".08"><h3>Servizi</h3><ul>
+          <li><a href="#pricing">Siti web<svg class="i"><use href="#i-upright"></use></svg></a></li>
+          <li><a href="#services">Video e spot con IA<svg class="i"><use href="#i-upright"></use></svg></a></li>
+          <li><a href="#services">Serie con IA<svg class="i"><use href="#i-upright"></use></svg></a></li>
+          <li><a href="#industries">Settori<svg class="i"><use href="#i-upright"></use></svg></a></li>
+        </ul></div>
+        <div class="f-col" data-fade="" data-delay=".16"><h3>Contatti</h3><ul>
+          <li><a href="#quote">Inizia un progetto<svg class="i"><use href="#i-upright"></use></svg></a></li>
+          <li data-config="booking" hidden=""><a id="book-link" href="#" target="_blank" rel="noopener">Prenota una call<svg class="i"><use href="#i-upright"></use></svg></a></li>
+          <li><a href="https://www.instagram.com/ferrarastudio.ai/" target="_blank" rel="noopener">Instagram<svg class="i"><use href="#i-upright"></use></svg></a></li>
+          <li data-config="email" hidden=""><a id="mail-link" href="#">Scrivici<svg class="i"><use href="#i-upright"></use></svg></a></li>
+        </ul></div>
+      </div>
+    </div>
+    <div class="f-bar">
+      <span class="wm">FERRARA</span><span class="bd"></span><small>© 2026 Ferrara Studio — Gusto umano. Velocità IA.</small>
+    </div>
+  </div>
+</footer>
+
+<div id="scrim"></div>
+<aside id="drawer" role="dialog" aria-modal="true" aria-labelledby="dr-title" tabindex="-1">
+  <div class="dr-top">
+    <p class="dr-title" id="dr-title"><svg class="i"><use href="#i-sliders"></use></svg>Controlli dello studio</p>
+    <button class="dr-x" id="close-drawer" type="button" aria-label="Chiudi i controlli dello studio"><svg class="i"><use href="#i-x"></use></svg></button>
+  </div>
+  <p class="dr-note">Scegli la palette delle sfere. Scorrendo, la scena diventa verde lime e poi rosa mentre si forma il cuore.</p>
+  <p class="dr-sec"><svg class="i" style="width:12px;height:12px"><use href="#i-spark"></use></svg>Palette delle sfere</p>
+  <div class="themes" id="themes"></div>
+  <div class="dr-foot">
+    <div><span>MOTORE DI RENDER</span><span>THREE.JS WEBGL</span></div>
+    <div><span>MOTORE FISICO</span><span>COLLISIONI 3D VERLET</span></div>
+    <button class="reset" id="reset-theme" type="button"><svg class="i" style="width:14px;height:14px"><use href="#i-reset"></use></svg>Ripristina</button>
+  </div>
+</aside>
+
+<script type="module">
+// Three.js is loaded dynamically below so the page still works if the CDN fails.
+let THREE = null;
+
+// ── SITE CONFIG ─ fill these in ────────────────────────────────────────
+// FORM_ENDPOINT: your Formspree URL, e.g. 'https://formspree.io/f/abcdwxyz'
+// BOOKING_URL:   your Calendly (or similar) link — hidden while empty
+// CONTACT_EMAIL: shown in the footer — hidden while empty
+const FORM_ENDPOINT = 'https://formspree.io/f/xwlvwpjd';
+const BOOKING_URL = '';
+const CONTACT_EMAIL = 'simon@ferrarastudio.net';
+const SERIES_URL = 'https://www.skool.com/mujeres-de-luz-7381/about?ref=1a68221c4f2b4f879cf0727445e131d5'; // e.g. Instagram / TikTok / YouTube link to the AI series
+
+const REDUCED_MOTION = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// ── Shared state ───────────────────────────────────────────────────────
+const control = { progress: 0, started: false };
+const mousePos = { x: 99, y: 99, isDown: false };
+
+window.addEventListener('pointermove', e => {
+  mousePos.x = (e.clientX / window.innerWidth) * 2 - 1;
+  mousePos.y = -(e.clientY / window.innerHeight) * 2 + 1;
+});
+window.addEventListener('mousedown', () => mousePos.isDown = true);
+window.addEventListener('mouseup', () => mousePos.isDown = false);
+
+// ── Background gradient by scroll stage ────────────────────────────────
+const BG = [
+  'radial-gradient(circle at center, #ffffff 0%, #ecefff 35%, #c2d1ff 100%)',
+  'radial-gradient(circle at center, #ffffff 0%, #fbffe5 38%, #e8ff9c 100%)',
+  'radial-gradient(circle at center, #ffffff 0%, #fff0f1 38%, #ffd1d5 100%)',
+  // after the scene releases, content reads on a calm white-slate studio
+  'radial-gradient(circle at center, #ffffff 0%, #f3f5fb 45%, #e3e9f8 100%)',
+];
+const bgEl = document.getElementById('bg');
+const headerEl = document.querySelector('header');
+let bgStage = -1;
+let scrollQueued = false;
+const onScroll = () => {
+  if (scrollQueued) return;
+  scrollQueued = true;
+  requestAnimationFrame(() => {
+    scrollQueued = false;
+    const vh = window.innerHeight || 1;
+    const progress = window.scrollY / vh;
+    control.progress = progress;
+    const stage = progress > 3.5 ? 3 : progress > 1.55 ? 2 : progress > 0.7 ? 1 : 0;
+    if (stage !== bgStage) { bgStage = stage; bgEl.style.background = BG[stage]; }
+    headerEl.classList.toggle('solid', progress > 3.6);
+  });
+};
+window.addEventListener('scroll', onScroll, { passive: true });
+window.addEventListener('resize', onScroll);
+onScroll();
+
+// ── Smooth wheel scroll (Lenis-style) ──────────────────────────────────
+if (!REDUCED_MOTION) {
+  let target = window.scrollY;
+  let current = window.scrollY;
+  let animating = false;
+  const maxScroll = () => document.documentElement.scrollHeight - window.innerHeight;
+  const step = () => {
+    current += (target - current) * 0.09;
+    if (Math.abs(target - current) < 0.5) { current = target; animating = false; }
+    window.scrollTo(0, current);
+    if (animating) requestAnimationFrame(step);
+  };
+  window.addEventListener('wheel', e => {
+    if (e.ctrlKey || document.body.classList.contains('drawer-open')) return;
+    e.preventDefault();
+    if (!animating) { current = window.scrollY; target = current; }
+    const unit = e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? window.innerHeight : 1;
+    target = Math.max(0, Math.min(maxScroll(), target + e.deltaY * unit * 1));
+    if (!animating) { animating = true; requestAnimationFrame(step); }
+  }, { passive: false });
+  // keyboard, scrollbar and anchor jumps: stay in sync
+  window.addEventListener('scroll', () => { if (!animating) { target = current = window.scrollY; } }, { passive: true });
+  document.addEventListener('click', e => {
+    const a = e.target.closest('a[href^="#"]');
+    if (!a) return;
+    const el = document.querySelector(a.getAttribute('href'));
+    if (!el) return;
+    e.preventDefault();
+    if (!animating) current = window.scrollY;
+    target = Math.max(0, Math.min(maxScroll(), el.getBoundingClientRect().top + window.scrollY));
+    if (!animating) { animating = true; requestAnimationFrame(step); }
+    history.replaceState(null, '', a.getAttribute('href'));
+  });
+}
+
+// ── Reveal on scroll ───────────────────────────────────────────────────
+const revealEls = document.querySelectorAll('[data-reveal],[data-fade]');
+revealEls.forEach(el => { if (el.dataset.delay) el.style.transitionDelay = el.dataset.delay + 's'; });
+if ('IntersectionObserver' in window && !REDUCED_MOTION) {
+  const io = new IntersectionObserver(entries => {
+    for (const en of entries) {
+      const tall = en.boundingClientRect.height > window.innerHeight * 0.8;
+      if (en.isIntersecting && (en.intersectionRatio >= 0.45 || (tall && en.intersectionRatio >= 0.12))) {
+        en.target.classList.add('shown');
+        io.unobserve(en.target);
+      }
+    }
+  }, { threshold: [0, 0.12, 0.45] });
+  revealEls.forEach(el => io.observe(el));
+} else {
+  revealEls.forEach(el => el.classList.add('shown'));
+}
+
+// ── Three.js gravity field ─────────────────────────────────────────────
+const container = document.getElementById('stage');
+const canvas = document.getElementById('gl');
+
+const clamp01 = (v) => (v < 0 ? 0 : v > 1 ? 1 : v);
+const smoothstep = (a, b, x) => { const t = clamp01((x - a) / (b - a)); return t * t * (3 - 2 * t); };
+const lerp = (a, b, t) => a + (b - a) * t;
+const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
+
+const getDynamicColors = (baseColor) => {
+  const hex = baseColor.toLowerCase();
+  if (hex === '#e1fc03') {
+    return { pastel: new THREE.Color('#FBFFE2'), light: new THREE.Color('#EFFE69'),
+      medium: new THREE.Color('#E1FC03'), deep: new THREE.Color('#B1E200'), glass: new THREE.Color('#DCFF32') };
+  } else if (hex === '#ffc5c2' || hex === '#ffa19e') {
+    return { pastel: new THREE.Color('#FFF5F4'), light: new THREE.Color('#FFECEB'),
+      medium: new THREE.Color('#FFA6B3'), deep: new THREE.Color('#FF4D6D'), glass: new THREE.Color('#FFA6B3') };
+  } else if (hex === '#96e5ff') {
+    return { pastel: new THREE.Color('#F0F9FF'), light: new THREE.Color('#C9F1FF'),
+      medium: new THREE.Color('#96E5FF'), deep: new THREE.Color('#2BA5FF'), glass: new THREE.Color('#98E4FF') };
+  } else if (hex === '#2f69ff') {
+    return { pastel: new THREE.Color('#ECEFFF'), light: new THREE.Color('#A8C1FF'),
+      medium: new THREE.Color('#2F69FF'), deep: new THREE.Color('#0A33BF'), glass: new THREE.Color('#4D80FF') };
+  } else if (hex === '#141414' || hex === '#000000') {
+    return { pastel: new THREE.Color('#D8D8D8'), light: new THREE.Color('#555555'),
+      medium: new THREE.Color('#242424'), deep: new THREE.Color('#0A0A0A'), glass: new THREE.Color('#1F1F1F') };
+  }
+  const c = new THREE.Color(baseColor);
+  return { pastel: c.clone().offsetHSL(0, -0.15, 0.25), light: c.clone().offsetHSL(0, -0.05, 0.12),
+    medium: c.clone(), deep: c.clone().offsetHSL(0.01, 0.1, -0.12), glass: c.clone() };
+};
+
+function createScene(ballColor, onReady) {
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(38, container.clientWidth / container.clientHeight, 0.1, 100);
+  camera.position.set(0, 0, 11);
+
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(container.clientWidth, container.clientHeight, false);
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.15;
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+  const hemiLight = new THREE.HemisphereLight(0xffffff, new THREE.Color(ballColor), 1.6);
+  scene.add(hemiLight);
+
+  const keyLight = new THREE.DirectionalLight(0xffffff, 1.4);
+  keyLight.position.set(-6, 10, 8);
+  keyLight.castShadow = true;
+  keyLight.shadow.mapSize.width = 2048;
+  keyLight.shadow.mapSize.height = 2048;
+  keyLight.shadow.camera.near = 0.5;
+  keyLight.shadow.camera.far = 30;
+  keyLight.shadow.camera.left = -8;
+  keyLight.shadow.camera.right = 8;
+  keyLight.shadow.camera.top = 8;
+  keyLight.shadow.camera.bottom = -8;
+  keyLight.shadow.bias = -0.0003;
+  keyLight.shadow.radius = 12.0;
+  scene.add(keyLight);
+
+  const rimLight = new THREE.DirectionalLight(0xffffff, 1.25);
+  rimLight.position.set(8, 7, -8);
+  scene.add(rimLight);
+
+  const frontLight = new THREE.DirectionalLight(0xffffff, 0.4);
+  frontLight.position.set(0, 0, 11);
+  scene.add(frontLight);
+
+  const sideBounceLight = new THREE.DirectionalLight(0xffffff, 0.3);
+  sideBounceLight.position.set(-9, -2, 4);
+  scene.add(sideBounceLight);
+
+  let viewportWidth = 10;
+  let viewportHeight = 6;
+  const updateFrustumBounds = () => {
+    const fovRad = THREE.MathUtils.degToRad(camera.fov);
+    viewportHeight = 2 * Math.tan(fovRad / 2) * camera.position.z;
+    viewportWidth = viewportHeight * (container.clientWidth / container.clientHeight);
+  };
+  updateFrustumBounds();
+
+  const isMobile = window.innerWidth < 768;
+  const ballCount = isMobile ? 54 : 96;
+
+  const palette = getDynamicColors(ballColor);
+  const isBlack = ['#141414', '#18181b', '#000000'].includes(ballColor.toLowerCase());
+
+  const palHero = palette;
+  const palLime = getDynamicColors('#E1FC03');
+  const palPink = getDynamicColors('#FFC5C2');
+  const ROLES = ['pastel', 'light', 'medium', 'deep', 'glass'];
+  const curPal = { pastel: new THREE.Color(), light: new THREE.Color(), medium: new THREE.Color(),
+    deep: new THREE.Color(), glass: new THREE.Color() };
+
+  const sphereGeometry = new THREE.SphereGeometry(1, 48, 48);
+  const balls = [];
+  for (let i = 0; i < ballCount; i++) {
+    let radius = 0.33;
+    const rand = Math.random();
+    if (rand < 0.3) radius = 0.27 + Math.random() * 0.12;
+    else if (rand < 0.8) radius = 0.42 + Math.random() * 0.18;
+    else radius = 0.66 + Math.random() * 0.21;
+
+    const mass = Math.pow(radius, 3);
+
+    let chosenColor = palette.medium;
+    let color = palette.medium;
+    let sphereMat;
+    let role = 'medium';
+
+    const isGlass = Math.random() < 0.22 && !isBlack;
+
+    if (isGlass) {
+      sphereMat = new THREE.MeshPhysicalMaterial({
+        color: palette.glass, roughness: 0.08, metalness: 0.0,
+        clearcoat: 1.0, clearcoatRoughness: 0.03, transmission: 0.95,
+        ior: 1.485, thickness: 2.2,
+        specularColor: new THREE.Color('#ffffff'), specularIntensity: 1.0,
+        attenuationColor: palette.pastel, attenuationDistance: 1.0,
+        emissive: palette.glass, emissiveIntensity: 0.12,
+        transparent: true,
+      });
+      color = palette.glass;
+      role = 'glass';
+    } else {
+      const colorRand = Math.random();
+      if (colorRand < 0.25) { chosenColor = palette.pastel; role = 'pastel'; }
+      else if (colorRand < 0.55) { chosenColor = palette.light; role = 'light'; }
+      else if (colorRand < 0.85) { chosenColor = palette.medium; role = 'medium'; }
+      else { chosenColor = palette.deep; role = 'deep'; }
+
+      sphereMat = new THREE.MeshPhysicalMaterial({
+        color: chosenColor, roughness: 0.44, metalness: 0.0,
+        clearcoat: 0.24, clearcoatRoughness: 0.35,
+        emissive: isBlack ? new THREE.Color('#000000') : chosenColor,
+        emissiveIntensity: isBlack ? 0.0 : 0.08,
+        transparent: true,
+      });
+      color = chosenColor;
+    }
+
+    const group = new THREE.Group();
+    const sphereMesh = new THREE.Mesh(sphereGeometry, sphereMat);
+    sphereMesh.scale.setScalar(radius);
+    sphereMesh.castShadow = true;
+    sphereMesh.receiveShadow = true;
+    group.add(sphereMesh);
+    scene.add(group);
+
+    balls.push({
+      id: i, radius, mass,
+      position: new THREE.Vector3(0, 0, 0),
+      velocity: new THREE.Vector3(),
+      meshGroup: group, sphere: sphereMesh, material: sphereMat, role, isGlass,
+      visualScale: radius, color,
+      restPosition: new THREE.Vector3(0, 0, 0),
+      shapeTarget: new THREE.Vector3(),
+      angleY: Math.random() * Math.PI * 2,
+      angleZ: 0.1 + Math.random() * 0.45,
+    });
+  }
+
+  const meanRadius = balls.reduce((sum, b) => sum + b.radius, 0) / balls.length;
+  let shapeScale = 1;
+
+  const inHeart = (x, y) => {
+    const a = x * x + y * y - 1;
+    return a * a * a - x * x * y * y * y <= 0;
+  };
+  const assignHeartTargets = () => {
+    const S = Math.min(viewportWidth * 0.30, viewportHeight * 0.27);
+    const baseCY = -viewportHeight * 0.03;
+    shapeScale = Math.max(0.3, Math.min(1, (S * 0.45 / 2.3) / meanRadius));
+    for (let i = 0; i < balls.length; i++) {
+      let x = 0, y = 0, tries = 0;
+      do {
+        x = (Math.random() * 2 - 1) * 1.25;
+        y = Math.random() * 2.55 - 1.4;
+        tries++;
+      } while (!inHeart(x, y) && tries < 60);
+      balls[i].shapeTarget.set(x * S, (y + 0.12) * S + baseCY, (Math.random() - 0.5) * 0.35);
+    }
+  };
+  assignHeartTargets();
+
+  const scatterFar = (withInwardVelocity) => {
+    const R = Math.max(viewportWidth, viewportHeight) * 1.5;
+    for (const b of balls) {
+      const a = Math.random() * Math.PI * 2;
+      const px = Math.cos(a) * R * 1.25;
+      const py = Math.sin(a) * R * 0.85;
+      const pz = (Math.random() - 0.5) * 4;
+      b.position.set(px, py, pz);
+      b.meshGroup.position.copy(b.position);
+      if (withInwardVelocity) {
+        b.velocity.set(-px, -py, -pz).normalize().multiplyScalar(0.08 + Math.random() * 0.05);
+      } else {
+        b.velocity.set(0, 0, 0);
+      }
+    }
+  };
+  scatterFar(false);
+
+  const params = {
+    gravity: 0, rebound: -0.3,
+    mouseRepelForce: 0.05, mouseRepelRadius: 4.4,
+    damping: 0.91, centerAttractForce: 0.0035, bounciness: 0.02,
+  };
+
+  const mouseProjVec = new THREE.Vector3();
+  const mouseWorld3D = new THREE.Vector3();
+  const updateMouse3D = () => {
+    if (!mousePos) return;
+    mouseProjVec.set(mousePos.x, mousePos.y, 0.5);
+    mouseProjVec.unproject(camera);
+    const dir = mouseProjVec.sub(camera.position).normalize();
+    const distance = -camera.position.z / dir.z;
+    mouseWorld3D.copy(camera.position).add(dir.multiplyScalar(distance));
+  };
+
+  let animationFrameId = 0;
+  const clock = new THREE.Clock();
+  let localStarted = false;
+  let entranceStart = 0;
+  let reportedReady = false;
+
+  const diffVec = new THREE.Vector3();
+  const collideDiff = new THREE.Vector3();
+  const relVel = new THREE.Vector3();
+  const deltaPos = new THREE.Vector3();
+  const rotAxis = new THREE.Vector3();
+  const prevMouseWorld = new THREE.Vector3();
+  let mouseSpeed = 0;
+
+  const simulateAndRender = () => {
+    animationFrameId = requestAnimationFrame(simulateAndRender);
+
+    const time = clock.getElapsedTime();
+    clock.getDelta();
+    updateMouse3D();
+
+    const ctrl = control;
+
+    if (ctrl?.started && !localStarted) {
+      localStarted = true;
+      entranceStart = time;
+      scatterFar(true);
+    }
+
+    if (!localStarted) {
+      renderer.render(scene, camera);
+      if (!reportedReady) { reportedReady = true; onReady(); }
+      return;
+    }
+
+    const progress = ctrl?.progress ?? 0;
+
+    // once every sphere has flown past the lens, stop simulating until the user scrolls back
+    if (progress > 4.2 && balls.every(b => b.position.z > camera.position.z - 0.3)) return;
+
+    const heroF = 1 - smoothstep(0.30, 0.80, progress);
+    const dropRaw = smoothstep(0.40, 0.95, progress);
+    const flyF = smoothstep(2.7, 3.45, progress);
+    const shapeF = smoothstep(1.40, 2.05, progress) * (1 - smoothstep(2.55, 3.0, progress));
+    const dropF = dropRaw * (1 - smoothstep(1.25, 1.75, progress));
+
+    const bLime = smoothstep(0.55, 1.05, progress);
+    const bPink = smoothstep(1.40, 1.95, progress);
+    for (const role of ROLES) {
+      curPal[role].copy(palHero[role]).lerp(palLime[role], bLime).lerp(palPink[role], bPink);
+    }
+    hemiLight.groundColor.copy(curPal.medium);
+
+    const entranceT = easeOutCubic(clamp01((time - entranceStart) / 2.2));
+    const attractionBoost = lerp(7.5, 1, entranceT);
+
+    const isMouseInteracting = !!mousePos &&
+      (Math.abs(mousePos.x) < 0.99 || Math.abs(mousePos.y) < 0.99);
+
+    mouseSpeed = isMouseInteracting ? mouseWorld3D.distanceTo(prevMouseWorld) : 0;
+    if (mouseSpeed > 3) mouseSpeed = 3;
+    prevMouseWorld.copy(mouseWorld3D);
+
+    let damping = 0.91;
+    damping = lerp(damping, 0.992, dropF);
+    damping = lerp(damping, 0.90, shapeF);
+    damping = lerp(damping, 0.985, flyF);
+
+    const camZ = camera.position.z;
+    const clusterActive = Math.max(heroF, entranceT < 1 ? 1 : 0);
+
+    // 1. ACCELERATIONS
+    for (let i = 0; i < balls.length; i++) {
+      const b = balls[i];
+
+      if (heroF > 0.01) {
+        b.velocity.x += Math.sin(time * 0.4 + b.id * 1.5) * 0.0004 * b.radius * heroF;
+        b.velocity.y += Math.cos(time * 0.5 + b.id * 1.2) * 0.0004 * b.radius * heroF;
+        b.velocity.z += Math.sin(time * 0.35 + b.id) * 0.0001 * heroF;
+      }
+
+      const clusterStrength = params.centerAttractForce * attractionBoost * clusterActive;
+      if (clusterStrength > 0.00001) {
+        b.velocity.x += (0 - b.position.x) * clusterStrength * 0.38;
+        b.velocity.y += (0 - b.position.y) * clusterStrength * 1.85;
+        b.velocity.z += (0 - b.position.z) * clusterStrength * 1.8;
+      }
+
+      if (dropF > 0.001) {
+        b.velocity.y -= 0.011 * dropF;
+      }
+
+      if (shapeF > 0.001) {
+        const k = 0.06 * shapeF;
+        b.velocity.x += (b.shapeTarget.x - b.position.x) * k;
+        b.velocity.y += (b.shapeTarget.y - b.position.y) * k;
+        b.velocity.z += (b.shapeTarget.z - b.position.z) * k;
+      }
+
+      if (flyF > 0.001) {
+        const stagger = (b.id * 0.6180339887) % 1;
+        const local = smoothstep(stagger * 0.55, stagger * 0.55 + 0.45, flyF);
+        b.velocity.z += 0.05 * local;
+        b.velocity.x += b.position.x * 0.006 * local;
+        b.velocity.y += b.position.y * 0.006 * local;
+      }
+
+      if (mousePos && isMouseInteracting) {
+        diffVec.subVectors(b.position, mouseWorld3D);
+        const rawDist = diffVec.length();
+        const down = mousePos.isDown;
+        const activeRepelRadius = down ? params.mouseRepelRadius * 1.4 : params.mouseRepelRadius;
+        const activeRepelForce = down ? params.mouseRepelForce * 1.7 : params.mouseRepelForce;
+        if (rawDist < activeRepelRadius && rawDist > 0.0001) {
+          const ratio = rawDist / activeRepelRadius;
+          const smoothFactor = 1.0 - (ratio * ratio * (3.0 - 2.0 * ratio));
+          const speedBoost = 1 + mouseSpeed * 3.2;
+          const push = smoothFactor * activeRepelForce * speedBoost;
+          diffVec.normalize();
+          diffVec.z *= 0.12;
+          diffVec.normalize();
+          b.velocity.addScaledVector(diffVec, push);
+        }
+      }
+
+      b.velocity.multiplyScalar(damping);
+      b.position.addScaledVector(b.velocity, 1);
+
+      const c = b.isGlass ? curPal.glass : curPal[b.role];
+      b.material.color.copy(c);
+      if (!isBlack) b.material.emissive.copy(c);
+
+      b.material.opacity = flyF > 0.001
+        ? 1 - smoothstep(camZ - 2.6, camZ - 0.3, b.position.z)
+        : 1;
+
+      const targetVis = b.radius * (1 - (1 - shapeScale) * shapeF);
+      b.visualScale += (targetVis - b.visualScale) * 0.12;
+      b.sphere.scale.setScalar(b.visualScale);
+    }
+
+    // 2. PAIRWISE COLLISIONS
+    const collideScale = 0.28 * (1 - 0.93 * shapeF) * (1 - flyF);
+    const subSteps = 4;
+    for (let step = 0; step < subSteps; step++) {
+      for (let i = 0; i < balls.length; i++) {
+        for (let j = i + 1; j < balls.length; j++) {
+          const b1 = balls[i];
+          const b2 = balls[j];
+          collideDiff.subVectors(b2.position, b1.position);
+          const dist = collideDiff.length();
+          const minDist = b1.visualScale + b2.visualScale;
+          if (dist < minDist && dist > 0.001) {
+            const overlap = minDist - dist;
+            collideDiff.multiplyScalar(1 / dist);
+            const totalMass = b1.mass + b2.mass;
+            const ratio1 = b2.mass / totalMass;
+            const ratio2 = b1.mass / totalMass;
+            b1.position.addScaledVector(collideDiff, -overlap * ratio1 * collideScale);
+            b2.position.addScaledVector(collideDiff, overlap * ratio2 * collideScale);
+
+            relVel.subVectors(b2.velocity, b1.velocity);
+            const velAlongNormal = relVel.dot(collideDiff);
+            if (velAlongNormal < -0.0001) {
+              const impulse = -(1 + params.bounciness) * velAlongNormal / (1 / b1.mass + 1 / b2.mass);
+              b1.velocity.addScaledVector(collideDiff, -impulse / b1.mass);
+              b2.velocity.addScaledVector(collideDiff, impulse / b2.mass);
+            }
+          }
+        }
+      }
+    }
+
+    // 3. VIEWPORT WALLS + BOUNCY FLOOR
+    const borderPad = 0.2;
+    const xBound = viewportWidth / 2 - borderPad;
+    const topY = viewportHeight / 2 - 0.05;
+    const floorY = -viewportHeight / 2 + 0.05;
+    const zBound = 2.0;
+    const restitution = 0.30 + 0.35 * dropF;
+
+    const contain = flyF < 0.5;
+    const zContain = flyF < 0.02;
+
+    for (let i = 0; i < balls.length; i++) {
+      const b = balls[i];
+      const r = b.visualScale;
+
+      if (contain) {
+        if (b.position.x < -xBound - r) { b.position.x = -xBound - r; b.velocity.x *= params.rebound; }
+        else if (b.position.x > xBound + r) { b.position.x = xBound + r; b.velocity.x *= params.rebound; }
+
+        if (b.position.y - r < floorY) {
+          b.position.y = floorY + r;
+          if (b.velocity.y < 0) b.velocity.y = -b.velocity.y * restitution;
+          if (dropF > 0.3) { b.velocity.x *= 0.86; b.velocity.z *= 0.86; }
+        }
+        if (b.position.y + r > topY) {
+          b.position.y = topY - r;
+          if (b.velocity.y > 0) b.velocity.y *= params.rebound;
+        }
+      }
+
+      if (zContain) {
+        if (b.position.z < -zBound) { b.position.z = -zBound; b.velocity.z *= params.rebound; }
+        else if (b.position.z > zBound) { b.position.z = zBound; b.velocity.z *= params.rebound; }
+      }
+
+      deltaPos.copy(b.position).sub(b.meshGroup.position);
+      if (deltaPos.lengthSq() > 0.000001) {
+        rotAxis.set(deltaPos.y, -deltaPos.x, 0).normalize();
+        const rotAngle = (deltaPos.length() / b.radius) * 0.95;
+        b.meshGroup.rotateOnWorldAxis(rotAxis, rotAngle);
+      }
+      b.meshGroup.position.copy(b.position);
+    }
+
+    renderer.render(scene, camera);
+    if (!reportedReady) { reportedReady = true; onReady(); }
+  };
+
+  const handleResize = () => {
+    const width = container.clientWidth;
+    const height = container.clientHeight;
+    camera.aspect = width / height;
+    camera.updateProjectionMatrix();
+    renderer.setSize(width, height, false);
+    updateFrustumBounds();
+    assignHeartTargets();
+  };
+  const ro = new ResizeObserver(handleResize);
+  ro.observe(container);
+
+  simulateAndRender();
+
+  return () => {
+    cancelAnimationFrame(animationFrameId);
+    ro.disconnect();
+    sphereGeometry.dispose();
+    for (const b of balls) b.material.dispose();
+    renderer.dispose();
+  };
+}
+
+// ── Loader ─────────────────────────────────────────────────────────────
+const ldFill = document.getElementById('ld-fill');
+const ldCount = document.getElementById('ld-count');
+const ldStatus = document.getElementById('ld-status');
+const loader = document.getElementById('loader');
+let sceneReady = false;
+let loaderValue = 0;
+let lastT = performance.now();
+let leaving = false;
+
+const onDone = () => {
+  control.started = true;
+  document.body.classList.add('revealed');
+  loader.classList.add('gone');
+};
+
+const loaderStart = performance.now();
+const loaderTick = (now) => {
+  if (!sceneReady && now - loaderStart > 10000) sceneReady = true; // never trap visitors behind the loader
+  const dt = Math.min(0.05, (now - lastT) / 1000);
+  lastT = now;
+  if (!sceneReady) loaderValue += (92 - loaderValue) * 1.7 * dt;
+  else {
+    loaderValue += (100 - loaderValue) * 6 * dt;
+    if (loaderValue >= 99.4) loaderValue = 100;
+  }
+  const v = Math.round(loaderValue);
+  ldFill.style.width = loaderValue + '%';
+  ldCount.textContent = String(v).padStart(3, '0') + '%';
+  ldStatus.textContent = v >= 100 ? 'Entrata in orbita' : 'Calibrazione del campo gravitazionale';
+  if (loaderValue >= 99.9 && sceneReady && !leaving) {
+    leaving = true;
+    setTimeout(() => loader.classList.add('leaving'), 140);
+    setTimeout(onDone, 140 + 520);
+    return;
+  }
+  requestAnimationFrame(loaderTick);
+};
+requestAnimationFrame(loaderTick);
+
+// ── Scene lifecycle + palette drawer ───────────────────────────────────
+const THEMES = [
+  { id: 'roseGold', name: 'Royal Blue & Pearl', desc: 'Sfere cobalto che fluttuano su sfumature bianco ardesia.', primary: '#2F69FF', ball: '#2F69FF' },
+  { id: 'pinkBlush', name: 'Rose Blush & Crème', desc: 'Rosa caramella e tocchi di fragola in uno studio perla.', primary: '#FFA6B3', ball: '#FFC5C2' },
+  { id: 'voltLime', name: 'Volt Lime & Slate', desc: 'Verde lime neon su un orizzonte bianco ardesia.', primary: '#E1FC03', ball: '#E1FC03' },
+  { id: 'arcticBlue', name: 'Arctic Sky & Crystal', desc: 'Azzurri artici con riflessi di vetro traslucido.', primary: '#96E5FF', ball: '#96E5FF' },
+];
+let disposeScene = null;
+const buildScene = (ballColor) => {
+  if (disposeScene) disposeScene();
+  try {
+    if (!THREE) throw new Error('three.js failed to load');
+    disposeScene = createScene(ballColor, () => { sceneReady = true; });
+  } catch (err) {
+    // No WebGL: keep the page fully usable without the field.
+    console.warn('WebGL unavailable, continuing without the gravity field.', err);
+    container.style.display = 'none';
+    disposeScene = null;
+    sceneReady = true;
+  }
+};
+
+const themesEl = document.getElementById('themes');
+let selected = 'roseGold';
+const renderThemes = () => {
+  themesEl.innerHTML = '';
+  for (const t of THEMES) {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'theme';
+    b.setAttribute('aria-pressed', String(t.id === selected));
+    b.innerHTML = `<span class="tn">${t.name}<span class="sw" style="background:${t.primary}"></span></span><span class="td" style="display:block">${t.desc}</span>`;
+    b.addEventListener('click', () => selectTheme(t.id));
+    themesEl.appendChild(b);
+  }
+};
+const selectTheme = (id) => {
+  if (id === selected) return;
+  selected = id;
+  renderThemes();
+  buildScene(THEMES.find(t => t.id === id).ball);
+};
+renderThemes();
+document.getElementById('reset-theme').addEventListener('click', () => selectTheme('roseGold'));
+
+const drawer = document.getElementById('drawer');
+const scrim = document.getElementById('scrim');
+const openBtn = document.getElementById('open-drawer');
+const openDrawer = () => {
+  drawer.classList.add('open'); scrim.classList.add('open');
+  document.body.classList.add('drawer-open');
+  openBtn.setAttribute('aria-expanded', 'true');
+  drawer.focus();
+};
+const closeDrawer = () => {
+  drawer.classList.remove('open'); scrim.classList.remove('open');
+  document.body.classList.remove('drawer-open');
+  openBtn.setAttribute('aria-expanded', 'false');
+  openBtn.focus();
+};
+openBtn.addEventListener('click', openDrawer);
+document.getElementById('close-drawer').addEventListener('click', closeDrawer);
+scrim.addEventListener('click', closeDrawer);
+document.addEventListener('keydown', e => {
+  if (!drawer.classList.contains('open')) return;
+  if (e.key === 'Escape') { closeDrawer(); return; }
+  if (e.key === 'Tab') {
+    const f = drawer.querySelectorAll('button');
+    const first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && (document.activeElement === first || document.activeElement === drawer)) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  }
+});
+
+// ── Contact config ─────────────────────────────────────────────────────
+if (BOOKING_URL) {
+  document.getElementById('book-link').href = BOOKING_URL;
+  document.querySelector('[data-config="booking"]').hidden = false;
+}
+if (SERIES_URL) {
+  const sl = document.getElementById('series-link');
+  sl.href = SERIES_URL;
+  sl.hidden = false;
+}
+if (CONTACT_EMAIL) {
+  document.getElementById('mail-link').href = 'mailto:' + CONTACT_EMAIL;
+  document.querySelector('[data-config="email"]').hidden = false;
+}
+
+// Language switcher: remember the choice (read by the redirect snippet in <head>)
+document.querySelectorAll('.lang a[data-lang]').forEach(a => a.addEventListener('click', () => {
+  try { localStorage.setItem('lang', a.dataset.lang); } catch (e) {}
+}));
+
+// Pricing buttons preselect the package
+document.querySelectorAll('[data-package]').forEach(a => a.addEventListener('click', () => {
+  document.getElementById('f-pkg').value = a.dataset.package;
+}));
+
+// ── Quote form ─────────────────────────────────────────────────────────
+const form = document.getElementById('qform');
+const status = document.getElementById('form-status');
+const submitBtn = document.getElementById('f-submit');
+const setStatus = (msg, kind) => { status.textContent = msg; status.className = kind || ''; };
+
+form.addEventListener('submit', async e => {
+  e.preventDefault();
+  if (!form.checkValidity()) {
+    const bad = form.querySelector(':invalid');
+    setStatus('Inserisci il tuo nome, un\'email valida e il tuo settore.', 'err');
+    bad.setAttribute('aria-invalid', 'true');
+    bad.focus();
+    return;
+  }
+  form.querySelectorAll('[aria-invalid]').forEach(el => el.removeAttribute('aria-invalid'));
+  if (!FORM_ENDPOINT) {
+    const alt = CONTACT_EMAIL ? ` Scrivici a ${CONTACT_EMAIL}.` : '';
+    setStatus('Stiamo collegando il modulo proprio ora: la tua richiesta non è stata inviata.' + alt, 'err');
+    return;
+  }
+  submitBtn.disabled = true;
+  setStatus('Invio in corso…');
+  try {
+    const res = await fetch(FORM_ENDPOINT, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
+    if (!res.ok) {
+      const data = await res.json().catch(() => ({}));
+      const msg = (data.errors || []).map(er => er.message).filter(Boolean).join(' ');
+      throw new Error(msg || 'HTTP ' + res.status);
+    }
+    form.reset();
+    setStatus('Richiesta ricevuta! Ti invieremo il preventivo su misura entro 24 ore.', 'ok');
+  } catch (err) {
+    const detail = err && err.message && !err.message.startsWith('HTTP') ? ' (' + err.message + ')' : '';
+    setStatus('Si è verificato un problema con l\'invio della richiesta' + detail + '. Riprova oppure scrivici a ' + CONTACT_EMAIL + '.', 'err');
+  } finally {
+    submitBtn.disabled = false;
+  }
+});
+
+// ── Boot the scene last, so the rest of the page never waits on the CDN ─
+try { THREE = await import('three'); } catch (err) { console.warn(err); }
+buildScene(THEMES.find(t => t.id === selected).ball);
+</script>
+
+
+</body></html>

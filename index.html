@@ -7,6 +7,15 @@
 <meta name="description" content="Ferrara Studio is Simon + a team of AIs. We build websites, AI video and original AI series for brands — human taste, AI speed. Websites live in 7 days, from $799.">
 <meta name="theme-color" content="#0E2AC5">
 <link rel="canonical" href="https://ferrarastudio.net/">
+<link rel="alternate" hreflang="en" href="https://ferrarastudio.net/">
+<link rel="alternate" hreflang="es" href="https://ferrarastudio.net/es/">
+<link rel="alternate" hreflang="it" href="https://ferrarastudio.net/it/">
+<link rel="alternate" hreflang="x-default" href="https://ferrarastudio.net/">
+<script data-i18n-redirect>
+// First visit from a Spanish/Italian browser → its language. A language picked in the switcher always wins.
+(function(){try{var p=location.pathname,s=localStorage.getItem('lang'),b=(navigator.language||'').slice(0,2).toLowerCase(),l=s||b;
+if((p==='/'||p==='/index.html')&&s!=='en'&&(l==='es'||l==='it'))location.replace('/'+l+'/'+location.hash);}catch(e){}})();
+</script>
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://ferrarastudio.net/">
 <meta property="og:title" content="Ferrara Studio — Human taste. AI speed.">
@@ -105,6 +114,15 @@ header>*{pointer-events:auto;}
 .pill{display:inline-flex;align-items:center;gap:12px;padding:6px 6px 6px 20px;border-radius:99px;font:500 13px var(--font-raleway);color:var(--ink);
   background:rgba(255,255,255,.12);-webkit-backdrop-filter:blur(24px);backdrop-filter:blur(24px);
   border:1px solid rgba(255,255,255,.1);border-top-color:rgba(255,255,255,.9);border-bottom-color:rgba(255,255,255,.85);box-shadow:var(--glass-shadow);}
+.lang{display:flex;align-items:center;gap:2px;padding:4px;border-radius:99px;border:1px solid rgba(255,255,255,.4);background:rgba(255,255,255,.2);
+  -webkit-backdrop-filter:blur(24px);backdrop-filter:blur(24px);box-shadow:var(--glass-shadow);}
+.lang a{min-width:30px;height:30px;padding:0 6px;border-radius:99px;display:grid;place-items:center;font:600 11px var(--font-mono);letter-spacing:.06em;color:var(--n700);transition:background .2s,color .2s;}
+.lang a:hover{background:rgba(255,255,255,.5);}
+.lang a[aria-current="page"]{background:var(--ink);color:#fff;}
+.hdr-r .pill{white-space:nowrap;}
+@media (max-width:520px){.hdr-r .pill{font-size:0;gap:0;padding:4px;}}
+@media (min-width:768px) and (max-width:1180px){.nav{gap:22px;font-size:13px;}}
+@media (min-width:768px) and (max-width:960px){.hdr-r .pill{font-size:0;gap:0;padding:4px;}}
 .orb{width:32px;height:32px;border-radius:99px;display:grid;place-items:center;background:var(--orb);color:#fff;transition:transform .3s var(--ease);}
 .pill:hover .orb{transform:scale(1.05);}
 .orb svg.i{width:14px;height:14px;}
@@ -389,6 +407,11 @@ footer{background:var(--ink);color:#fff;border-radius:2.5rem 2.5rem 0 0;overflow
     <a href="#quote">Contact</a>
   </nav>
   <div class="hdr-r">
+    <nav class="lang" aria-label="Language">
+      <a href="/" hreflang="en" lang="en" data-lang="en" aria-current="page">EN</a>
+      <a href="/es/" hreflang="es" lang="es" data-lang="es">ES</a>
+      <a href="/it/" hreflang="it" lang="it" data-lang="it">IT</a>
+    </nav>
     <button class="glass-btn" id="open-drawer" type="button" aria-label="Open studio controls" aria-controls="drawer" aria-expanded="false"><svg class="i"><use href="#i-sliders"/></svg></button>
     <a class="pill" href="#quote">Start a project <span class="orb"><svg class="i"><use href="#i-chev"/></svg></span></a>
   </div>
@@ -1430,6 +1453,11 @@ if (CONTACT_EMAIL) {
   document.getElementById('mail-link').href = 'mailto:' + CONTACT_EMAIL;
   document.querySelector('[data-config="email"]').hidden = false;
 }
+
+// Language switcher: remember the choice (read by the redirect snippet in <head>)
+document.querySelectorAll('.lang a[data-lang]').forEach(a => a.addEventListener('click', () => {
+  try { localStorage.setItem('lang', a.dataset.lang); } catch (e) {}
+}));
 
 // Pricing buttons preselect the package
 document.querySelectorAll('[data-package]').forEach(a => a.addEventListener('click', () => {
