@@ -1,0 +1,194 @@
+<title>Job Board App Demo</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,500;0,600;0,700;1,500&family=JetBrains+Mono:wght@500&family=Inter:wght@400;500;600&display=swap">
+<style>
+/* Layout: brand header → KPI strip → main grid (job board left, quote builder + automations right) → activity + weekly report. Dark-only by design (Ferrara navy). */
+:root{
+  --bg:#060b24; --panel:#0d1640; --panel2:#132058; --line:rgba(160,180,255,.18);
+  --fg:#eef1ff; --muted:#9aa6d6; --accent:#5b84ff; --accent2:#8aa6ff;
+  --ok:#3ecf8e; --warn:#ffb547; --hot:#ff7a7a;
+  --display:'Raleway',Georgia,serif; --body:'Inter',system-ui,-apple-system,sans-serif; --mono:'JetBrains Mono',ui-monospace,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:14.5px/1.5 var(--body);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:26px 48px;
+  background-image:radial-gradient(ellipse 70% 40% at 15% 0%,rgba(47,105,255,.22),transparent 70%)}
+.wrap{max-width:1180px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
+header{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:16px}
+.eb{font:500 12px var(--mono);letter-spacing:.28em;text-transform:uppercase;color:var(--accent2)}
+h1{margin:6px 0 0;font:600 clamp(30px,5vw,48px)/1.05 var(--display);letter-spacing:-.03em;text-wrap:balance}
+h1 em{font-style:italic;font-weight:500;color:var(--accent2)}
+.lede{margin:8px 0 0;max-width:64ch;color:var(--muted)}
+.note{font:500 11px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--warn)}
+.hbtns{display:flex;gap:10px;flex-wrap:wrap}
+button{font:600 14px var(--body);cursor:pointer;border-radius:10px;border:1px solid var(--line);background:var(--panel);color:var(--fg);padding:9px 14px}
+button:hover{border-color:var(--accent2)}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--accent2);outline-offset:2px}
+button.primary{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+@media (max-width:760px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:14px 16px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.kpi b{font:600 26px var(--display);font-variant-numeric:tabular-nums}
+.kpi span{font-size:12.5px;color:var(--muted)}
+.main{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,360px);gap:18px;align-items:start}
+@media (max-width:980px){.main{grid-template-columns:minmax(0,1fr)}}
+.board{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+@media (max-width:760px){.board{grid-template-columns:minmax(0,1fr)}}
+.col{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.col h2{margin:0;display:flex;justify-content:space-between;font:500 11px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--accent2)}
+.col h2 span{color:var(--muted)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:11px 12px;display:flex;flex-direction:column;gap:6px}
+.card.flash{border-color:var(--ok);box-shadow:0 0 0 1px var(--ok)}
+.card .t{display:flex;justify-content:space-between;gap:8px;font-weight:600}
+.card .t span{font:600 13px var(--body);font-variant-numeric:tabular-nums;color:var(--accent2)}
+.card .s{font-size:12.5px;color:var(--muted)}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font:600 11px var(--body);padding:2px 8px;border-radius:99px;background:rgba(154,166,214,.14);color:var(--muted)}
+.tag.warn{background:rgba(255,181,71,.15);color:var(--warn)}
+.tag.ok{background:rgba(62,207,142,.15);color:var(--ok)}
+.tag.hot{background:rgba(255,122,122,.15);color:var(--hot)}
+.card button{padding:6px 10px;font-size:12.5px;align-self:flex-start}
+.side{display:flex;flex-direction:column;gap:16px;min-width:0}
+.box{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px 18px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.box h3{margin:0;font:500 11px var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--accent2)}
+.form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.form .full{grid-column:1/-1}
+.f{display:flex;flex-direction:column;gap:4px;min-width:0}
+.f label{font:500 10.5px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+input,select{background:var(--bg);border:1px solid var(--line);color:var(--fg);border-radius:9px;padding:9px 10px;font:500 14px var(--body);width:100%;min-width:0}
+.total{display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid var(--line);padding-top:10px}
+.total b{font:600 28px var(--display);font-variant-numeric:tabular-nums}
+.preview{background:var(--bg);border:1px dashed var(--line);border-radius:12px;padding:10px 12px;font-size:13px;color:var(--muted);white-space:pre-line}
+.rule{display:flex;gap:10px;align-items:flex-start}
+.rule input{width:18px;height:18px;margin-top:2px;flex:none;accent-color:var(--accent)}
+.rule label{font-size:13.5px}
+.rule small{display:block;color:var(--muted);font-size:12px}
+.bottom{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px}
+@media (max-width:760px){.bottom{grid-template-columns:minmax(0,1fr)}}
+.log{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;max-height:280px;overflow-y:auto}
+.log li{display:flex;gap:10px;font-size:13.5px}
+.log time{flex:none;width:64px;font:500 11px var(--mono);color:var(--muted);padding-top:2px}
+.log .ico{flex:none}
+.report{white-space:pre-line;font-size:13.5px;color:var(--fg)}
+footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;border-top:1px solid var(--line);padding-top:18px;color:var(--muted);font-size:13.5px}
+footer b{color:var(--fg)}
+.sel{user-select:all;font-family:var(--mono);color:var(--accent2)}
+</style>
+
+<div class="wrap">
+  <header>
+    <div>
+      <div class="eb">Ferrara Studio · Custom business apps</div>
+      <h1>Your whole business, <em>one app.</em></h1>
+      <p class="lede">A web app built around how a roofing company already works: every job on one board, quotes in a minute, and the follow-ups and review requests sent automatically. Move a job and watch what happens.</p>
+      <div class="note">Demo · sample business (Lone Star Roofing) and sample customers · nothing is sent</div>
+    </div>
+    <div class="hbtns"><button type="button" id="sim">⏩ Skip ahead 3 days</button><button type="button" id="reset">Reset demo</button></div>
+  </header>
+
+  <div class="kpis">
+    <div class="kpi"><b id="kOpen">$0</b><span>in open quotes</span></div>
+    <div class="kpi"><b id="kSched">0</b><span>jobs scheduled</span></div>
+    <div class="kpi"><b id="kAuto">0</b><span>messages sent automatically</span></div>
+    <div class="kpi"><b id="kHours">0 h</b><span>admin time saved this week (est.)</span></div>
+  </div>
+
+  <div class="main">
+    <div class="board" id="board"></div>
+    <div class="side">
+      <div class="box"><h3>New quote</h3>
+        <div class="form">
+          <div class="f full"><label for="qName">Customer</label><input id="qName" value="Maria Lopez"></div>
+          <div class="f full"><label for="qAddr">Address</label><input id="qAddr" value="1180 Westgreen Blvd, Katy"></div>
+          <div class="f"><label for="qType">Job</label><select id="qType"><option value="replace">Roof replacement</option><option value="repair">Leak repair</option></select></div>
+          <div class="f"><label for="qMat">Material</label><select id="qMat"><option value="arch">Architectural shingle</option><option value="3tab">3-tab shingle</option><option value="metal">Standing-seam metal</option></select></div>
+          <div class="f"><label for="qSq">Roof size (squares)</label><input id="qSq" type="number" min="1" max="200" value="24"></div>
+          <div class="f"><label for="qTear">Tear-off layers</label><select id="qTear"><option value="1">1 layer</option><option value="2">2 layers</option><option value="0">None</option></select></div>
+        </div>
+        <div class="total"><span>Quote total</span><b id="qTotal">$0</b></div>
+        <div class="preview" id="qPrev"></div>
+        <button type="button" class="primary" id="qSend">Create quote &amp; add to board</button>
+      </div>
+      <div class="box"><h3>Automations</h3>
+        <div class="rule"><input type="checkbox" id="r1" checked><label for="r1">Quote unanswered for 3 days → send a friendly follow-up<small>Stops as soon as the customer replies or books.</small></label></div>
+        <div class="rule"><input type="checkbox" id="r2" checked><label for="r2">Job scheduled → text the customer the date and an "on my way" alert</label></div>
+        <div class="rule"><input type="checkbox" id="r3" checked><label for="r3">Job done → ask for a Google review</label></div>
+        <div class="rule"><input type="checkbox" id="r4" checked><label for="r4">Every Monday → weekly summary to the owner</label></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom">
+    <div class="box"><h3>Activity</h3><ul class="log" id="log"></ul></div>
+    <div class="box"><h3>Monday summary · sent to the owner</h3><div class="report" id="report"></div></div>
+  </div>
+
+  <footer><span>Built around your workflow in 2–3 weeks by <b>Ferrara Studio</b>. Works on phone and computer, nothing to install.</span><span><span class="sel">ferrarastudio.net</span> · <span class="sel">simon@ferrarastudio.net</span></span></footer>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const COLS=[['lead','New lead'],['quote','Quote sent'],['sched','Scheduled'],['done','Done']];
+const PRICE={arch:465,'3tab':395,metal:1050}, TEAR=95, REPAIR_BASE=650;
+const fmt=n=>'$'+Math.round(n).toLocaleString('en-US');
+const SEED=()=>({day:0,auto:0,saved:0,flash:null,jobs:[
+  {id:1,name:'James Carter',job:'Hail damage inspection',area:'Cypress',value:0,col:'lead',age:0,tags:['From AI front desk']},
+  {id:2,name:'Linda Nguyen',job:'Roof replacement · 28 sq',area:'Sugar Land',value:14250,col:'quote',age:2,tags:[]},
+  {id:3,name:'Robert Hayes',job:'Leak repair',area:'Katy',value:850,col:'quote',age:4,tags:[]},
+  {id:4,name:'Ana Torres',job:'Roof replacement · 22 sq',area:'Fulshear',value:11320,col:'sched',age:0,tags:['Thu 8:00 AM']},
+  {id:5,name:'Mike Brooks',job:'Gutter + flashing',area:'Richmond',value:1900,col:'done',age:1,tags:['Review requested']},
+ ],log:[['Mon','📥','New lead from the AI front desk: James Carter, hail damage, Cypress']]});
+let S=SEED(), nextId=6;
+const rule=n=>$('r'+n).checked;
+function addLog(icon,text){S.log.unshift([S.day===0?'Today':'Day +'+S.day,icon,text]);}
+function quote(){
+  const sq=Math.max(1,Math.min(200,+$('qSq').value||1)), type=$('qType').value, mat=$('qMat').value, tear=+$('qTear').value;
+  const total=type==='repair'?REPAIR_BASE:sq*PRICE[mat]+sq*TEAR*tear;
+  return {sq,type,mat,tear,total};
+}
+function renderQuote(){
+  const q=quote(), name=$('qName').value.trim()||'there', first=name.split(' ')[0];
+  $('qTotal').textContent=fmt(q.total);
+  const what=q.type==='repair'?'leak repair':`${q.sq}-square roof replacement (${$('qMat').selectedOptions[0].text.toLowerCase()})`;
+  $('qPrev').textContent=`Text to ${name}:\nHi ${first}, it's Lone Star Roofing. Your quote for the ${what} at ${$('qAddr').value.trim()||'your address'} is ${fmt(q.total)}. Reply YES to book a date or ask us anything.`;
+}
+function move(id){
+  const j=S.jobs.find(x=>x.id===id), i=COLS.findIndex(c=>c[0]===j.col); if(i>=COLS.length-1) return;
+  j.col=COLS[i+1][0]; j.age=0; S.flash=id;
+  if(j.col==='quote'){ if(!j.value) j.value=REPAIR_BASE; addLog('🧾',`Quote sent to ${j.name}: ${fmt(j.value)}`); S.saved+=0.5; }
+  if(j.col==='sched'){ j.tags=['Next available: Tue 9:00 AM']; if(rule(2)){S.auto++;S.saved+=0.25;addLog('📅',`Auto-text to ${j.name}: "You're booked for Tue 9:00 AM. We'll text when we're on the way."`);} }
+  if(j.col==='done'){ j.tags=[]; if(rule(3)){S.auto++;S.saved+=0.25;j.tags=['Review requested'];addLog('⭐',`Auto-text to ${j.name}: "Thanks for choosing us! Would you leave a quick Google review?"`);} }
+  render();
+}
+function skip(){
+  S.day+=3; S.flash=null;
+  S.jobs.forEach(j=>{j.age+=3;
+    if(j.col==='quote'&&j.age>=3&&!j.tags.includes('Followed up')&&rule(1)){j.tags=['Followed up'];S.auto++;S.saved+=0.25;
+      addLog('💬',`Auto follow-up to ${j.name}: "Hi ${j.name.split(' ')[0]}, just checking in on your quote. Any questions? Happy to help."`);}});
+  if(S.jobs.some(j=>j.name==='Robert Hayes'&&j.col==='quote')){const r=S.jobs.find(j=>j.name==='Robert Hayes'); if(r.tags.includes('Followed up')){r.col='sched';r.tags=['Replied YES · Fri 10:00 AM'];addLog('✅','Robert Hayes replied YES to the follow-up and booked Fri 10:00 AM');}}
+  if(rule(4)) addLog('📊','Weekly summary sent to the owner');
+  render();
+}
+function render(){
+  $('board').innerHTML=COLS.map(([k,label])=>{const js=S.jobs.filter(j=>j.col===k);
+    return `<section class="col" aria-label="${label}"><h2>${label}<span>${js.length}</span></h2>${js.map(j=>{
+      const stale=j.col==='quote'&&j.age>=3&&!j.tags.includes('Followed up');
+      const tags=[...j.tags.map(t=>`<span class="tag ${/Review|YES|booked/i.test(t)?'ok':(/Followed/.test(t)?'warn':'')}">${t}</span>`),stale?'<span class="tag hot">No reply 3+ days</span>':''].join('');
+      return `<article class="card ${S.flash===j.id?'flash':''}"><div class="t">${j.name}<span>${j.value?fmt(j.value):'—'}</span></div><div class="s">${j.job} · ${j.area}</div>${tags?`<div class="tags">${tags}</div>`:''}${k!=='done'?`<button type="button" data-id="${j.id}">Move to ${COLS[COLS.findIndex(c=>c[0]===k)+1][1]} →</button>`:''}</article>`;}).join('')}</section>`;}).join('');
+  $('board').querySelectorAll('button[data-id]').forEach(b=>b.onclick=()=>move(+b.dataset.id));
+  const open=S.jobs.filter(j=>j.col==='quote').reduce((a,j)=>a+j.value,0);
+  $('kOpen').textContent=fmt(open); $('kSched').textContent=S.jobs.filter(j=>j.col==='sched').length;
+  $('kAuto').textContent=S.auto; $('kHours').textContent=(1.5+S.saved).toFixed(1).replace('.0','')+' h';
+  $('log').innerHTML=S.log.map(l=>`<li><time>${l[0]}</time><span class="ico">${l[1]}</span><span>${l[2]}</span></li>`).join('');
+  const done=S.jobs.filter(j=>j.col==='done'), sched=S.jobs.filter(j=>j.col==='sched'), stuck=S.jobs.filter(j=>j.col==='quote'&&!j.tags.includes('Followed up')&&j.age>=3);
+  $('report').textContent=`Good morning! Here's your week at Lone Star Roofing:\n\n• ${done.length} job${done.length===1?'':'s'} completed (${fmt(done.reduce((a,j)=>a+j.value,0))})\n• ${sched.length} scheduled: ${sched.map(j=>j.name.split(' ')[0]).join(', ')||'none'}\n• ${fmt(open)} waiting in open quotes\n• ${S.auto} messages sent for you automatically\n${stuck.length?`• Needs you: ${stuck.map(j=>j.name).join(', ')} (no reply yet)`:'• Nothing is stuck. Nice.'}`;
+  renderQuote();
+}
+$('qSend').onclick=()=>{const q=quote(), name=$('qName').value.trim()||'New customer';
+  S.jobs.push({id:nextId,name,job:q.type==='repair'?'Leak repair':`Roof replacement · ${q.sq} sq`,area:($('qAddr').value.split(',')[1]||'Katy').trim(),value:q.total,col:'quote',age:0,tags:[]});
+  S.flash=nextId++; addLog('🧾',`Quote created and texted to ${name}: ${fmt(q.total)}`); S.saved+=0.5; render();};
+['qName','qAddr','qType','qMat','qSq','qTear'].forEach(id=>$(id).addEventListener('input',renderQuote));
+$('sim').onclick=skip; $('reset').onclick=()=>{S=SEED();nextId=6;render();};
+render();
+</script>

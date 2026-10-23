@@ -141,6 +141,10 @@ body.revealed .hero-row{opacity:1;}
 .hero-r{font:500 15px/1.35 var(--font-raleway);}
 .hero-r .credit{margin-top:20px;font:400 10px var(--font-mono);letter-spacing:.18em;text-transform:uppercase;color:var(--n500);}
 .hero-r .pill{margin-top:22px;}
+.hero-ctas{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px;}
+.hero-ctas .pill{margin-top:0;}
+.pill.dark{background:var(--ink);color:#fff;border-color:var(--ink);}
+.pill.dark:hover{background:#222;}
 .scroll-cue{display:none;margin-top:16px;align-items:center;gap:8px;color:var(--n500);font:400 10px var(--font-mono);letter-spacing:.2em;text-transform:uppercase;animation:pulse 2s cubic-bezier(.4,0,.6,1) infinite;}
 .scroll-cue svg.i{width:14px;height:14px;}
 @keyframes pulse{50%{opacity:.5}}
@@ -219,6 +223,9 @@ body.revealed .in{opacity:1;transform:none;}
 .quote .gcard-in{padding:28px;height:100%;display:flex;flex-direction:column;gap:22px;}
 .quote q{font:500 18px/1.45 var(--font-raleway);color:var(--ink);quotes:"“" "”";}
 .quote .who{margin-top:auto;font:600 14px var(--font-raleway);}
+.quote .q-t{font:600 20px/1.25 var(--font-raleway);color:var(--ink);letter-spacing:-.01em;}
+.quote .q-d{font:400 14px/1.55 var(--font-sans);color:var(--n500);}
+.quote .btn{align-self:flex-start;margin-top:auto;}
 .quote .who span{display:block;margin-top:4px;font:400 10px var(--font-mono);letter-spacing:.15em;text-transform:uppercase;color:var(--n500);}
 .faq-wrap{display:grid;grid-template-columns:1fr;gap:40px;}
 .faq{display:flex;flex-direction:column;gap:10px;}
@@ -422,7 +429,10 @@ footer{background:var(--ink);color:#fff;border-radius:2.5rem 2.5rem 0 0;overflow
       </div>
       <div class="hero-r pe in" style="--delay:.45s">
         <p>Ferrara Studio è Simon + un team di IA. Creiamo siti web, video con IA e serie originali per brand che vogliono distinguersi.</p>
-        <a class="pill" href="#services">Scopri cosa facciamo <span class="orb"><svg class="i"><use href="#i-chev"></use></svg></span></a>
+        <div class="hero-ctas">
+          <a class="pill" href="#services">Scopri cosa facciamo <span class="orb"><svg class="i"><use href="#i-chev"></use></svg></span></a>
+          <a class="pill dark" id="hero-book" href="https://ferrarastudio.zohobookings.eu/ferrarastudio" target="_blank" rel="noopener">Prenota una call gratuita di 15 min <span class="orb"><svg class="i"><use href="#i-upright"></use></svg></span></a>
+        </div>
         <p class="credit">© 2026 — Un umano · tante IA</p>
         <a href="#drop" class="scroll-cue"><svg class="i"><use href="#i-down"></use></svg>Scorri</a>
       </div>
@@ -584,30 +594,46 @@ footer{background:var(--ink);color:#fff;border-radius:2.5rem 2.5rem 0 0;overflow
   <section id="industries" class="sec" aria-labelledby="ind-h">
     <div class="sec-head">
       <p class="label" data-reveal="">[ 08 — Siti per settore ]</p>
-      <h2 id="ind-h" class="h-xl" data-reveal="" data-delay=".1">Conosciamo il tuo<br>settore a fondo.</h2>
+      <h2 id="ind-h" class="h-xl" data-reveal="" data-delay=".1">Pensato per le attività<br>locali di servizi.</h2>
     </div>
     <ul class="chips" style="list-style:none;padding:0;margin:0" data-reveal="" data-delay=".15">
-      <li class="chip">Ristoranti <span>Media $1,200</span></li>
-      <li class="chip">Studi legali <span>Media $2,500</span></li>
-      <li class="chip">Immobiliari <span>Media $1,800</span></li>
-      <li class="chip">Imprese edili <span>Media $999</span></li>
-      <li class="chip">Dentisti e studi medici <span>Media $2,200</span></li>
-      <li class="chip">Centri estetici <span>Media $1,500</span></li>
-      <li class="chip">Palestre e fitness <span>Media $1,200</span></li>
-      <li class="chip">Officine e servizi auto <span>Media $899</span></li>
+      <li class="chip">Ristoranti</li>
+      <li class="chip">Studi legali</li>
+      <li class="chip">Immobiliari</li>
+      <li class="chip">Imprese edili</li>
+      <li class="chip">Dentisti e studi medici</li>
+      <li class="chip">Centri estetici</li>
+      <li class="chip">Palestre e fitness</li>
+      <li class="chip">Officine e servizi auto</li>
     </ul>
   </section>
 
-  <!-- TESTIMONIALS -->
+  <!-- FOUNDING CLIENTS (replaces the old testimonials: no reviews until real clients give them) -->
   <section id="work" class="sec" aria-labelledby="work-h">
     <div class="sec-head">
-      <p class="label" data-reveal="">[ 09 — Clienti ]</p>
-      <h2 id="work-h" class="h-xl" data-reveal="" data-delay=".1">I risultati<br>parlano da soli.</h2>
+      <p class="label" data-reveal="">[ 09 — Clienti fondatori ]</p>
+      <h2 id="work-h" class="h-xl" data-reveal="" data-delay=".1">Studio nuovo.<br>Prove oneste.</h2>
+      <p class="body-lg" data-reveal="" data-delay=".2">Ferrara Studio è nuovo, quindi qui non ci sono ancora recensioni di clienti, e non le inventeremo. Ecco cosa possiamo mostrarti.</p>
     </div>
     <div class="quotes">
-      <figure class="gcard quote" style="margin:0" data-reveal=""><div class="gcard-in"><q>Da zero presenza online a 3–5 richieste di prenotazione a settimana solo dal sito. I $1,200 spesi meglio di sempre.</q><figcaption class="who">Marco Rossi<span>Grande Pizza NYC · Ristorante</span></figcaption></div></figure>
-      <figure class="gcard quote" style="margin:0" data-reveal="" data-delay=".1"><div class="gcard-in"><q>Il mio vecchio sito sembrava del 2009. Ora i clienti lo citano già alla prima chiamata. Vale ogni dollaro.</q><figcaption class="who">James Morris<span>Morris Law Group · Atlanta</span></figcaption></div></figure>
-      <figure class="gcard quote" style="margin:0" data-reveal="" data-delay=".2"><div class="gcard-in"><q>Consegnato in 6 giorni. È in prima pagina per le imprese edili della mia città. Ricevo 2–3 contatti a settimana senza pagare pubblicità.</q><figcaption class="who">Derek Chen<span>Peak Contractors · Los Angeles</span></figcaption></div></figure>
+      <div class="gcard quote" data-reveal=""><div class="gcard-in">
+        <p class="label">[ Concept · non è un cliente ]</p>
+        <p class="q-t">Homepage per servizi a domicilio</p>
+        <p class="q-d">Una homepage di esempio per un'azienda di climatizzazione: chiamata con un tocco da mobile, servizi chiari e modulo per il preventivo. Nome e telefono sono di fantasia.</p>
+        <a class="btn" href="/demos/">Vedi il concept <svg class="i"><use href="#i-chev"></use></svg></a>
+      </div></div>
+      <div class="gcard quote" data-reveal="" data-delay=".1"><div class="gcard-in">
+        <p class="label">[ Demo dal vivo ]</p>
+        <p class="q-t">Receptionist con IA</p>
+        <p class="q-d">Se perdi una chiamata, l'IA scrive al cliente in pochi secondi, fa le domande giuste e fissa il lavoro nel tuo calendario. Attività di esempio, non viene inviato nulla.</p>
+        <a class="btn" href="/demos/">Prova la demo <svg class="i"><use href="#i-chev"></use></svg></a>
+      </div></div>
+      <div class="gcard quote" data-reveal="" data-delay=".2"><div class="gcard-in">
+        <p class="label">[ Come lavoriamo ]</p>
+        <p class="q-t">Paghi $0 finché non approvi.</p>
+        <p class="q-d">Non paghi un solo dollaro finché non approvi il design, e il tuo sito è pronto 7 giorni lavorativi dopo aver ricevuto il tuo brief.</p>
+        <a class="btn solid" href="#quote">Inizia un progetto <svg class="i"><use href="#i-chev"></use></svg></a>
+      </div></div>
     </div>
   </section>
 
@@ -641,7 +667,7 @@ footer{background:var(--ink);color:#fff;border-radius:2.5rem 2.5rem 0 0;overflow
     <div class="sec-head">
       <p class="label" data-reveal="">[ 11 — Inizia un progetto ]</p>
       <h2 id="quote-h" class="h-xl" data-reveal="" data-delay=".1">Hai un'idea?<br>Realizziamola.</h2>
-      <p class="body-lg" data-reveal="" data-delay=".2">Un sito, uno spot con IA, una serie tutta tua: raccontaci cosa hai in mente. Preventivo su misura in 24 ore. Niente chiamate, nessuna pressione.</p>
+      <p class="body-lg" data-reveal="" data-delay=".2">Un sito, uno spot con IA, una serie tutta tua: raccontaci cosa hai in mente. Preventivo su misura in 24 ore, senza pressioni.</p>
     </div>
     <div class="gcard form-card" data-reveal="" data-delay=".1"><div class="gcard-in">
       <form id="qform" novalidate="">
@@ -706,7 +732,7 @@ footer{background:var(--ink);color:#fff;border-radius:2.5rem 2.5rem 0 0;overflow
           <li><a href="#services">Servizi<svg class="i"><use href="#i-upright"></use></svg></a></li>
           <li><a href="#process">Processo<svg class="i"><use href="#i-upright"></use></svg></a></li>
           <li><a href="#pricing">Prezzi<svg class="i"><use href="#i-upright"></use></svg></a></li>
-          <li><a href="#work">Clienti<svg class="i"><use href="#i-upright"></use></svg></a></li>
+          <li><a href="#work">Clienti fondatori<svg class="i"><use href="#i-upright"></use></svg></a></li>
           <li><a href="#faq">FAQ<svg class="i"><use href="#i-upright"></use></svg></a></li>
         </ul></div>
         <div class="f-col" data-fade="" data-delay=".08"><h3>Servizi</h3><ul>
@@ -720,6 +746,7 @@ footer{background:var(--ink);color:#fff;border-radius:2.5rem 2.5rem 0 0;overflow
           <li data-config="booking" hidden=""><a id="book-link" href="#" target="_blank" rel="noopener">Prenota una call<svg class="i"><use href="#i-upright"></use></svg></a></li>
           <li><a href="https://www.instagram.com/ferrarastudio.ai/" target="_blank" rel="noopener">Instagram<svg class="i"><use href="#i-upright"></use></svg></a></li>
           <li data-config="email" hidden=""><a id="mail-link" href="#">Scrivici<svg class="i"><use href="#i-upright"></use></svg></a></li>
+          <li><a href="/it/privacy/" data-i18n-href="">Privacy policy<svg class="i"><use href="#i-upright"></use></svg></a></li>
         </ul></div>
       </div>
     </div>
@@ -754,7 +781,7 @@ let THREE = null;
 // BOOKING_URL:   your Calendly (or similar) link — hidden while empty
 // CONTACT_EMAIL: shown in the footer — hidden while empty
 const FORM_ENDPOINT = 'https://formspree.io/f/xwlvwpjd';
-const BOOKING_URL = '';
+const BOOKING_URL = 'https://ferrarastudio.zohobookings.eu/ferrarastudio';
 const CONTACT_EMAIL = 'simon@ferrarastudio.net';
 const SERIES_URL = 'https://www.skool.com/mujeres-de-luz-7381/about?ref=1a68221c4f2b4f879cf0727445e131d5'; // e.g. Instagram / TikTok / YouTube link to the AI series
 
@@ -1438,6 +1465,9 @@ document.addEventListener('keydown', e => {
 if (BOOKING_URL) {
   document.getElementById('book-link').href = BOOKING_URL;
   document.querySelector('[data-config="booking"]').hidden = false;
+  document.getElementById('hero-book').href = BOOKING_URL;
+} else {
+  document.getElementById('hero-book').remove(); // no booking link → no hero button
 }
 if (SERIES_URL) {
   const sl = document.getElementById('series-link');

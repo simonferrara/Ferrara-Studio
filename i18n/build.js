@@ -31,6 +31,8 @@ const SITE = 'https://ferrarastudio.net';
       d.querySelector('link[rel=canonical]').setAttribute('href', url);
       d.querySelector('meta[property="og:url"]').setAttribute('content', url);
       d.querySelector('script[data-i18n-redirect]')?.remove();
+      // links marked data-i18n-href point to the same page in this language (e.g. /privacy/ → /es/privacy/)
+      d.querySelectorAll('a[data-i18n-href]').forEach(a => a.setAttribute('href', `/${lang}${a.getAttribute('href')}`));
       // switcher: mark the current language
       d.querySelectorAll('.lang a').forEach(a => a.dataset.lang === lang ? a.setAttribute('aria-current', 'page') : a.removeAttribute('aria-current'));
       // strings inside the page script
