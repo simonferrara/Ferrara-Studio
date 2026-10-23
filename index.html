@@ -146,6 +146,10 @@ body.revealed .hero-row{opacity:1;}
 .hero-r{font:500 15px/1.35 var(--font-raleway);}
 .hero-r .credit{margin-top:20px;font:400 10px var(--font-mono);letter-spacing:.18em;text-transform:uppercase;color:var(--n500);}
 .hero-r .pill{margin-top:22px;}
+.hero-ctas{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px;}
+.hero-ctas .pill{margin-top:0;}
+.pill.dark{background:var(--ink);color:#fff;border-color:var(--ink);}
+.pill.dark:hover{background:#222;}
 .scroll-cue{display:none;margin-top:16px;align-items:center;gap:8px;color:var(--n500);font:400 10px var(--font-mono);letter-spacing:.2em;text-transform:uppercase;animation:pulse 2s cubic-bezier(.4,0,.6,1) infinite;}
 .scroll-cue svg.i{width:14px;height:14px;}
 @keyframes pulse{50%{opacity:.5}}
@@ -224,6 +228,9 @@ body.revealed .in{opacity:1;transform:none;}
 .quote .gcard-in{padding:28px;height:100%;display:flex;flex-direction:column;gap:22px;}
 .quote q{font:500 18px/1.45 var(--font-raleway);color:var(--ink);quotes:"“" "”";}
 .quote .who{margin-top:auto;font:600 14px var(--font-raleway);}
+.quote .q-t{font:600 20px/1.25 var(--font-raleway);color:var(--ink);letter-spacing:-.01em;}
+.quote .q-d{font:400 14px/1.55 var(--font-sans);color:var(--n500);}
+.quote .btn{align-self:flex-start;margin-top:auto;}
 .quote .who span{display:block;margin-top:4px;font:400 10px var(--font-mono);letter-spacing:.15em;text-transform:uppercase;color:var(--n500);}
 .faq-wrap{display:grid;grid-template-columns:1fr;gap:40px;}
 .faq{display:flex;flex-direction:column;gap:10px;}
@@ -427,7 +434,10 @@ footer{background:var(--ink);color:#fff;border-radius:2.5rem 2.5rem 0 0;overflow
       </div>
       <div class="hero-r pe in" style="--delay:.45s">
         <p>Ferrara Studio is Simon + a team of AIs. We create websites, AI video and original series for brands that want to stand out.</p>
-        <a class="pill" href="#services">See what we do <span class="orb"><svg class="i"><use href="#i-chev"/></svg></span></a>
+        <div class="hero-ctas">
+          <a class="pill" href="#services">See what we do <span class="orb"><svg class="i"><use href="#i-chev"/></svg></span></a>
+          <a class="pill dark" id="hero-book" href="https://ferrarastudio.zohobookings.eu/ferrarastudio" target="_blank" rel="noopener">Book a free 15-min call <span class="orb"><svg class="i"><use href="#i-upright"/></svg></span></a>
+        </div>
         <p class="credit">© 2026 — One human · many AIs</p>
         <a href="#drop" class="scroll-cue"><svg class="i"><use href="#i-down"/></svg>Scroll</a>
       </div>
@@ -589,30 +599,46 @@ footer{background:var(--ink);color:#fff;border-radius:2.5rem 2.5rem 0 0;overflow
   <section id="industries" class="sec" aria-labelledby="ind-h">
     <div class="sec-head">
       <p class="label" data-reveal>[ 08 — Websites by industry ]</p>
-      <h2 id="ind-h" class="h-xl" data-reveal data-delay=".1">We know your<br>industry cold.</h2>
+      <h2 id="ind-h" class="h-xl" data-reveal data-delay=".1">Built for local<br>service businesses.</h2>
     </div>
     <ul class="chips" style="list-style:none;padding:0;margin:0" data-reveal data-delay=".15">
-      <li class="chip">Restaurants <span>Avg $1,200</span></li>
-      <li class="chip">Law firms <span>Avg $2,500</span></li>
-      <li class="chip">Real estate <span>Avg $1,800</span></li>
-      <li class="chip">Contractors <span>Avg $999</span></li>
-      <li class="chip">Dental &amp; medical <span>Avg $2,200</span></li>
-      <li class="chip">Med spas <span>Avg $1,500</span></li>
-      <li class="chip">Gyms &amp; fitness <span>Avg $1,200</span></li>
-      <li class="chip">Auto services <span>Avg $899</span></li>
+      <li class="chip">Restaurants</li>
+      <li class="chip">Law firms</li>
+      <li class="chip">Real estate</li>
+      <li class="chip">Contractors</li>
+      <li class="chip">Dental &amp; medical</li>
+      <li class="chip">Med spas</li>
+      <li class="chip">Gyms &amp; fitness</li>
+      <li class="chip">Auto services</li>
     </ul>
   </section>
 
-  <!-- TESTIMONIALS -->
+  <!-- FOUNDING CLIENTS (replaces the old testimonials: no reviews until real clients give them) -->
   <section id="work" class="sec" aria-labelledby="work-h">
     <div class="sec-head">
-      <p class="label" data-reveal>[ 09 — Clients ]</p>
-      <h2 id="work-h" class="h-xl" data-reveal data-delay=".1">Results speak<br>louder.</h2>
+      <p class="label" data-reveal>[ 09 — Founding clients ]</p>
+      <h2 id="work-h" class="h-xl" data-reveal data-delay=".1">New studio.<br>Honest proof.</h2>
+      <p class="body-lg" data-reveal data-delay=".2">Ferrara Studio is new, so there are no client reviews here yet — and we won't invent any. Here is what we can show you instead.</p>
     </div>
     <div class="quotes">
-      <figure class="gcard quote" style="margin:0" data-reveal><div class="gcard-in"><q>We went from zero online presence to getting 3–5 reservation requests a week from our website alone. Best $1,200 I've ever spent.</q><figcaption class="who">Marco Rossi<span>Grande Pizza NYC · Restaurant</span></figcaption></div></figure>
-      <figure class="gcard quote" style="margin:0" data-reveal data-delay=".1"><div class="gcard-in"><q>My old website looked like it was built in 2009. Now clients actually mention it on their first call. Worth every dollar.</q><figcaption class="who">James Morris<span>Morris Law Group · Atlanta</span></figcaption></div></figure>
-      <figure class="gcard quote" style="margin:0" data-reveal data-delay=".2"><div class="gcard-in"><q>Delivered in 6 days. Ranks on page 1 for contractors in my city. I get 2–3 leads a week without paying for ads.</q><figcaption class="who">Derek Chen<span>Peak Contractors · Los Angeles</span></figcaption></div></figure>
+      <div class="gcard quote" data-reveal><div class="gcard-in">
+        <p class="label">[ Concept · not a client ]</p>
+        <p class="q-t">Home-services homepage</p>
+        <p class="q-d">A sample homepage for an HVAC company: click-to-call on mobile, clear services and a quote form. The business name and phone are fictional.</p>
+        <a class="btn" href="/demos/">See the concept <svg class="i"><use href="#i-chev"/></svg></a>
+      </div></div>
+      <div class="gcard quote" data-reveal data-delay=".1"><div class="gcard-in">
+        <p class="label">[ Live demo ]</p>
+        <p class="q-t">AI front desk</p>
+        <p class="q-d">When you miss a call, the AI texts the customer back in seconds, asks the right questions and books the job on your calendar. Sample business, nothing is sent.</p>
+        <a class="btn" href="/demos/">Try the demo <svg class="i"><use href="#i-chev"/></svg></a>
+      </div></div>
+      <div class="gcard quote" data-reveal data-delay=".2"><div class="gcard-in">
+        <p class="label">[ How we work ]</p>
+        <p class="q-t">Pay $0 until you approve.</p>
+        <p class="q-d">You don't pay a single dollar until you approve the design, and your website is ready 7 business days after we receive your brief.</p>
+        <a class="btn solid" href="#quote">Start a project <svg class="i"><use href="#i-chev"/></svg></a>
+      </div></div>
     </div>
   </section>
 
@@ -646,7 +672,7 @@ footer{background:var(--ink);color:#fff;border-radius:2.5rem 2.5rem 0 0;overflow
     <div class="sec-head">
       <p class="label" data-reveal>[ 11 — Start a project ]</p>
       <h2 id="quote-h" class="h-xl" data-reveal data-delay=".1">Have an idea?<br>Let's make it real.</h2>
-      <p class="body-lg" data-reveal data-delay=".2">A website, an AI ad, a series of your own — tell us what you have in mind. Custom quote within 24 hours. No calls, no pressure.</p>
+      <p class="body-lg" data-reveal data-delay=".2">A website, an AI ad, a series of your own — tell us what you have in mind. Custom quote within 24 hours, no pressure.</p>
     </div>
     <div class="gcard form-card" data-reveal data-delay=".1"><div class="gcard-in">
       <form id="qform" novalidate>
@@ -711,7 +737,7 @@ footer{background:var(--ink);color:#fff;border-radius:2.5rem 2.5rem 0 0;overflow
           <li><a href="#services">Services<svg class="i"><use href="#i-upright"/></svg></a></li>
           <li><a href="#process">Process<svg class="i"><use href="#i-upright"/></svg></a></li>
           <li><a href="#pricing">Pricing<svg class="i"><use href="#i-upright"/></svg></a></li>
-          <li><a href="#work">Clients<svg class="i"><use href="#i-upright"/></svg></a></li>
+          <li><a href="#work">Founding clients<svg class="i"><use href="#i-upright"/></svg></a></li>
           <li><a href="#faq">FAQ<svg class="i"><use href="#i-upright"/></svg></a></li>
         </ul></div>
         <div class="f-col" data-fade data-delay=".08"><h3>Services</h3><ul>
@@ -725,6 +751,7 @@ footer{background:var(--ink);color:#fff;border-radius:2.5rem 2.5rem 0 0;overflow
           <li data-config="booking" hidden><a id="book-link" href="#" target="_blank" rel="noopener">Book a call<svg class="i"><use href="#i-upright"/></svg></a></li>
           <li><a href="https://www.instagram.com/ferrarastudio.ai/" target="_blank" rel="noopener">Instagram<svg class="i"><use href="#i-upright"/></svg></a></li>
           <li data-config="email" hidden><a id="mail-link" href="#">Email us<svg class="i"><use href="#i-upright"/></svg></a></li>
+          <li><a href="/privacy/" data-i18n-href>Privacy policy<svg class="i"><use href="#i-upright"/></svg></a></li>
         </ul></div>
       </div>
     </div>
@@ -759,7 +786,7 @@ let THREE = null;
 // BOOKING_URL:   your Calendly (or similar) link — hidden while empty
 // CONTACT_EMAIL: shown in the footer — hidden while empty
 const FORM_ENDPOINT = 'https://formspree.io/f/xwlvwpjd';
-const BOOKING_URL = '';
+const BOOKING_URL = 'https://ferrarastudio.zohobookings.eu/ferrarastudio';
 const CONTACT_EMAIL = 'simon@ferrarastudio.net';
 const SERIES_URL = 'https://www.skool.com/mujeres-de-luz-7381/about?ref=1a68221c4f2b4f879cf0727445e131d5'; // e.g. Instagram / TikTok / YouTube link to the AI series
 
@@ -1443,6 +1470,9 @@ document.addEventListener('keydown', e => {
 if (BOOKING_URL) {
   document.getElementById('book-link').href = BOOKING_URL;
   document.querySelector('[data-config="booking"]').hidden = false;
+  document.getElementById('hero-book').href = BOOKING_URL;
+} else {
+  document.getElementById('hero-book').remove(); // no booking link → no hero button
 }
 if (SERIES_URL) {
   const sl = document.getElementById('series-link');

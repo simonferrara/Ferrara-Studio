@@ -1,0 +1,214 @@
+<title>AI Front Desk Demo</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,500;0,600;0,700;1,500&family=JetBrains+Mono:wght@500&family=Inter:wght@400;500;600&display=swap">
+<style>
+/* Layout: brand header, then a two-column stage — customer phone (left) and owner console (right); stacks on phones. Dark-only by design (Ferrara navy). */
+:root{
+  --bg:#060b24; --panel:#0d1640; --panel2:#111d52; --line:rgba(160,180,255,.18);
+  --fg:#eef1ff; --muted:#9aa6d6; --accent:#5b84ff; --accent2:#8aa6ff;
+  --ok:#3ecf8e; --warn:#ffb547; --bubble-in:#1b2760; --bubble-out:#2f69ff; --wa-out:#1f7a5a;
+  --display:'Raleway',Georgia,serif; --body:'Inter',system-ui,-apple-system,sans-serif; --mono:'JetBrains Mono',ui-monospace,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:15px/1.5 var(--body);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 48px;
+  background-image:radial-gradient(ellipse 70% 45% at 20% 0%,rgba(47,105,255,.25),transparent 70%)}
+.wrap{max-width:1080px;margin:0 auto;display:flex;flex-direction:column;gap:28px}
+header{display:flex;flex-direction:column;gap:10px}
+.eb{font:500 12px var(--mono);letter-spacing:.28em;text-transform:uppercase;color:var(--accent2)}
+h1{margin:0;font:600 clamp(34px,6vw,58px)/1.02 var(--display);letter-spacing:-.03em;text-wrap:balance}
+h1 em{font-style:italic;font-weight:500;color:var(--accent2)}
+.lede{margin:0;max-width:62ch;color:var(--muted);font-size:16px}
+.demo-note{font:500 11px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--warn)}
+.controls{display:flex;flex-wrap:wrap;gap:12px;align-items:end}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font:500 11px var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+input[type=text]{background:var(--panel);border:1px solid var(--line);color:var(--fg);border-radius:12px;padding:11px 14px;font:500 15px var(--body);width:240px;max-width:100%}
+input[type=text]:focus-visible,button:focus-visible{outline:2px solid var(--accent2);outline-offset:2px}
+.seg{display:inline-flex;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:4px}
+.seg button{background:none;border:0;color:var(--muted);font:600 14px var(--body);padding:8px 14px;border-radius:9px;cursor:pointer}
+.seg button[aria-pressed=true]{background:var(--panel2);color:var(--fg)}
+.play{background:var(--fg);color:var(--bg);border:0;border-radius:99px;font:600 15px var(--body);padding:12px 22px;cursor:pointer;display:inline-flex;gap:10px;align-items:center}
+.play:disabled{opacity:.5;cursor:default}
+.stage{display:grid;grid-template-columns:minmax(0,380px) minmax(0,1fr);gap:24px;align-items:start}
+@media (max-width:820px){.stage{grid-template-columns:minmax(0,1fr)}}
+/* phone */
+.phone{width:100%;max-width:380px;justify-self:center;border-radius:44px;padding:12px;background:linear-gradient(160deg,#2b345c,#0b1030 55%,#2b345c);box-shadow:0 40px 90px -30px rgba(0,0,0,.9),0 0 0 1px var(--line)}
+.screen{border-radius:34px;background:#070c26;height:640px;display:flex;flex-direction:column;overflow:hidden}
+.bar{padding:14px 18px 10px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--line)}
+.avatar{width:38px;height:38px;border-radius:50%;background:radial-gradient(circle at 40% 30%,#7d97ff,#0e2ac5);display:grid;place-items:center;font:700 15px var(--display)}
+.who{display:flex;flex-direction:column;min-width:0}
+.who b{font:600 15px var(--body);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.who span{font:500 11px var(--mono);letter-spacing:.06em;color:var(--muted)}
+.chat{flex:1;overflow-y:auto;padding:16px 14px;display:flex;flex-direction:column;gap:8px;scroll-behavior:smooth}
+.sys{align-self:center;font:500 11px var(--mono);letter-spacing:.06em;color:var(--muted);background:rgba(255,255,255,.05);border:1px solid var(--line);padding:6px 12px;border-radius:99px;text-align:center}
+.sys.miss{color:#ff8a8a;border-color:rgba(255,120,120,.35)}
+.msg{max-width:82%;padding:9px 13px;border-radius:18px;font-size:14.5px;line-height:1.4;animation:pop .25s ease-out}
+.msg.in{align-self:flex-start;background:var(--bubble-in);border-bottom-left-radius:6px}
+.msg.out{align-self:flex-end;background:var(--bubble-out);border-bottom-right-radius:6px}
+.wa .msg.out{background:var(--wa-out)}
+.msg small{display:block;margin-top:3px;font:500 10px var(--mono);opacity:.7}
+.typing{align-self:flex-end;background:var(--bubble-out);border-radius:18px;padding:12px 14px;display:flex;gap:4px}
+.wa .typing{background:var(--wa-out)}
+.typing i{width:6px;height:6px;border-radius:50%;background:#fff;opacity:.6;animation:blink 1s infinite}
+.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+@keyframes pop{from{transform:translateY(6px);opacity:0}to{transform:none;opacity:1}}
+@keyframes blink{50%{opacity:.15}}
+@media (prefers-reduced-motion:reduce){.msg{animation:none}.typing i{animation:none}}
+/* console */
+.console{display:flex;flex-direction:column;gap:16px;min-width:0}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:20px 22px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.card h2{margin:0;font:500 11px var(--mono);letter-spacing:.22em;text-transform:uppercase;color:var(--accent2)}
+.kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.kpi{display:flex;flex-direction:column;gap:2px}
+.kpi b{font:600 28px var(--display);font-variant-numeric:tabular-nums}
+.kpi span{font-size:12.5px;color:var(--muted)}
+.lead{display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 16px;font-size:14px}
+.lead dt{color:var(--muted);font:500 11px var(--mono);letter-spacing:.12em;text-transform:uppercase;padding-top:3px}
+.lead dd{margin:0;min-width:0}
+.pill{display:inline-block;padding:3px 10px;border-radius:99px;font:600 12px var(--body)}
+.pill.hot{background:rgba(255,181,71,.15);color:var(--warn)}
+.pill.ok{background:rgba(62,207,142,.15);color:var(--ok)}
+.pill.wait{background:rgba(154,166,214,.15);color:var(--muted)}
+.cal{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.slot{border:1px dashed var(--line);border-radius:12px;padding:10px;font-size:13px;color:var(--muted);min-height:58px;display:flex;flex-direction:column;gap:2px}
+.slot b{font:600 13px var(--body);color:var(--fg)}
+.slot.busy{border-style:solid;background:rgba(255,255,255,.04)}
+.slot.new{border-style:solid;border-color:var(--ok);background:rgba(62,207,142,.08)}
+@media (max-width:480px){.cal{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.log{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;font-size:14px}
+.log li{display:flex;gap:10px;align-items:baseline}
+.log time{font:500 11px var(--mono);color:var(--muted);flex:none;width:44px}
+.empty{color:var(--muted);font-size:14px}
+footer{display:flex;flex-wrap:wrap;gap:12px 24px;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:20px;color:var(--muted);font-size:14px}
+footer b{color:var(--fg)}
+.sel{user-select:all;font-family:var(--mono);color:var(--accent2)}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eb">Ferrara Studio · AI systems</div>
+    <h1>The call you missed <em>just booked itself.</em></h1>
+    <p class="lede" id="lede">You're on a roof and the phone rings. Nobody answers, so the AI front desk texts the customer back in seconds, asks the right questions and books the inspection on your calendar. You get the summary.</p>
+    <div class="demo-note" id="note">Demo with a sample business and sample customer · no real messages are sent</div>
+  </header>
+
+  <div class="controls">
+    <div class="field"><label for="biz" id="bizLabel">Business name</label><input type="text" id="biz" value="Lone Star Roofing" maxlength="32"></div>
+    <div class="field"><label id="chanLabel">Channel</label>
+      <div class="seg" role="group" aria-labelledby="chanLabel"><button type="button" id="enBtn" aria-pressed="true">SMS · English</button><button type="button" id="esBtn" aria-pressed="false">WhatsApp · Español</button></div></div>
+    <button class="play" type="button" id="play">▶ <span id="playTxt">Replay the call</span></button>
+  </div>
+
+  <div class="stage">
+    <div class="phone" aria-label="Customer phone"><div class="screen" id="screen">
+      <div class="bar"><div class="avatar" id="av">L</div><div class="who"><b id="bizName">Lone Star Roofing</b><span id="chanTag">SMS · AI front desk</span></div></div>
+      <div class="chat" id="chat" aria-live="polite"></div>
+    </div></div>
+
+    <div class="console">
+      <div class="card"><h2 id="h-today">Today</h2>
+        <div class="kpis">
+          <div class="kpi"><b id="k1">1</b><span id="k1l">missed call recovered</span></div>
+          <div class="kpi"><b id="k2">6 s</b><span id="k2l">to first reply</span></div>
+          <div class="kpi"><b id="k3">1</b><span id="k3l">inspection booked</span></div>
+        </div>
+      </div>
+      <div class="card"><h2 id="h-lead">New lead · sent to the owner</h2><div id="lead"></div></div>
+      <div class="card"><h2 id="h-cal">Calendar</h2><div class="cal" id="cal"></div></div>
+      <div class="card"><h2 id="h-log">Activity</h2><ul class="log" id="log"></ul></div>
+    </div>
+  </div>
+
+  <footer><span id="foot">Built and installed for you in 7 days by <b>Ferrara Studio</b>. Websites, AI video and AI systems.</span><span><span class="sel">ferrarastudio.net</span> · <span class="sel">simon@ferrarastudio.net</span></span></footer>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const S={
+ en:{chan:'SMS · AI front desk',lede:"You're on a roof and the phone rings. Nobody answers, so the AI front desk texts the customer back in seconds, asks the right questions and books the inspection on your calendar. You get the summary.",
+  note:'Demo with a sample business and sample customer · no real messages are sent',bizL:'Business name',chanL:'Channel',play:'Replay the call',
+  k:['missed call recovered','to first reply','inspection booked'],h:['Today','New lead · sent to the owner','Calendar','Activity'],
+  foot:'Built and installed for you in 7 days by <b>Ferrara Studio</b>. Websites, AI video and AI systems.',
+  steps:[
+   {t:'sys miss',x:'📞 Missed call · (281) 555-0142 · 2:41 PM'},
+   {t:'out',x:b=>`Hi, this is ${b}! Sorry we missed your call, the crew is on a job. What can we help you with?`,w:6},
+   {t:'in',x:'Water is coming through my bedroom ceiling after last night\'s storm'},
+   {t:'out',x:'So sorry about that. Is it leaking right now, and what\'s the address?',w:3},
+   {t:'in',x:'A little, yes. 2418 Mason Rd, Katy'},
+   {t:'out',x:'Got it. We can inspect today at 4:30 PM or tomorrow at 8:00 AM. Which works better?',w:3},
+   {t:'in',x:'Today 4:30 please'},
+   {t:'out',x:'Booked ✅ Today 4:30 PM at 2418 Mason Rd. Our tech will text you when on the way. Reply STOP to opt out.',w:3},
+  ],
+  lead:{who:'Sample customer · (281) 555-0142',what:'Roof leak after storm · active',where:'2418 Mason Rd, Katy, TX',when:'Today 4:30 PM',hot:'Urgent',ok:'Booked',wait:'Qualifying…'},
+  dt:['Customer','Problem','Address','Inspection'],
+  cal:[['1:00 PM','Gutter job · Fulshear',1],['3:00 PM','Estimate · Cinco Ranch',1],['4:30 PM','',0],['6:00 PM','',0]],
+  calNew:'Roof leak · Mason Rd',free:'Free',
+  log:[['2:41','Missed call from (281) 555-0142'],['2:41','AI texted back automatically'],['2:42','Lead qualified: active leak, Katy'],['2:43','Inspection booked for 4:30 PM'],['2:43','Summary texted to the owner'],['later','Job done → Google review request sent']]},
+ es:{chan:'WhatsApp · recepcionista IA',lede:'Estás en una obra y suena el teléfono. Nadie atiende, así que la recepcionista con IA le escribe al cliente por WhatsApp en segundos, le hace las preguntas correctas y agenda la visita en tu calendario. Tú recibes el resumen.',
+  note:'Demo con un negocio y un cliente de ejemplo · no se envía ningún mensaje real',bizL:'Nombre del negocio',chanL:'Canal',play:'Ver la llamada otra vez',
+  k:['llamada perdida recuperada','hasta la primera respuesta','visita agendada'],h:['Hoy','Nuevo cliente · enviado al dueño','Calendario','Actividad'],
+  foot:'Lo instalamos por ti en 7 días · <b>Ferrara Studio</b>. Webs, video con IA y sistemas con IA.',
+  steps:[
+   {t:'sys miss',x:'📞 Llamada perdida · +34 612 000 142 · 14:41'},
+   {t:'out',x:b=>`¡Hola! Te escribimos de ${b}. Perdona que no pudimos atenderte, estamos en una obra. ¿En qué te podemos ayudar?`,w:6},
+   {t:'in',x:'Hola, tengo una gotera en el techo del dormitorio desde la tormenta de anoche'},
+   {t:'out',x:'Lo siento mucho. ¿Sigue entrando agua ahora mismo? ¿Y cuál es la dirección?',w:3},
+   {t:'in',x:'Un poco, sí. Calle Mayor 24, Alcobendas'},
+   {t:'out',x:'Perfecto. Podemos pasar hoy a las 16:30 o mañana a las 8:00. ¿Qué te viene mejor?',w:3},
+   {t:'in',x:'Hoy a las 16:30, por favor'},
+   {t:'out',x:'¡Agendado ✅! Hoy a las 16:30 en Calle Mayor 24. El técnico te avisará cuando vaya en camino.',w:3},
+  ],
+  lead:{who:'Cliente de ejemplo · +34 612 000 142',what:'Gotera tras tormenta · activa',where:'Calle Mayor 24, Alcobendas',when:'Hoy 16:30',hot:'Urgente',ok:'Agendado',wait:'Calificando…'},
+  dt:['Cliente','Problema','Dirección','Visita'],
+  cal:[['13:00','Canalones · Tres Cantos',1],['15:00','Presupuesto · Sanse',1],['16:30','',0],['18:00','',0]],
+  calNew:'Gotera · Calle Mayor',free:'Libre',
+  log:[['14:41','Llamada perdida del +34 612 000 142'],['14:41','La IA respondió por WhatsApp sola'],['14:42','Cliente calificado: gotera activa'],['14:43','Visita agendada a las 16:30'],['14:43','Resumen enviado al dueño'],['después','Trabajo terminado → pedido de reseña en Google']]}
+};
+let lang='en', step=8, timer=null, typingEl=null;
+const biz=()=>($('biz').value.trim()||'Your Business');
+function render(){
+  const L=S[lang], b=biz();
+  $('bizName').textContent=b; $('av').textContent=b[0].toUpperCase(); $('chanTag').textContent=L.chan;
+  $('screen').classList.toggle('wa',lang==='es');
+  $('lede').textContent=L.lede; $('note').textContent=L.note; $('bizLabel').textContent=L.bizL; $('chanLabel').textContent=L.chanL; $('playTxt').textContent=L.play;
+  ['k1l','k2l','k3l'].forEach((id,i)=>$(id).textContent=L.k[i]); ['h-today','h-lead','h-cal','h-log'].forEach((id,i)=>$(id).textContent=L.h[i]); $('foot').innerHTML=L.foot;
+  // chat
+  const chat=$('chat'); chat.innerHTML='';
+  L.steps.slice(0,step).forEach((s,i)=>{const d=document.createElement('div');
+    if(s.t.startsWith('sys')){d.className=s.t;d.textContent=s.x;}
+    else{d.className='msg '+s.t; d.textContent=typeof s.x==='function'?s.x(b):s.x; if(s.t==='out'){const sm=document.createElement('small');sm.textContent=lang==='es'?'Recepcionista IA':'AI front desk';d.appendChild(sm);}}
+    chat.appendChild(d);});
+  if(typingEl) chat.appendChild(typingEl);
+  chat.scrollTop=chat.scrollHeight;
+  // console
+  const done=step>=8, q=step>=5;
+  $('k1').textContent=step>=2?'1':'0'; $('k2').textContent=step>=2?'6 s':'—'; $('k3').textContent=done?'1':'0';
+  const ld=L.lead, pill=done?`<span class="pill ok">${ld.ok}</span>`:(q?`<span class="pill hot">${ld.hot}</span>`:`<span class="pill wait">${ld.wait}</span>`);
+  $('lead').innerHTML=step<3?`<p class="empty">${lang==='es'?'Esperando la respuesta del cliente…':'Waiting for the customer to reply…'}</p>`:
+   `<dl class="lead"><dt>${L.dt[0]}</dt><dd>${ld.who}</dd><dt>${L.dt[1]}</dt><dd>${ld.what} ${pill}</dd><dt>${L.dt[2]}</dt><dd>${q?ld.where:'…'}</dd><dt>${L.dt[3]}</dt><dd>${done?ld.when:'…'}</dd></dl>`;
+  $('cal').innerHTML=L.cal.map((c,i)=>{const isNew=i===2&&done;return `<div class="slot ${c[2]?'busy':''} ${isNew?'new':''}"><span>${c[0]}</span><b>${c[2]?c[1]:(isNew?L.calNew:L.free)}</b></div>`;}).join('');
+  const nLog=[0,1,2,2,2,3,3,3,6][step]; // how many log lines are visible per step
+  $('log').innerHTML=L.log.slice(0,nLog).map(l=>`<li><time>${l[0]}</time><span>${l[1]}</span></li>`).join('');
+}
+function play(){
+  clearTimeout(timer); step=0; typingEl=null; $('play').disabled=true; render();
+  const L=S[lang]; const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const next=()=>{
+    if(step>=L.steps.length){typingEl=null;$('play').disabled=false;render();return;}
+    const s=L.steps[step];
+    if(s.t==='out'&&!reduce){typingEl=document.createElement('div');typingEl.className='typing';typingEl.innerHTML='<i></i><i></i><i></i>';render();
+      timer=setTimeout(()=>{typingEl=null;step++;render();timer=setTimeout(next,1200);},Math.min(s.w||2,4)*450);}
+    else{step++;render();timer=setTimeout(next,s.t==='in'?1400:900);}
+  };
+  timer=setTimeout(next,500);
+}
+function setLang(l){lang=l;$('enBtn').setAttribute('aria-pressed',l==='en');$('esBtn').setAttribute('aria-pressed',l==='es');
+  if(l==='es'&&$('biz').value==='Lone Star Roofing')$('biz').value='Tejados Hermanos Ruiz';
+  if(l==='en'&&$('biz').value==='Tejados Hermanos Ruiz')$('biz').value='Lone Star Roofing';
+  clearTimeout(timer);typingEl=null;step=8;$('play').disabled=false;render();}
+$('enBtn').onclick=()=>setLang('en'); $('esBtn').onclick=()=>setLang('es');
+$('biz').addEventListener('input',render); $('play').onclick=play;
+if(location.hash==='#es') setLang('es'); else render();
+</script>
