@@ -451,6 +451,7 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spa
   .scrub--render .eyebrow { color: var(--sun); }
   .scrub--render .h2 { color: var(--bone); }
   .scrub--render .h2 em { color: var(--sun); }
+  .scrub__copy .lede { display: none; }
   .steps { margin-top: 22px; position: relative; min-height: 96px; }
   .steps li { position: absolute; inset: 0 0 auto; border: 0; padding: 0; opacity: 0; }
   .steps li.is-active { opacity: 1; }

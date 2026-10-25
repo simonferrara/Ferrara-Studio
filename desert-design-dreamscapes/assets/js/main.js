@@ -85,23 +85,29 @@
   addEventListener('keydown', e => e.key === 'Escape' && closeMenu());
 
   /* ---------- frame sequences drawn to canvas ---------- */
+  // Frames are decoded up front (createImageBitmap) and painted once per animation frame,
+  // so scrubbing never pays a decode on the main thread.
   class Sequence {
     constructor(canvas) {
       this.canvas = canvas;
-      this.ctx = canvas.getContext('2d');
+      this.ctx = canvas.getContext('2d', { alpha: false });
       this.name = canvas.dataset.seq;
       this.count = +canvas.dataset.count;
       this.frames = new Array(this.count);
-      this.index = 0;
+      this.target = 0;
       this.drawn = -1;
       this.loading = false;
+      this.raf = 0;
       this.resize();
     }
     get size() {
       const dpr = Math.min(devicePixelRatio || 1, 2);
       return this.canvas.clientWidth * dpr > 520 ? 'lg' : 'sm';
     }
-    src(i) { this.sizeKey = this.sizeKey || this.size; return `assets/seq/${this.name}/${this.sizeKey}/${String(i + 1).padStart(3, '0')}.webp`; }
+    src(i) {
+      this.sizeKey = this.sizeKey || this.size; // keep one resolution per session
+      return `assets/seq/${this.name}/${this.sizeKey}/${String(i + 1).padStart(3, '0')}.webp`;
+    }
     resize() {
       const dpr = Math.min(devicePixelRatio || 1, 2);
       const w = Math.round(this.canvas.clientWidth * dpr);
@@ -109,21 +115,21 @@
       if (!w || !h) return;
       this.canvas.width = w;
       this.canvas.height = h;
-      if (!this.sizeKey) this.sizeKey = this.size; // keep one resolution per session
       this.drawn = -1;
-      this.draw(this.index);
+      this.schedule();
     }
-    load(i) {
-      if (this.frames[i]) return Promise.resolve(this.frames[i]);
-      return new Promise(res => {
-        const img = new Image();
-        img.decoding = 'async';
-        img.onload = () => { this.frames[i] = img; res(img); };
-        img.onerror = () => res(null);
-        img.src = this.src(i);
-      });
+    async load(i) {
+      if (this.frames[i]) return this.frames[i];
+      try {
+        const res = await fetch(this.src(i));
+        const bmp = await createImageBitmap(await res.blob());
+        this.frames[i] = bmp;
+        return bmp;
+      } catch (e) {
+        return null;
+      }
     }
-    first() { return this.load(0).then(() => this.draw(this.index)); }
+    first() { return this.load(0).then(() => this.schedule()); }
     // Coarse-to-fine order: early scrubbing already looks continuous while the rest streams in.
     loadAll() {
       if (this.loading) return;
@@ -137,7 +143,7 @@
         if (next >= order.length) return;
         const i = order[next++];
         this.load(i).then(() => {
-          if (Math.abs(i - this.index) < 3) this.draw(this.index, true);
+          if (Math.abs(i - this.target) < 4) { this.drawn = -1; this.schedule(); }
           worker();
         });
       };
@@ -150,18 +156,23 @@
       }
       return -1;
     }
-    draw(i, force) {
-      this.index = i;
-      const n = this.nearest(i);
-      if (n < 0 || (n === this.drawn && !force)) return;
+    schedule() {
+      if (!this.raf) this.raf = requestAnimationFrame(() => { this.raf = 0; this.paint(); });
+    }
+    paint() {
+      const n = this.nearest(this.target);
+      if (n < 0 || n === this.drawn) return;
       const img = this.frames[n];
       const { width: cw, height: ch } = this.canvas;
-      const s = Math.max(cw / img.naturalWidth, ch / img.naturalHeight);
-      const w = img.naturalWidth * s, h = img.naturalHeight * s;
+      const s = Math.max(cw / img.width, ch / img.height);
+      const w = img.width * s, h = img.height * s;
       this.ctx.drawImage(img, (cw - w) / 2, (ch - h) / 2, w, h);
       this.drawn = n;
     }
-    progress(p) { this.draw(Math.round(Math.min(1, Math.max(0, p)) * (this.count - 1))); }
+    progress(p) {
+      this.target = Math.round(Math.min(1, Math.max(0, p)) * (this.count - 1));
+      this.schedule();
+    }
   }
 
   const seqs = {};
@@ -181,8 +192,10 @@
       s && s.loadAll();
       io.unobserve(e.target);
     });
-  }, { rootMargin: '150% 0px' });
+  }, { rootMargin: '250% 0px' });
   Object.values(seqs).forEach(s => io.observe(s.canvas));
+  // The render sequence sits right after the hero: warm it up as soon as the page is idle.
+  addEventListener('load', () => setTimeout(() => seqs.render && seqs.render.loadAll(), 600));
 
   let resizeT;
   addEventListener('resize', () => {
@@ -199,8 +212,7 @@
 
   /* ---------- reduced motion: static, fully readable layout ---------- */
   if (reduced) {
-    seqs.render && seqs.render.progress(0.55);
-    seqs.build && (seqs.build.loadAll(), seqs.build.progress(1));
+    seqs.render && (seqs.render.loadAll(), seqs.render.progress(1));
     $$('.steps li').forEach(li => li.classList.add('is-active'));
     root.classList.add('reduced');
     return;
@@ -227,29 +239,15 @@
   ScrollTrigger.create({
     trigger: '.scrub--render',
     start: 'top top',
-    end: '+=230%',
+    end: '+=170%',
     pin: '.scrub--render .scrub__pin',
-    scrub: 0.4,
+    scrub: true, // Lenis already smooths the scroll; a second smoothing layer feels laggy
     onUpdate: self => {
       const p = self.progress;
       seqs.render.progress(p);
       renderBar.style.transform = `scaleX(${p})`;
       const active = Math.min(steps.length - 1, Math.floor(p * steps.length));
       steps.forEach((li, i) => li.classList.toggle('is-active', i === active));
-    }
-  });
-
-  /* ---------- build sequence ---------- */
-  const buildBar = $('#buildProgress');
-  ScrollTrigger.create({
-    trigger: '.scrub--build',
-    start: 'top top',
-    end: '+=200%',
-    pin: '.scrub--build .scrub__pin',
-    scrub: 0.4,
-    onUpdate: self => {
-      seqs.build.progress(self.progress);
-      buildBar.style.transform = `scaleX(${self.progress})`;
     }
   });
 
