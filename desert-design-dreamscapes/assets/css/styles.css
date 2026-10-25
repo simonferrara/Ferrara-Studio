@@ -39,6 +39,7 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  overflow-x: clip; /* hidden makes body a scroller on iOS and breaks the sticky film */
 }
 img { display: block; max-width: 100%; height: auto; }
 a { color: inherit; }
@@ -214,8 +215,8 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spa
 .tag--sun { background: var(--sun); color: var(--ink); border-color: transparent; }
 
 
-/* chapters over the white model (desktop): ink type, no shadow */
-@media (min-width: 900px) {
+/* chapters over the white model: ink type, no shadow */
+@media all {
   .chapter--light { color: var(--ink); }
   .chapter--light .display { text-shadow: none; }
   .chapter--light .display em { color: var(--clay); }
@@ -416,10 +417,13 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spa
   .nav__phone, .nav__cta .btn { display: none; }
   .brand__mark { width: 36px; height: 36px; }
   .film { height: 620vh; }
-  /* phones: the shot sits in the top of the screen, copy reads on ink below it */
-  .film__canvas { top: var(--nav-h); height: 54svh; }
-  .film__shade { opacity: 1; background: linear-gradient(0deg, var(--ink) 0%, var(--ink) calc(46svh - var(--nav-h) + 2px), rgba(15,13,11,0) calc(46svh - var(--nav-h) + 90px)); }
+  .film__shade { background: linear-gradient(180deg, rgba(15,13,11,.45) 0%, transparent 16%), linear-gradient(0deg, rgba(15,13,11,.88) 0%, rgba(15,13,11,.55) 40%, transparent 64%); }
+  .film__stage::before {
+    content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; opacity: calc(1 - var(--shade));
+    background: linear-gradient(0deg, rgba(244,239,231,.92) 0%, rgba(244,239,231,.7) 42%, transparent 66%);
+  }
   .hotspots { display: none; }
+  .chapter--intro .btn--ghost, .scroll-cue { display: none; }
   .chapter__chips { display: none; }
   .chapter--intro .btn--ghost, .scroll-cue { display: none; }
   .film__rail { left: 10px; height: 34vh; top: 40%; }

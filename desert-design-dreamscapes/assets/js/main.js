@@ -85,7 +85,10 @@
   });
   addEventListener('keydown', e => e.key === 'Escape' && closeMenu());
 
-  /* ---------- film: frames decoded ahead, painted once per animation frame ---------- */
+  /* ---------- film ----------
+     Compressed frames are kept as blobs (cheap); only a small window around the playhead is
+     decoded to bitmaps, so memory stays flat on phones. Neighbouring frames are cross-faded,
+     which makes 12 fps footage read as continuous motion while scrubbing. */
   class Film {
     constructor(canvas) {
       this.canvas = canvas;
@@ -93,11 +96,15 @@
       this.count = +canvas.dataset.count;
       // Phones get the vertical cut, larger screens the wide one.
       this.size = matchMedia('(min-width: 900px)').matches ? 'lg' : 'sm';
-      this.frames = new Array(this.count);
-      this.target = 0;
-      this.drawn = -1;
+      this.blobs = new Array(this.count);
+      this.bitmaps = new Map();
+      this.decoding = new Set();
+      this.pos = 0;      // fractional frame index
+      this.painted = -1;
       this.loading = false;
       this.raf = 0;
+      this.AHEAD = 8;
+      this.KEEP = 14;
       this.resize();
     }
     src(i) { return `assets/film/${this.size}/${String(i + 1).padStart(3, '0')}.webp`; }
@@ -105,19 +112,44 @@
       const dpr = Math.min(devicePixelRatio || 1, 2);
       this.canvas.width = Math.round(this.canvas.clientWidth * dpr);
       this.canvas.height = Math.round(this.canvas.clientHeight * dpr);
-      this.drawn = -1;
+      this.painted = -1;
       this.schedule();
     }
-    async load(i) {
-      if (this.frames[i]) return this.frames[i];
+    async fetchBlob(i) {
+      if (this.blobs[i]) return;
       try {
         const res = await fetch(this.src(i));
-        return (this.frames[i] = await createImageBitmap(await res.blob()));
-      } catch (e) {
-        return null;
+        if (res.ok) this.blobs[i] = await res.blob();
+      } catch (e) { /* frame skipped; neighbours cover it */ }
+    }
+    async decode(blob) {
+      if (window.createImageBitmap) return createImageBitmap(blob);
+      const img = new Image();
+      img.src = URL.createObjectURL(blob);
+      await img.decode();
+      return img;
+    }
+    ensure(i) {
+      if (i < 0 || i >= this.count || this.bitmaps.has(i) || this.decoding.has(i) || !this.blobs[i]) return;
+      this.decoding.add(i);
+      this.decode(this.blobs[i]).then(bmp => {
+        this.decoding.delete(i);
+        if (Math.abs(i - this.pos) > this.KEEP) { bmp.close && bmp.close(); return; }
+        this.bitmaps.set(i, bmp);
+        this.painted = -1;
+        this.schedule();
+      }).catch(() => this.decoding.delete(i));
+    }
+    // Decode around the playhead, release what scrolled far away.
+    window() {
+      const c = Math.round(this.pos);
+      for (let d = 0; d <= this.AHEAD; d++) { this.ensure(c + d); this.ensure(c - d); }
+      for (const [i, bmp] of this.bitmaps) {
+        if (Math.abs(i - this.pos) > this.KEEP) { bmp.close && bmp.close(); this.bitmaps.delete(i); }
       }
     }
-    // Coarse-to-fine order: early scrubbing already looks continuous while the rest streams in.
+    first() { return this.fetchBlob(0).then(() => { this.ensure(0); }); }
+    // Coarse-to-fine download order: early scrubbing already has frames everywhere.
     loadAll() {
       if (this.loading) return;
       this.loading = true;
@@ -129,53 +161,51 @@
       const worker = () => {
         if (next >= order.length) return;
         const i = order[next++];
-        this.load(i).then(() => {
-          if (Math.abs(i - this.target) < 4) { this.drawn = -1; this.schedule(); }
+        this.fetchBlob(i).then(() => {
+          if (Math.abs(i - this.pos) <= this.AHEAD) this.window();
           worker();
         });
       };
       for (let k = 0; k < 6; k++) worker();
     }
     nearest(i) {
-      for (let d = 0; d < this.count; d++) {
-        if (this.frames[i - d]) return i - d;
-        if (this.frames[i + d]) return i + d;
+      if (this.bitmaps.has(i)) return i;
+      for (let d = 1; d < this.count; d++) {
+        if (this.bitmaps.has(i - d)) return i - d;
+        if (this.bitmaps.has(i + d)) return i + d;
       }
       return -1;
     }
     schedule() {
       if (!this.raf) this.raf = requestAnimationFrame(() => { this.raf = 0; this.paint(); });
     }
-    paint() {
-      const n = this.nearest(this.target);
-      if (n < 0 || n === this.drawn) return;
-      const img = this.frames[n];
+    cover(img, alpha) {
       const { width: cw, height: ch } = this.canvas;
-      const ctx = this.ctx;
-      const mismatch = (img.width / img.height) / (cw / ch);
-      if (mismatch > 0.72 && mismatch < 1.39) {
-        const s = Math.max(cw / img.width, ch / img.height);
-        ctx.drawImage(img, (cw - img.width * s) / 2, (ch - img.height * s) / 2, img.width * s, img.height * s);
-      } else {
-        // Clip shot for another aspect: dimmed backdrop from the same frame, clip shown whole.
-        const bs = Math.max(cw / img.width, ch / img.height) * 1.15;
-        ctx.drawImage(img, (cw - img.width * bs) / 2, (ch - img.height * bs) / 2, img.width * bs, img.height * bs);
-        ctx.fillStyle = 'rgba(15,13,11,.72)';
-        ctx.fillRect(0, 0, cw, ch);
-        const s = Math.min(cw / img.width, ch / img.height);
-        ctx.drawImage(img, (cw - img.width * s) / 2, (ch - img.height * s) / 2, img.width * s, img.height * s);
-      }
-      this.drawn = n;
+      const s = Math.max(cw / img.width, ch / img.height);
+      this.ctx.globalAlpha = alpha;
+      this.ctx.drawImage(img, (cw - img.width * s) / 2, (ch - img.height * s) / 2, img.width * s, img.height * s);
+    }
+    paint() {
+      if (Math.abs(this.pos - this.painted) < 0.01) return;
+      const i0 = Math.floor(this.pos);
+      const a = this.pos - i0;
+      const n0 = this.nearest(i0);
+      if (n0 < 0) return;
+      this.cover(this.bitmaps.get(n0), 1);
+      if (a > 0.02 && n0 === i0 && this.bitmaps.has(i0 + 1)) this.cover(this.bitmaps.get(i0 + 1), a);
+      this.ctx.globalAlpha = 1;
+      this.painted = n0 === i0 ? this.pos : -1;
     }
     progress(p) {
-      this.target = Math.round(clamp01(p) * (this.count - 1));
+      this.pos = clamp01(p) * (this.count - 1);
+      this.window();
       this.schedule();
     }
   }
 
   const film = new Film($('#filmCanvas'));
-  Promise.all([film.load(0), document.fonts ? document.fonts.ready : null]).then(() => {
-    film.schedule();
+  DDD.film = film;
+  Promise.all([film.first(), document.fonts ? document.fonts.ready : null]).then(() => {
     loaderBar.style.width = '100%';
     setTimeout(hideLoader, 350);
   });
