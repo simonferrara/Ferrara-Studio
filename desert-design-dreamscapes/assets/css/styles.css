@@ -155,8 +155,9 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spa
 .film { position: relative; height: 720vh; background: var(--ink); color: var(--bone); }
 .film__stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
 .film__canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.film__stage { --shade: 0; }
 .film__shade {
-  position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  position: absolute; inset: 0; z-index: 1; pointer-events: none; opacity: var(--shade);
   background:
     radial-gradient(ellipse 80% 70% at 50% 45%, transparent 35%, rgba(15,13,11,.55) 100%),
     linear-gradient(0deg, rgba(15,13,11,.8) 0%, rgba(15,13,11,.25) 38%, transparent 60%);
@@ -211,6 +212,28 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spa
   -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
 }
 .tag--sun { background: var(--sun); color: var(--ink); border-color: transparent; }
+
+
+/* chapters over the white model (desktop): ink type, no shadow */
+@media (min-width: 900px) {
+  .chapter--light { color: var(--ink); }
+  .chapter--light .display { text-shadow: none; }
+  .chapter--light .display em { color: var(--clay); }
+  .chapter--light .kicker { color: var(--clay); }
+  .chapter--light .kicker span { color: var(--ink); }
+  .chapter--light .chapter__text { color: #3d362f; text-shadow: none; }
+  .chapter--light .btn--ghost { --fg: var(--ink); border-color: rgba(15,13,11,.3); }
+  .chapter--light .chapter__chips li { color: var(--ink); background: rgba(255,255,255,.55); border-color: rgba(15,13,11,.14); }
+  .chapter--light .scroll-cue { color: var(--muted); }
+  .film__stage::before {
+    content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; opacity: calc(1 - var(--shade));
+    background: linear-gradient(90deg, rgba(244,239,231,.82) 0%, rgba(244,239,231,.5) 34%, transparent 58%);
+  }
+  .film__stage.is-light .film__rail-line { background: rgba(15,13,11,.18); }
+  .film__stage.is-light .film__rail ol { color: rgba(15,13,11,.4); }
+  .film__stage.is-light .film__rail li.is-on { color: var(--ink); }
+  .hotspots li { color: var(--ink); background: rgba(255,255,255,.7); border-color: rgba(15,13,11,.12); }
+}
 
 /* ---------- trust marquee ---------- */
 .trust { background: var(--ink-2); color: var(--bone); border-block: 1px solid var(--line-light); overflow: hidden; }
@@ -393,7 +416,12 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spa
   .nav__phone, .nav__cta .btn { display: none; }
   .brand__mark { width: 36px; height: 36px; }
   .film { height: 620vh; }
-  .film__shade { background: linear-gradient(180deg, rgba(15,13,11,.55) 0%, transparent 18%), linear-gradient(0deg, rgba(15,13,11,.92) 0%, rgba(15,13,11,.6) 42%, transparent 66%); }
+  /* phones: the shot sits in the top of the screen, copy reads on ink below it */
+  .film__canvas { top: var(--nav-h); height: 54svh; }
+  .film__shade { opacity: 1; background: linear-gradient(0deg, var(--ink) 0%, var(--ink) calc(46svh - var(--nav-h) + 2px), rgba(15,13,11,0) calc(46svh - var(--nav-h) + 90px)); }
+  .hotspots { display: none; }
+  .chapter__chips { display: none; }
+  .chapter--intro .btn--ghost, .scroll-cue { display: none; }
   .film__rail { left: 10px; height: 34vh; top: 40%; }
   .film__rail ol { display: none; }
   .chapter, .chapter--right { left: var(--gutter); right: var(--gutter); bottom: calc(92px + env(safe-area-inset-bottom)); text-align: left; max-width: none; }

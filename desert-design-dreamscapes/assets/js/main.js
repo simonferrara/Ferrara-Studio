@@ -18,6 +18,7 @@
     if (loaderDone) return;
     loaderDone = true;
     loader.classList.add('is-done');
+    setTimeout(() => loader.remove(), 900); // don't depend on the fade finishing
     introFilm();
   };
   setTimeout(hideLoader, 2600); // never block the page for long
@@ -54,7 +55,7 @@
   let lastY = 0;
   const onScroll = () => {
     const y = window.scrollY;
-    nav.classList.toggle('is-solid', y > 40);
+    nav.classList.add('is-solid'); // the film opens on a white model, so the bar stays solid
     nav.classList.toggle('is-hidden', y > innerHeight * 1.5 && y > lastY && !menuOpen);
     dock.classList.toggle('is-visible', y > innerHeight * 0.7);
     lastY = y;
@@ -203,6 +204,7 @@
 
   /* ---------- film scroll: frames, progress line, chapters ---------- */
   const line = $('#filmLine');
+  const stage = $('.film__stage');
   const marks = $$('.film__rail li');
   const fades = $$('.film [data-from]').map(el => ({ el, from: +el.dataset.from, to: +el.dataset.to }));
   const FADE = 0.04;
@@ -215,9 +217,13 @@
       const p = self.progress;
       film.progress(p);
       line.style.transform = `scaleY(${p})`;
+      // The film opens and closes on a white model: drop the dark shade and flip the UI there.
+      const light = Math.max(clamp01((0.12 - p) / 0.04), clamp01((p - 0.84) / 0.04));
+      stage.style.setProperty('--shade', (1 - light).toFixed(3));
+      stage.classList.toggle('is-light', light > 0.5);
       marks.forEach(m => m.classList.toggle('is-on', +m.dataset.at <= p + 0.001));
       fades.forEach(f => {
-        const a = (f.from === 0 ? 1 : clamp01((p - f.from) / FADE)) * clamp01((f.to - p) / FADE);
+        const a = (f.from === 0 ? 1 : clamp01((p - f.from) / FADE)) * (f.to >= 1 ? 1 : clamp01((f.to - p) / FADE));
         if (Math.abs(a - (f.a ?? -1)) < 0.002) return; // untouched chapters cost nothing
         f.a = a;
         f.el.style.opacity = a;
