@@ -38,8 +38,7 @@ body {
   font-size: 17px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
-  overflow-x: clip; /* hidden makes body a scroller on iOS and breaks the sticky film */
+  /* no overflow-x here: any overflow on an ancestor breaks the sticky film on iOS Safari */
 }
 img { display: block; max-width: 100%; height: auto; }
 a { color: inherit; }
@@ -105,6 +104,9 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spa
   transition: opacity .8s var(--ease), visibility .8s;
 }
 .loader.is-done { opacity: 0; visibility: hidden; }
+/* safety net: never keep covering the page, even if a script fails */
+.loader { animation: loaderOut .6s 4s forwards; }
+@keyframes loaderOut { to { opacity: 0; visibility: hidden; } }
 .loader__mark { width: 84px; height: 84px; }
 .loader__mark use:first-child { stroke-dasharray: 277; stroke-dashoffset: 277; animation: draw 1.4s var(--ease) forwards; }
 .loader__mark use:last-child { opacity: 0; animation: fade .6s .7s forwards; }

@@ -3,6 +3,10 @@
   const root = document.documentElement;
   root.classList.add('js');
 
+  // Always open on the first frame of the film, not mid-scroll from a previous visit.
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  if (!location.hash) window.scrollTo(0, 0);
+
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const DDD = (window.DDD = { reduced });
 
@@ -254,7 +258,7 @@
       marks.forEach(m => m.classList.toggle('is-on', +m.dataset.at <= p + 0.001));
       fades.forEach(f => {
         const a = (f.from === 0 ? 1 : clamp01((p - f.from) / FADE)) * (f.to >= 1 ? 1 : clamp01((f.to - p) / FADE));
-        if (Math.abs(a - (f.a ?? -1)) < 0.002) return; // untouched chapters cost nothing
+        if (f.a !== undefined && Math.abs(a - f.a) < 0.002) return; // untouched chapters cost nothing
         f.a = a;
         f.el.style.opacity = a;
         f.el.style.visibility = a > 0.01 ? 'visible' : 'hidden';
