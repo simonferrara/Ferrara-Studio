@@ -4,11 +4,11 @@
   root.classList.add('js');
 
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const isDesktop = () => matchMedia('(min-width: 900px)').matches;
-  const DDD = (window.DDD = { heroProgress: reduced ? 1 : 0, reduced });
+  const DDD = (window.DDD = { reduced });
 
   const $ = (s, c = document) => c.querySelector(s);
   const $$ = (s, c = document) => [...c.querySelectorAll(s)];
+  const clamp01 = v => Math.min(1, Math.max(0, v));
 
   /* ---------- loader ---------- */
   const loader = $('#loader');
@@ -18,7 +18,7 @@
     if (loaderDone) return;
     loaderDone = true;
     loader.classList.add('is-done');
-    introHero();
+    introFilm();
   };
   setTimeout(hideLoader, 2600); // never block the page for long
 
@@ -84,15 +84,14 @@
   });
   addEventListener('keydown', e => e.key === 'Escape' && closeMenu());
 
-  /* ---------- frame sequences drawn to canvas ---------- */
-  // Frames are decoded up front (createImageBitmap) and painted once per animation frame,
-  // so scrubbing never pays a decode on the main thread.
-  class Sequence {
+  /* ---------- film: frames decoded ahead, painted once per animation frame ---------- */
+  class Film {
     constructor(canvas) {
       this.canvas = canvas;
       this.ctx = canvas.getContext('2d', { alpha: false });
-      this.name = canvas.dataset.seq;
       this.count = +canvas.dataset.count;
+      // Phones get the vertical cut, larger screens the wide one.
+      this.size = matchMedia('(min-width: 900px)').matches ? 'lg' : 'sm';
       this.frames = new Array(this.count);
       this.target = 0;
       this.drawn = -1;
@@ -100,21 +99,11 @@
       this.raf = 0;
       this.resize();
     }
-    get size() {
-      const dpr = Math.min(devicePixelRatio || 1, 2);
-      return this.canvas.clientWidth * dpr > 520 ? 'lg' : 'sm';
-    }
-    src(i) {
-      this.sizeKey = this.sizeKey || this.size; // keep one resolution per session
-      return `assets/seq/${this.name}/${this.sizeKey}/${String(i + 1).padStart(3, '0')}.webp`;
-    }
+    src(i) { return `assets/film/${this.size}/${String(i + 1).padStart(3, '0')}.webp`; }
     resize() {
       const dpr = Math.min(devicePixelRatio || 1, 2);
-      const w = Math.round(this.canvas.clientWidth * dpr);
-      const h = Math.round(this.canvas.clientHeight * dpr);
-      if (!w || !h) return;
-      this.canvas.width = w;
-      this.canvas.height = h;
+      this.canvas.width = Math.round(this.canvas.clientWidth * dpr);
+      this.canvas.height = Math.round(this.canvas.clientHeight * dpr);
       this.drawn = -1;
       this.schedule();
     }
@@ -122,14 +111,11 @@
       if (this.frames[i]) return this.frames[i];
       try {
         const res = await fetch(this.src(i));
-        const bmp = await createImageBitmap(await res.blob());
-        this.frames[i] = bmp;
-        return bmp;
+        return (this.frames[i] = await createImageBitmap(await res.blob()));
       } catch (e) {
         return null;
       }
     }
-    first() { return this.load(0).then(() => this.schedule()); }
     // Coarse-to-fine order: early scrubbing already looks continuous while the rest streams in.
     loadAll() {
       if (this.loading) return;
@@ -164,90 +150,80 @@
       if (n < 0 || n === this.drawn) return;
       const img = this.frames[n];
       const { width: cw, height: ch } = this.canvas;
-      const s = Math.max(cw / img.width, ch / img.height);
-      const w = img.width * s, h = img.height * s;
-      this.ctx.drawImage(img, (cw - w) / 2, (ch - h) / 2, w, h);
+      const ctx = this.ctx;
+      const mismatch = (img.width / img.height) / (cw / ch);
+      if (mismatch > 0.72 && mismatch < 1.39) {
+        const s = Math.max(cw / img.width, ch / img.height);
+        ctx.drawImage(img, (cw - img.width * s) / 2, (ch - img.height * s) / 2, img.width * s, img.height * s);
+      } else {
+        // Clip shot for another aspect: dimmed backdrop from the same frame, clip shown whole.
+        const bs = Math.max(cw / img.width, ch / img.height) * 1.15;
+        ctx.drawImage(img, (cw - img.width * bs) / 2, (ch - img.height * bs) / 2, img.width * bs, img.height * bs);
+        ctx.fillStyle = 'rgba(15,13,11,.72)';
+        ctx.fillRect(0, 0, cw, ch);
+        const s = Math.min(cw / img.width, ch / img.height);
+        ctx.drawImage(img, (cw - img.width * s) / 2, (ch - img.height * s) / 2, img.width * s, img.height * s);
+      }
       this.drawn = n;
     }
     progress(p) {
-      this.target = Math.round(Math.min(1, Math.max(0, p)) * (this.count - 1));
+      this.target = Math.round(clamp01(p) * (this.count - 1));
       this.schedule();
     }
   }
 
-  const seqs = {};
-  $$('canvas.seq').forEach(c => { seqs[c.dataset.seq] = new Sequence(c); });
-  const loaded = Object.values(seqs).map(s => s.first());
-  Promise.all([loaded[0], document.fonts ? document.fonts.ready : null]).then(() => {
+  const film = new Film($('#filmCanvas'));
+  Promise.all([film.load(0), document.fonts ? document.fonts.ready : null]).then(() => {
+    film.schedule();
     loaderBar.style.width = '100%';
     setTimeout(hideLoader, 350);
   });
   loaderBar.style.width = '45%';
-
-  // Stream the full sequences only when a section gets close, to save mobile data.
-  const io = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (!e.isIntersecting) return;
-      const s = seqs[e.target.dataset.seq];
-      s && s.loadAll();
-      io.unobserve(e.target);
-    });
-  }, { rootMargin: '250% 0px' });
-  Object.values(seqs).forEach(s => io.observe(s.canvas));
-  // The render sequence sits right after the hero: warm it up as soon as the page is idle.
-  addEventListener('load', () => setTimeout(() => seqs.render && seqs.render.loadAll(), 600));
+  addEventListener('load', () => setTimeout(() => film.loadAll(), 300));
 
   let resizeT;
   addEventListener('resize', () => {
     clearTimeout(resizeT);
-    resizeT = setTimeout(() => Object.values(seqs).forEach(s => s.resize()), 120);
+    resizeT = setTimeout(() => film.resize(), 120);
   });
 
-  /* ---------- hero intro ---------- */
-  function introHero() {
+  /* ---------- film intro ---------- */
+  function introFilm() {
     if (reduced) return;
-    gsap.from('.hero__title .line > span', { yPercent: 110, duration: 1.3, stagger: 0.09, ease: 'expo.out' });
-    gsap.from(['.hero .eyebrow', '.hero__lede', '.hero__actions', '.hero__chips li'], { y: 24, opacity: 0, duration: 1, stagger: 0.08, delay: 0.35, ease: 'power3.out' });
+    gsap.from('.chapter--intro > *', { y: 36, opacity: 0, duration: 1.3, stagger: 0.1, ease: 'expo.out' });
   }
 
-  /* ---------- reduced motion: static, fully readable layout ---------- */
+  /* ---------- reduced motion: last frame, intro copy, normal page ---------- */
   if (reduced) {
-    seqs.render && (seqs.render.loadAll(), seqs.render.progress(1));
-    $$('.steps li').forEach(li => li.classList.add('is-active'));
+    film.loadAll();
+    film.progress(1);
     root.classList.add('reduced');
     return;
   }
 
-  /* ---------- hero: pin while the 3D patio assembles ---------- */
+  /* ---------- film scroll: frames, progress line, chapters ---------- */
+  const line = $('#filmLine');
+  const marks = $$('.film__rail li');
+  const fades = $$('.film [data-from]').map(el => ({ el, from: +el.dataset.from, to: +el.dataset.to }));
+  const FADE = 0.04;
   ScrollTrigger.create({
-    trigger: '.hero',
+    trigger: '.film',
     start: 'top top',
-    end: '+=130%',
-    pin: '#heroStage',
-    scrub: true,
-    onUpdate: self => { DDD.heroProgress = self.progress; }
-  });
-  gsap.timeline({ scrollTrigger: { trigger: '.hero', start: 'top top', end: '+=130%', scrub: true } })
-    .to('.hero__copy', { y: -60, opacity: 0, ease: 'power1.in', duration: 0.4 }, 0.55)
-    .to('.hero__chips, .hero__scroll', { opacity: 0, duration: 0.2 }, 0.5)
-    .to('.hero__stage', { '--scrim': 0, duration: 0.3 }, 0.6)
-    .fromTo('.hero__caption', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.15 }, 0.85);
-
-  /* ---------- render sequence ---------- */
-  const steps = $$('#renderSteps li');
-  const renderBar = $('#renderProgress');
-  ScrollTrigger.create({
-    trigger: '.scrub--render',
-    start: 'top top',
-    end: '+=170%',
-    pin: '.scrub--render .scrub__pin',
+    end: 'bottom bottom',
     scrub: true, // Lenis already smooths the scroll; a second smoothing layer feels laggy
     onUpdate: self => {
       const p = self.progress;
-      seqs.render.progress(p);
-      renderBar.style.transform = `scaleX(${p})`;
-      const active = Math.min(steps.length - 1, Math.floor(p * steps.length));
-      steps.forEach((li, i) => li.classList.toggle('is-active', i === active));
+      film.progress(p);
+      line.style.transform = `scaleY(${p})`;
+      marks.forEach(m => m.classList.toggle('is-on', +m.dataset.at <= p + 0.001));
+      fades.forEach(f => {
+        const a = (f.from === 0 ? 1 : clamp01((p - f.from) / FADE)) * clamp01((f.to - p) / FADE);
+        if (Math.abs(a - (f.a ?? -1)) < 0.002) return; // untouched chapters cost nothing
+        f.a = a;
+        f.el.style.opacity = a;
+        f.el.style.visibility = a > 0.01 ? 'visible' : 'hidden';
+        f.el.style.transform = `translateY(${(1 - a) * 28}px)`;
+      });
     }
   });
 
