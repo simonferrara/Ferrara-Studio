@@ -90,9 +90,9 @@
   addEventListener('keydown', e => e.key === 'Escape' && closeMenu());
 
   /* ---------- film ----------
-     Compressed frames are kept as blobs (cheap); only a small window around the playhead is
-     decoded to bitmaps, so memory stays flat on phones. Neighbouring frames are cross-faded,
-     which makes 12 fps footage read as continuous motion while scrubbing. */
+     Frames are plain <img> objects, pre-decoded with img.decode() (off the main thread in Safari
+     and Chrome) and drawn straight to the canvas. Downloads go coarse-to-fine first, then follow
+     the playhead, so whatever the user scrolls to arrives next. Neighbours are cross-faded. */
   class Film {
     constructor(canvas) {
       this.canvas = canvas;
@@ -100,83 +100,76 @@
       this.count = +canvas.dataset.count;
       // Phones get the vertical cut, larger screens the wide one.
       this.size = matchMedia('(min-width: 900px)').matches ? 'lg' : 'sm';
-      this.blobs = new Array(this.count);
-      this.bitmaps = new Map();
-      this.decoding = new Set();
+      this.frames = new Array(this.count); // HTMLImageElement once requested
+      this.ready = new Uint8Array(this.count); // 1 = decoded and drawable
       this.pos = 0;      // fractional frame index
       this.painted = -1;
       this.loading = false;
+      this.inflight = 0;
       this.raf = 0;
-      this.AHEAD = 8;
-      this.KEEP = 14;
       this.resize();
     }
     src(i) { return `assets/film/${this.size}/${String(i + 1).padStart(3, '0')}.webp`; }
     resize() {
+      // Never render the canvas far above the frames' own resolution: no extra sharpness,
+      // only extra pixels for Safari to push on every scroll step.
       const dpr = Math.min(devicePixelRatio || 1, 2);
-      this.canvas.width = Math.round(this.canvas.clientWidth * dpr);
-      this.canvas.height = Math.round(this.canvas.clientHeight * dpr);
+      const maxW = this.size === 'lg' ? 1920 : 1080;
+      const k = Math.min(dpr, maxW / Math.max(1, this.canvas.clientWidth));
+      this.canvas.width = Math.round(this.canvas.clientWidth * k);
+      this.canvas.height = Math.round(this.canvas.clientHeight * k);
       this.painted = -1;
       this.schedule();
     }
-    async fetchBlob(i) {
-      if (this.blobs[i]) return;
-      try {
-        const res = await fetch(this.src(i));
-        if (res.ok) this.blobs[i] = await res.blob();
-      } catch (e) { /* frame skipped; neighbours cover it */ }
-    }
-    async decode(blob) {
-      if (window.createImageBitmap) return createImageBitmap(blob);
+    load(i) {
+      if (this.frames[i]) return Promise.resolve();
       const img = new Image();
-      img.src = URL.createObjectURL(blob);
-      await img.decode();
-      return img;
+      img.decoding = 'async';
+      this.frames[i] = img;
+      this.inflight++;
+      return new Promise(res => {
+        const done = ok => {
+          this.inflight--;
+          if (ok) {
+            this.ready[i] = 1;
+            if (Math.abs(i - this.pos) < 25) { this.painted = -1; this.schedule(); }
+          }
+          res();
+        };
+        img.onload = () => (img.decode ? img.decode().then(() => done(true), () => done(true)) : done(true));
+        img.onerror = () => done(false);
+        img.src = this.src(i);
+      });
     }
-    ensure(i) {
-      if (i < 0 || i >= this.count || this.bitmaps.has(i) || this.decoding.has(i) || !this.blobs[i]) return;
-      this.decoding.add(i);
-      this.decode(this.blobs[i]).then(bmp => {
-        this.decoding.delete(i);
-        if (Math.abs(i - this.pos) > this.KEEP) { bmp.close && bmp.close(); return; }
-        this.bitmaps.set(i, bmp);
-        this.painted = -1;
-        this.schedule();
-      }).catch(() => this.decoding.delete(i));
-    }
-    // Decode around the playhead, release what scrolled far away.
-    window() {
+    first() { return this.load(0).then(() => this.schedule()); }
+    // Next frame to fetch: the coarse skeleton first, then whatever sits just ahead of the playhead.
+    pick() {
+      while (this.coarse.length) { const i = this.coarse.shift(); if (!this.frames[i]) return i; }
       const c = Math.round(this.pos);
-      for (let d = 0; d <= this.AHEAD; d++) { this.ensure(c + d); this.ensure(c - d); }
-      for (const [i, bmp] of this.bitmaps) {
-        if (Math.abs(i - this.pos) > this.KEEP) { bmp.close && bmp.close(); this.bitmaps.delete(i); }
+      for (let d = 0; d < this.count; d++) {
+        const ahead = c + d, behind = c - Math.ceil(d / 3);
+        if (ahead < this.count && !this.frames[ahead]) return ahead;
+        if (behind >= 0 && !this.frames[behind]) return behind;
       }
+      return -1;
     }
-    first() { return this.fetchBlob(0).then(() => { this.ensure(0); }); }
-    // Coarse-to-fine download order: early scrubbing already has frames everywhere.
     loadAll() {
       if (this.loading) return;
       this.loading = true;
-      const order = [];
-      const seen = new Set();
-      for (let step = 16; step >= 1; step /= 2)
-        for (let i = 0; i < this.count; i += step) if (!seen.has(i)) { seen.add(i); order.push(i); }
-      let next = 0;
+      this.coarse = [];
+      for (let i = 0; i < this.count; i += 12) this.coarse.push(i);
       const worker = () => {
-        if (next >= order.length) return;
-        const i = order[next++];
-        this.fetchBlob(i).then(() => {
-          if (Math.abs(i - this.pos) <= this.AHEAD) this.window();
-          worker();
-        });
+        const i = this.pick();
+        if (i < 0) return;
+        this.load(i).then(worker);
       };
       for (let k = 0; k < 6; k++) worker();
     }
     nearest(i) {
-      if (this.bitmaps.has(i)) return i;
+      if (this.ready[i]) return i;
       for (let d = 1; d < this.count; d++) {
-        if (this.bitmaps.has(i - d)) return i - d;
-        if (this.bitmaps.has(i + d)) return i + d;
+        if (i - d >= 0 && this.ready[i - d]) return i - d;
+        if (i + d < this.count && this.ready[i + d]) return i + d;
       }
       return -1;
     }
@@ -185,24 +178,44 @@
     }
     cover(img, alpha) {
       const { width: cw, height: ch } = this.canvas;
-      const s = Math.max(cw / img.width, ch / img.height);
+      const iw = img.naturalWidth, ih = img.naturalHeight;
+      const s = Math.max(cw / iw, ch / ih);
       this.ctx.globalAlpha = alpha;
-      this.ctx.drawImage(img, (cw - img.width * s) / 2, (ch - img.height * s) / 2, img.width * s, img.height * s);
+      this.ctx.drawImage(img, (cw - iw * s) / 2, (ch - ih * s) / 2, iw * s, ih * s);
+    }
+    // Closest drawable frames at or before / at or after i (within a short reach).
+    bracket(i) {
+      let lo = -1, hi = -1;
+      for (let d = 0; d <= 24 && (lo < 0 || hi < 0); d++) {
+        if (lo < 0 && i - d >= 0 && this.ready[i - d]) lo = i - d;
+        if (hi < 0 && i + d < this.count && this.ready[i + d]) hi = i + d;
+      }
+      return [lo, hi];
     }
     paint() {
       if (Math.abs(this.pos - this.painted) < 0.01) return;
-      const i0 = Math.floor(this.pos);
-      const a = this.pos - i0;
-      const n0 = this.nearest(i0);
-      if (n0 < 0) return;
-      this.cover(this.bitmaps.get(n0), 1);
-      if (a > 0.02 && n0 === i0 && this.bitmaps.has(i0 + 1)) this.cover(this.bitmaps.get(i0 + 1), a);
+      // Blend the drawable frames around the playhead: adjacent frames give smooth motion,
+      // and frames still downloading become a short dissolve instead of a jump.
+      let [lo, hi] = this.bracket(Math.floor(this.pos));
+      if (hi >= 0 && hi < this.pos) hi = this.bracket(Math.ceil(this.pos))[1];
+      if (lo < 0 && hi < 0) {
+        const n = this.nearest(Math.floor(this.pos));
+        if (n < 0) return;
+        lo = hi = n;
+      }
+      if (lo < 0) lo = hi;
+      if (hi < 0) hi = lo;
+      const a = hi > lo ? (this.pos - lo) / (hi - lo) : 0;
+      this.cover(this.frames[lo], 1);
+      if (a > 0.02) this.cover(this.frames[hi], Math.min(1, a));
       this.ctx.globalAlpha = 1;
-      this.painted = n0 === i0 ? this.pos : -1;
+      this.shown = a > 0.5 ? hi : lo;
+      this.gap = hi - lo;
+      const exact = lo === Math.floor(this.pos) && (a <= 0.02 || hi === lo + 1);
+      this.painted = exact ? this.pos : -1;
     }
     progress(p) {
       this.pos = clamp01(p) * (this.count - 1);
-      this.window();
       this.schedule();
     }
   }
