@@ -1,6 +1,22 @@
-<title>Job Board App Demo</title>
-<meta name="robots" content="noindex, nofollow">
-<meta name="claude:viewport-fit-sides" content="cover">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7DWFSLGQ5S"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-7DWFSLGQ5S");</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Custom Business App Demo for Contractors — Ferrara Studio</title>
+<meta name="description" content="Interactive demo of a custom job-board app for a sample roofing company: jobs, quotes, follow-ups and review requests. Sample data, nothing is sent.">
+<link rel="canonical" href="https://ferrarastudio.net/demos/business-app.html">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ferrarastudio.net/demos/business-app.html">
+<meta property="og:title" content="Custom Business App Demo for Contractors — Ferrara Studio">
+<meta property="og:description" content="Interactive demo of a custom job-board app for a sample roofing company: jobs, quotes, follow-ups and review requests. Sample data, nothing is sent.">
+<meta property="og:image" content="https://ferrarastudio.net/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,500;0,600;0,700;1,500&family=JetBrains+Mono:wght@500&family=Inter:wght@400;500;600&display=swap">
 <style>
 /* Layout: brand header → KPI strip → main grid (job board left, quote builder + automations right) → activity + weekly report. Dark-only by design (Ferrara navy). */
@@ -76,13 +92,15 @@ footer b{color:var(--fg)}
 .sel{user-select:all;font-family:var(--mono);color:var(--accent2)}
 </style>
 
+</head>
+<body>
 <div class="wrap">
   <header>
     <div>
       <div class="eb">Ferrara Studio · Custom business apps</div>
       <h1>Your whole business, <em>one app.</em></h1>
       <p class="lede">A web app built around how a roofing company already works: every job on one board, quotes in a minute, and the follow-ups and review requests sent automatically. Move a job and watch what happens.</p>
-      <div class="note">Demo · sample business (Lone Star Roofing) and sample customers · nothing is sent</div>
+      <div class="note">Demo · sample business (Summit Ridge Roofing, a fictional Houston-area company) and sample customers · nothing is sent</div>
     </div>
     <div class="hbtns"><button type="button" id="sim">⏩ Skip ahead 3 days</button><button type="button" id="reset">Reset demo</button></div>
   </header>
@@ -100,7 +118,7 @@ footer b{color:var(--fg)}
       <div class="box"><h3>New quote</h3>
         <div class="form">
           <div class="f full"><label for="qName">Customer</label><input id="qName" value="Maria Lopez"></div>
-          <div class="f full"><label for="qAddr">Address</label><input id="qAddr" value="1180 Westgreen Blvd, Katy"></div>
+          <div class="f full"><label for="qAddr">Address</label><input id="qAddr" value="789 Demo Dr, Houston"></div>
           <div class="f"><label for="qType">Job</label><select id="qType"><option value="replace">Roof replacement</option><option value="repair">Leak repair</option></select></div>
           <div class="f"><label for="qMat">Material</label><select id="qMat"><option value="arch">Architectural shingle</option><option value="3tab">3-tab shingle</option><option value="metal">Standing-seam metal</option></select></div>
           <div class="f"><label for="qSq">Roof size (squares)</label><input id="qSq" type="number" min="1" max="200" value="24"></div>
@@ -124,7 +142,7 @@ footer b{color:var(--fg)}
     <div class="box"><h3>Monday summary · sent to the owner</h3><div class="report" id="report"></div></div>
   </div>
 
-  <footer><span>Built around your workflow in 2–3 weeks by <b>Ferrara Studio</b>. Works on phone and computer, nothing to install.</span><span><span class="sel">ferrarastudio.net</span> · <span class="sel">simon@ferrarastudio.net</span></span></footer>
+  <footer><span>Built around your workflow by <b>Ferrara Studio</b>. Works on phone and computer, nothing to install.</span><span><span class="sel">ferrarastudio.net</span> · <span class="sel">simon@ferrarastudio.net</span></span></footer>
 </div>
 
 <script>
@@ -133,12 +151,12 @@ const COLS=[['lead','New lead'],['quote','Quote sent'],['sched','Scheduled'],['d
 const PRICE={arch:465,'3tab':395,metal:1050}, TEAR=95, REPAIR_BASE=650;
 const fmt=n=>'$'+Math.round(n).toLocaleString('en-US');
 const SEED=()=>({day:0,auto:0,saved:0,flash:null,jobs:[
-  {id:1,name:'James Carter',job:'Hail damage inspection',area:'Cypress',value:0,col:'lead',age:0,tags:['From AI front desk']},
-  {id:2,name:'Linda Nguyen',job:'Roof replacement · 28 sq',area:'Sugar Land',value:14250,col:'quote',age:2,tags:[]},
-  {id:3,name:'Robert Hayes',job:'Leak repair',area:'Katy',value:850,col:'quote',age:4,tags:[]},
-  {id:4,name:'Ana Torres',job:'Roof replacement · 22 sq',area:'Fulshear',value:11320,col:'sched',age:0,tags:['Thu 8:00 AM']},
-  {id:5,name:'Mike Brooks',job:'Gutter + flashing',area:'Richmond',value:1900,col:'done',age:1,tags:['Review requested']},
- ],log:[['Mon','📥','New lead from the AI front desk: James Carter, hail damage, Cypress']]});
+  {id:1,name:'James Carter',job:'Hail damage inspection',area:'North Houston',value:0,col:'lead',age:0,tags:['From AI front desk']},
+  {id:2,name:'Linda Nguyen',job:'Roof replacement · 28 sq',area:'Southwest Houston',value:14250,col:'quote',age:2,tags:[]},
+  {id:3,name:'Robert Hayes',job:'Leak repair',area:'West Houston',value:850,col:'quote',age:4,tags:[]},
+  {id:4,name:'Ana Torres',job:'Roof replacement · 22 sq',area:'Northwest Houston',value:11320,col:'sched',age:0,tags:['Thu 8:00 AM']},
+  {id:5,name:'Mike Brooks',job:'Gutter + flashing',area:'South Houston',value:1900,col:'done',age:1,tags:['Review requested']},
+ ],log:[['Mon','📥','New lead from the AI front desk: James Carter, hail damage, North Houston']]});
 let S=SEED(), nextId=6;
 const rule=n=>$('r'+n).checked;
 function addLog(icon,text){S.log.unshift([S.day===0?'Today':'Day +'+S.day,icon,text]);}
@@ -151,7 +169,7 @@ function renderQuote(){
   const q=quote(), name=$('qName').value.trim()||'there', first=name.split(' ')[0];
   $('qTotal').textContent=fmt(q.total);
   const what=q.type==='repair'?'leak repair':`${q.sq}-square roof replacement (${$('qMat').selectedOptions[0].text.toLowerCase()})`;
-  $('qPrev').textContent=`Text to ${name}:\nHi ${first}, it's Lone Star Roofing. Your quote for the ${what} at ${$('qAddr').value.trim()||'your address'} is ${fmt(q.total)}. Reply YES to book a date or ask us anything.`;
+  $('qPrev').textContent=`Text to ${name}:\nHi ${first}, it's Summit Ridge Roofing. Your quote for the ${what} at ${$('qAddr').value.trim()||'your address'} is ${fmt(q.total)}. Reply YES to book a date or ask us anything.`;
 }
 function move(id){
   const j=S.jobs.find(x=>x.id===id), i=COLS.findIndex(c=>c[0]===j.col); if(i>=COLS.length-1) return;
@@ -182,13 +200,15 @@ function render(){
   $('kAuto').textContent=S.auto; $('kHours').textContent=(1.5+S.saved).toFixed(1).replace('.0','')+' h';
   $('log').innerHTML=S.log.map(l=>`<li><time>${l[0]}</time><span class="ico">${l[1]}</span><span>${l[2]}</span></li>`).join('');
   const done=S.jobs.filter(j=>j.col==='done'), sched=S.jobs.filter(j=>j.col==='sched'), stuck=S.jobs.filter(j=>j.col==='quote'&&!j.tags.includes('Followed up')&&j.age>=3);
-  $('report').textContent=`Good morning! Here's your week at Lone Star Roofing:\n\n• ${done.length} job${done.length===1?'':'s'} completed (${fmt(done.reduce((a,j)=>a+j.value,0))})\n• ${sched.length} scheduled: ${sched.map(j=>j.name.split(' ')[0]).join(', ')||'none'}\n• ${fmt(open)} waiting in open quotes\n• ${S.auto} messages sent for you automatically\n${stuck.length?`• Needs you: ${stuck.map(j=>j.name).join(', ')} (no reply yet)`:'• Nothing is stuck. Nice.'}`;
+  $('report').textContent=`Good morning! Here's your week at Summit Ridge Roofing:\n\n• ${done.length} job${done.length===1?'':'s'} completed (${fmt(done.reduce((a,j)=>a+j.value,0))})\n• ${sched.length} scheduled: ${sched.map(j=>j.name.split(' ')[0]).join(', ')||'none'}\n• ${fmt(open)} waiting in open quotes\n• ${S.auto} messages sent for you automatically\n${stuck.length?`• Needs you: ${stuck.map(j=>j.name).join(', ')} (no reply yet)`:'• Nothing is stuck. Nice.'}`;
   renderQuote();
 }
 $('qSend').onclick=()=>{const q=quote(), name=$('qName').value.trim()||'New customer';
-  S.jobs.push({id:nextId,name,job:q.type==='repair'?'Leak repair':`Roof replacement · ${q.sq} sq`,area:($('qAddr').value.split(',')[1]||'Katy').trim(),value:q.total,col:'quote',age:0,tags:[]});
+  S.jobs.push({id:nextId,name,job:q.type==='repair'?'Leak repair':`Roof replacement · ${q.sq} sq`,area:($('qAddr').value.split(',')[1]||'Houston').trim(),value:q.total,col:'quote',age:0,tags:[]});
   S.flash=nextId++; addLog('🧾',`Quote created and texted to ${name}: ${fmt(q.total)}`); S.saved+=0.5; render();};
 ['qName','qAddr','qType','qMat','qSq','qTear'].forEach(id=>$(id).addEventListener('input',renderQuote));
 $('sim').onclick=skip; $('reset').onclick=()=>{S=SEED();nextId=6;render();};
 render();
 </script>
+</body>
+</html>
