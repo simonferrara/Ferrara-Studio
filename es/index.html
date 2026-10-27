@@ -285,6 +285,17 @@ body.revealed .in{opacity:1;transform:none;}
 .btn.solid{background:var(--ink);color:#fff;border-color:var(--ink);}
 .btn.solid:hover{background:#222;}
 .tier.dark .btn{background:var(--orb);color:#fff;border:none;}
+.plan{margin-bottom:14px;}
+.plan .gcard-in{display:flex;flex-direction:column;gap:22px;padding:32px 28px;background:rgba(10,10,10,.92);color:#fff;}
+.plan .gcard-in::before{background:linear-gradient(to right,transparent,rgba(81,117,255,.8),transparent);}
+.plan .tier-name{color:rgba(255,255,255,.55);}
+.plan .price small{color:rgba(255,255,255,.55);}
+.plan .price-mo{font-size:.42em;letter-spacing:-.02em;margin-left:2px;}
+.plan .tier-d{color:rgba(255,255,255,.65);max-width:520px;}
+.plan .feats{margin:0;}
+.plan .feats svg.i{color:#7f9bff;}
+.plan .btn{background:var(--orb);color:#fff;border:none;align-self:flex-start;}
+.plan-r{display:flex;flex-direction:column;gap:22px;}
 .care{margin-top:14px;}
 .care .gcard-in{display:flex;flex-direction:column;gap:18px;padding:24px 28px;}
 .care-p{font:500 32px/1 var(--font-raleway);letter-spacing:-.03em;}
@@ -402,6 +413,7 @@ footer{background:var(--ink);color:#fff;border-radius:2.5rem 2.5rem 0 0;overflow
   #drawer{width:420px;}
   .themes{grid-template-columns:1fr 1fr;}
   .care .gcard-in{flex-direction:row;align-items:center;justify-content:space-between;}
+  .plan .gcard-in{display:grid;grid-template-columns:1.1fr 1fr;gap:40px;align-items:center;padding:40px;}
 }
 @media (min-width:768px){
   header{height:96px;padding:0 48px;}
@@ -559,7 +571,7 @@ footer{background:var(--ink);color:#fff;border-radius:2.5rem 2.5rem 0 0;overflow
     <div class="tiers">
       <div class="gcard tier" data-reveal=""><div class="gcard-in">
         <p class="tier-name"><span>01 · Webs</span></p>
-        <p class="price">Desde $599<small>Online en 7 días</small></p>
+        <p class="price">$0 de entrada<small>$99/mes · o desde $599 pago único · Lista en 7 días</small></p>
         <p class="tier-d">Webs a medida, pensadas para celular, con 3D, animación y textos que venden. $0 hasta que apruebes el diseño.</p>
         <ul class="feats">
           <li><svg class="i"><use href="#i-check"></use></svg>Diseño a medida, sin plantillas</li>
@@ -613,6 +625,23 @@ footer{background:var(--ink);color:#fff;border-radius:2.5rem 2.5rem 0 0;overflow
       <p class="label" data-reveal="">[ 07 — Precios de webs ]</p>
       <h2 id="price-h" class="h-xl" data-reveal="" data-delay=".1">Precios de webs.<br>Sin sorpresas.</h2>
     </div>
+    <div class="gcard plan" data-reveal=""><div class="gcard-in">
+      <div>
+        <p class="tier-name"><span>Plan Web · Mensual</span><span class="badge">Recomendado</span></p>
+        <p class="price">$0 de entrada<small>Luego $99/mes · mínimo 12 meses</small></p>
+        <p class="tier-d">Tu web a medida sin pagar nada por adelantado. Primero apruebas el diseño y luego pagas $99 al mes — hosting, dominio, cambios mensuales y soporte incluidos. Después de 12 meses sigue mes a mes; cancelas cuando quieras.</p>
+      </div>
+      <div class="plan-r">
+        <ul class="feats">
+          <li><svg class="i"><use href="#i-check"></use></svg>Diseño a medida, sin plantillas</li>
+          <li><svg class="i"><use href="#i-check"></use></svg>Hosting + dominio incluidos</li>
+          <li><svg class="i"><use href="#i-check"></use></svg>Cambios de contenido mensuales</li>
+          <li><svg class="i"><use href="#i-check"></use></svg>Soporte continuo</li>
+          <li><svg class="i"><use href="#i-check"></use></svg>Dominio registrado a tu nombre</li>
+        </ul>
+        <a class="btn cta" href="#quote" data-package="Plan Web — $0 de entrada, $99/mes">Empieza con $0 de entrada <svg class="i"><use href="#i-chev"></use></svg></a>
+      </div>
+    </div></div>
     <div class="tiers">
       <div class="gcard tier" data-reveal=""><div class="gcard-in">
         <p class="tier-name"><span>Starter · Landing page</span></p>
@@ -628,7 +657,7 @@ footer{background:var(--ink);color:#fff;border-radius:2.5rem 2.5rem 0 0;overflow
         <a class="btn cta" href="#quote" data-package="Landing page — $599">Empezar</a>
       </div></div>
       <div class="gcard tier dark" data-reveal="" data-delay=".1"><div class="gcard-in">
-        <p class="tier-name"><span>Business · Web completa</span><span class="badge">La más elegida</span></p>
+        <p class="tier-name"><span>Business · Web completa</span></p>
         <p class="price">$1,997<small>Pago único · 7 días</small></p>
         <p class="tier-d">Una web premium completa: Inicio, Nosotros, Servicios, Galería, Contacto. Para restaurantes, estudios jurídicos e inmobiliarias.</p>
         <ul class="feats">
@@ -726,7 +755,8 @@ footer{background:var(--ink);color:#fff;border-radius:2.5rem 2.5rem 0 0;overflow
         <details><summary>¿Y si no me gusta cómo queda?<svg class="i"><use href="#i-plus"></use></svg></summary><p>No pagas ni un dólar hasta aprobar el diseño. Business y Premium incluyen cambios ilimitados; Starter incluye 2 rondas. Si después de los cambios de verdad no estás conforme, te devolvemos el 100%.</p></details>
         <details><summary>¿Quién escribe los textos?<svg class="i"><use href="#i-plus"></use></svg></summary><p>Nosotros. Nos das los datos clave en el brief y escribimos todos los textos, titulares y llamados a la acción. Si prefieres, también puedes mandarnos tus propios textos.</p></details>
         <details><summary>¿Mi web va a aparecer en Google?<svg class="i"><use href="#i-plus"></use></svg></summary><p>Todas las webs incluyen SEO en la página: títulos, descripciones, estructura de encabezados, textos alternativos de imágenes y datos estructurados. Business y Premium incluyen Google Analytics y Search Console.</p></details>
-        <details><summary>¿Qué pasa cuando la web ya está online?<svg class="i"><use href="#i-plus"></use></svg></summary><p>La web es 100% tuya. Te entregamos todos los accesos y un video explicativo. Puedes sumar el plan de mantenimiento mensual de $297/mes para actualizaciones, monitoreo y soporte.</p></details>
+        <details><summary>¿Cómo funciona el plan de $99/mes?<svg class="i"><use href="#i-plus"></use></svg></summary><p>$0 de entrada. Primero apruebas el diseño y luego pagas $99/mes con un mínimo de 12 meses — hosting, dominio, cambios de contenido mensuales y soporte incluidos. Después de 12 meses sigue mes a mes y puedes cancelar cuando quieras. El dominio queda registrado a tu nombre y, si algún día te vas, puedes comprar los archivos de la web con un pago único.</p></details>
+        <details><summary>¿Qué pasa cuando la web ya está online?<svg class="i"><use href="#i-plus"></use></svg></summary><p>Con un paquete de pago único la web es completamente tuya. Te entregamos todos los accesos y un video explicativo. Suma el Plan de Mantenimiento Mensual a $297/mes para actualizaciones, monitoreo y soporte. En el plan de $99/mes, el hosting, las actualizaciones y el soporte ya están incluidos.</p></details>
       </div>
       <div class="gcard guar" data-reveal="" data-delay=".15"><div class="gcard-in">
         <p class="label">[ Garantía ]</p>
@@ -759,7 +789,7 @@ footer{background:var(--ink);color:#fff;border-radius:2.5rem 2.5rem 0 0;overflow
           <div class="field"><label for="f-pkg">¿Qué necesitas?</label>
             <select id="f-pkg" name="package">
               <option value="">Elige un servicio…</option>
-              <option>Landing page — $599</option><option>Web de varias páginas — $1,997</option><option>Tienda online — $2,997</option><option>Video y anuncios con IA</option><option>Series y personajes con IA</option><option>Todavía no sé, necesito consejo</option>
+              <option>Plan Web — $0 de entrada, $99/mes</option><option>Landing page — $599</option><option>Web de varias páginas — $1,997</option><option>Tienda online — $2,997</option><option>Video y anuncios con IA</option><option>Series y personajes con IA</option><option>Todavía no sé, necesito consejo</option>
             </select></div>
           <div class="field"><label for="f-budget">Tu presupuesto</label>
             <select id="f-budget" name="budget">

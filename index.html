@@ -120,6 +120,7 @@ if((p==='/'||p==='/index.html')&&s!=='en'&&(l==='es'||l==='it'))location.replace
   "mainEntity": [
     {"@type": "Question", "name": "What does “human + AI” actually mean?", "acceptedAnswer": {"@type": "Answer", "text": "Simon handles strategy, taste and direction on every project. AI handles production — code, images, video and motion — so you get studio-level work in days instead of weeks, reviewed by a person at every step."}},
     {"@type": "Question", "name": "Can I use the AI video commercially?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. You get the final files for your brand’s ads, social and website. We only use tools whose terms allow commercial use, and we never imitate real people or other brands."}},
+    {"@type": "Question", "name": "How does the $99/month plan work?", "acceptedAnswer": {"@type": "Answer", "text": "$0 down. You approve the design first, then pay $99/month with a 12-month minimum — hosting, domain, monthly content changes and support included. After 12 months it continues month to month and you can cancel anytime. The domain is registered in your name, and if you ever leave you can buy the site files for a one-time fee."}},
     {"@type": "Question", "name": "Do I need tech knowledge?", "acceptedAnswer": {"@type": "Answer", "text": "Zero. You fill a 10-question brief about your business and we handle everything — design, copy, hosting, domain connection and setup. You just approve the result."}},
     {"@type": "Question", "name": "What if I don't like how it looks?", "acceptedAnswer": {"@type": "Answer", "text": "You don't pay a single dollar until you approve the design. Business and Premium include unlimited revisions; Starter includes 2 rounds. If you're genuinely not happy after revisions, we refund 100%."}},
     {"@type": "Question", "name": "Who writes the content?", "acceptedAnswer": {"@type": "Answer", "text": "We do. You give us the key details in the brief and we handle all copywriting, headlines and calls to action. You can also send your own copy if you prefer."}},
@@ -303,6 +304,17 @@ body.revealed .in{opacity:1;transform:none;}
 .btn.solid{background:var(--ink);color:#fff;border-color:var(--ink);}
 .btn.solid:hover{background:#222;}
 .tier.dark .btn{background:var(--orb);color:#fff;border:none;}
+.plan{margin-bottom:14px;}
+.plan .gcard-in{display:flex;flex-direction:column;gap:22px;padding:32px 28px;background:rgba(10,10,10,.92);color:#fff;}
+.plan .gcard-in::before{background:linear-gradient(to right,transparent,rgba(81,117,255,.8),transparent);}
+.plan .tier-name{color:rgba(255,255,255,.55);}
+.plan .price small{color:rgba(255,255,255,.55);}
+.plan .price-mo{font-size:.42em;letter-spacing:-.02em;margin-left:2px;}
+.plan .tier-d{color:rgba(255,255,255,.65);max-width:520px;}
+.plan .feats{margin:0;}
+.plan .feats svg.i{color:#7f9bff;}
+.plan .btn{background:var(--orb);color:#fff;border:none;align-self:flex-start;}
+.plan-r{display:flex;flex-direction:column;gap:22px;}
 .care{margin-top:14px;}
 .care .gcard-in{display:flex;flex-direction:column;gap:18px;padding:24px 28px;}
 .care-p{font:500 32px/1 var(--font-raleway);letter-spacing:-.03em;}
@@ -420,6 +432,7 @@ footer{background:var(--ink);color:#fff;border-radius:2.5rem 2.5rem 0 0;overflow
   #drawer{width:420px;}
   .themes{grid-template-columns:1fr 1fr;}
   .care .gcard-in{flex-direction:row;align-items:center;justify-content:space-between;}
+  .plan .gcard-in{display:grid;grid-template-columns:1.1fr 1fr;gap:40px;align-items:center;padding:40px;}
 }
 @media (min-width:768px){
   header{height:96px;padding:0 48px;}
@@ -577,7 +590,7 @@ footer{background:var(--ink);color:#fff;border-radius:2.5rem 2.5rem 0 0;overflow
     <div class="tiers">
       <div class="gcard tier" data-reveal><div class="gcard-in">
         <p class="tier-name"><span>01 · Websites</span></p>
-        <p class="price">From $599<small>Live in 7 days</small></p>
+        <p class="price">$0 down<small>$99/mo · or from $599 one-time · Live in 7 days</small></p>
         <p class="tier-d">Custom, mobile-first websites with 3D, motion and copy that converts. $0 until you approve the design.</p>
         <ul class="feats">
           <li><svg class="i"><use href="#i-check"/></svg>Custom design — no templates</li>
@@ -631,6 +644,23 @@ footer{background:var(--ink);color:#fff;border-radius:2.5rem 2.5rem 0 0;overflow
       <p class="label" data-reveal>[ 07 — Website pricing ]</p>
       <h2 id="price-h" class="h-xl" data-reveal data-delay=".1">Website pricing.<br>No surprises.</h2>
     </div>
+    <div class="gcard plan" data-reveal><div class="gcard-in">
+      <div>
+        <p class="tier-name"><span>Website Plan · Monthly</span><span class="badge">Recommended</span></p>
+        <p class="price">$0 down<small>Then $99/month · 12-month minimum</small></p>
+        <p class="tier-d">Your custom website with nothing to pay upfront. You approve the design first, then pay $99 a month — hosting, domain, monthly changes and support all included. After 12 months it continues month to month; cancel anytime.</p>
+      </div>
+      <div class="plan-r">
+        <ul class="feats">
+          <li><svg class="i"><use href="#i-check"/></svg>Custom design — no templates</li>
+          <li><svg class="i"><use href="#i-check"/></svg>Hosting + domain included</li>
+          <li><svg class="i"><use href="#i-check"/></svg>Monthly content changes</li>
+          <li><svg class="i"><use href="#i-check"/></svg>Ongoing support</li>
+          <li><svg class="i"><use href="#i-check"/></svg>Domain registered in your name</li>
+        </ul>
+        <a class="btn cta" href="#quote" data-package="Website Plan — $0 down, $99/mo">Start for $0 down <svg class="i"><use href="#i-chev"/></svg></a>
+      </div>
+    </div></div>
     <div class="tiers">
       <div class="gcard tier" data-reveal><div class="gcard-in">
         <p class="tier-name"><span>Starter · Landing page</span></p>
@@ -646,7 +676,7 @@ footer{background:var(--ink);color:#fff;border-radius:2.5rem 2.5rem 0 0;overflow
         <a class="btn cta" href="#quote" data-package="Landing Page — $599">Get started</a>
       </div></div>
       <div class="gcard tier dark" data-reveal data-delay=".1"><div class="gcard-in">
-        <p class="tier-name"><span>Business · Full website</span><span class="badge">Most popular</span></p>
+        <p class="tier-name"><span>Business · Full website</span></p>
         <p class="price">$1,997<small>One-time · 7 days</small></p>
         <p class="tier-d">A complete premium site — Home, About, Services, Gallery, Contact. Built for restaurants, law firms and real estate.</p>
         <ul class="feats">
@@ -744,7 +774,8 @@ footer{background:var(--ink);color:#fff;border-radius:2.5rem 2.5rem 0 0;overflow
         <details><summary>What if I don't like how it looks?<svg class="i"><use href="#i-plus"/></svg></summary><p>You don't pay a single dollar until you approve the design. Business and Premium include unlimited revisions; Starter includes 2 rounds. If you're genuinely not happy after revisions, we refund 100%.</p></details>
         <details><summary>Who writes the content?<svg class="i"><use href="#i-plus"/></svg></summary><p>We do. You give us the key details in the brief and we handle all copywriting, headlines and calls to action. You can also send your own copy if you prefer.</p></details>
         <details><summary>Will my site show up on Google?<svg class="i"><use href="#i-plus"/></svg></summary><p>Every site includes on-page SEO — meta titles, descriptions, heading structure, image alt text and schema markup. Business and Premium include Google Analytics and Search Console setup.</p></details>
-        <details><summary>What happens after the site is live?<svg class="i"><use href="#i-plus"/></svg></summary><p>You own the site completely. We hand you all credentials and a video walkthrough. Add the Monthly Care Plan at $297/month for ongoing updates, monitoring and support.</p></details>
+        <details><summary>How does the $99/month plan work?<svg class="i"><use href="#i-plus"/></svg></summary><p>$0 down. You approve the design first, then pay $99/month with a 12-month minimum — hosting, domain, monthly content changes and support included. After 12 months it continues month to month and you can cancel anytime. The domain is registered in your name, and if you ever leave you can buy the site files for a one-time fee.</p></details>
+        <details><summary>What happens after the site is live?<svg class="i"><use href="#i-plus"/></svg></summary><p>With a one-time package you own the site completely. We hand you all credentials and a video walkthrough. Add the Monthly Care Plan at $297/month for ongoing updates, monitoring and support. On the $99/month plan, hosting, updates and support are already included.</p></details>
       </div>
       <div class="gcard guar" data-reveal data-delay=".15"><div class="gcard-in">
         <p class="label">[ Guarantee ]</p>
@@ -777,7 +808,7 @@ footer{background:var(--ink);color:#fff;border-radius:2.5rem 2.5rem 0 0;overflow
           <div class="field"><label for="f-pkg">What do you need?</label>
             <select id="f-pkg" name="package">
               <option value="">Select a service…</option>
-              <option>Landing Page — $599</option><option>Multi-Page Website — $1,997</option><option>Online Store — $2,997</option><option>AI video &amp; ads</option><option>AI series &amp; characters</option><option>Not sure yet — need advice</option>
+              <option>Website Plan — $0 down, $99/mo</option><option>Landing Page — $599</option><option>Multi-Page Website — $1,997</option><option>Online Store — $2,997</option><option>AI video &amp; ads</option><option>AI series &amp; characters</option><option>Not sure yet — need advice</option>
             </select></div>
           <div class="field"><label for="f-budget">Your budget</label>
             <select id="f-budget" name="budget">
