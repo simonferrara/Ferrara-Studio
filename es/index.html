@@ -285,6 +285,30 @@ body.revealed .in{opacity:1;transform:none;}
 .btn.solid{background:var(--ink);color:#fff;border-color:var(--ink);}
 .btn.solid:hover{background:#222;}
 .tier.dark .btn{background:var(--orb);color:#fff;border:none;}
+.plans{display:grid;grid-template-columns:1fr;gap:14px;margin-bottom:14px;align-items:stretch;}
+.plan .gcard-in{height:100%;}
+.plan .plan-r{margin-top:auto;}
+.plan.plan-alt .gcard-in{background:transparent;color:inherit;}
+.plan.plan-alt .gcard-in::before{background:linear-gradient(to right,transparent,rgba(81,117,255,.5),transparent);}
+.plan.plan-alt .tier-name,.plan.plan-alt .price small,.plan.plan-alt .tier-d{color:var(--n500);}
+.plan.plan-alt .feats svg.i{color:var(--accent);}
+.plan.plan-alt .btn{background:var(--ink);color:#fff;}
+.badge.alt{background:transparent;color:var(--accent);border:1px solid currentColor;}
+.plan-note{font:400 11px/1.5 var(--font-mono);letter-spacing:.06em;color:var(--n500);}
+.plan .gcard-in{display:flex;flex-direction:column;gap:22px;padding:32px 28px;background:rgba(10,10,10,.92);color:#fff;}
+.plan .gcard-in::before{background:linear-gradient(to right,transparent,rgba(81,117,255,.8),transparent);}
+.plan .tier-name{color:rgba(255,255,255,.55);}
+.plan .price small{color:rgba(255,255,255,.55);}
+.plan-top{display:flex;justify-content:flex-end;font:400 10px var(--font-mono);letter-spacing:.2em;text-transform:uppercase;margin-bottom:-8px;}
+.plan .plan-name{font:500 clamp(32px,9vw,52px)/1.05 var(--font-raleway);letter-spacing:-.04em;}
+.plan .price{margin-top:10px;font:500 clamp(22px,6vw,28px)/1.1 var(--font-raleway);letter-spacing:-.03em;}
+.plan .price small{margin-top:12px;}
+.plan.plan-alt .plan-name,.plan.plan-alt .price{color:var(--ink);}
+.plan .tier-d{color:rgba(255,255,255,.65);max-width:520px;}
+.plan .feats{margin:0;}
+.plan .feats svg.i{color:#7f9bff;}
+.plan .btn{background:var(--orb);color:#fff;border:none;align-self:flex-start;}
+.plan-r{display:flex;flex-direction:column;gap:22px;}
 .care{margin-top:14px;}
 .care .gcard-in{display:flex;flex-direction:column;gap:18px;padding:24px 28px;}
 .care-p{font:500 32px/1 var(--font-raleway);letter-spacing:-.03em;}
@@ -402,6 +426,8 @@ footer{background:var(--ink);color:#fff;border-radius:2.5rem 2.5rem 0 0;overflow
   #drawer{width:420px;}
   .themes{grid-template-columns:1fr 1fr;}
   .care .gcard-in{flex-direction:row;align-items:center;justify-content:space-between;}
+  .plans{grid-template-columns:repeat(2,1fr);}
+  .plan .gcard-in{padding:36px;}
 }
 @media (min-width:768px){
   header{height:96px;padding:0 48px;}
@@ -559,7 +585,7 @@ footer{background:var(--ink);color:#fff;border-radius:2.5rem 2.5rem 0 0;overflow
     <div class="tiers">
       <div class="gcard tier" data-reveal=""><div class="gcard-in">
         <p class="tier-name"><span>01 · Webs</span></p>
-        <p class="price">Desde $599<small>Online en 7 días</small></p>
+        <p class="price">$0 de entrada<small>$99/mes · o desde $599 pago único · Lista en 7 días</small></p>
         <p class="tier-d">Webs a medida, pensadas para celular, con 3D, animación y textos que venden. $0 hasta que apruebes el diseño.</p>
         <ul class="feats">
           <li><svg class="i"><use href="#i-check"></use></svg>Diseño a medida, sin plantillas</li>
@@ -613,6 +639,45 @@ footer{background:var(--ink);color:#fff;border-radius:2.5rem 2.5rem 0 0;overflow
       <p class="label" data-reveal="">[ 07 — Precios de webs ]</p>
       <h2 id="price-h" class="h-xl" data-reveal="" data-delay=".1">Precios de webs.<br>Sin sorpresas.</h2>
     </div>
+    <div class="plans">
+    <div class="gcard plan" data-reveal=""><div class="gcard-in">
+      <div>
+        <p class="plan-top"><span class="badge">Recomendado</span></p>
+        <p class="plan-name">Plan Web</p>
+        <p class="price">$0 de entrada<small>Luego $99/mes · mínimo 12 meses</small></p>
+        <p class="tier-d">Tu web a medida sin pagar nada por adelantado. Primero apruebas el diseño y luego pagas $99 al mes — hosting, dominio, cambios mensuales y soporte incluidos. Después de 12 meses sigue mes a mes; cancelas cuando quieras.</p>
+      </div>
+      <div class="plan-r">
+        <ul class="feats">
+          <li><svg class="i"><use href="#i-check"></use></svg>Diseño a medida, sin plantillas</li>
+          <li><svg class="i"><use href="#i-check"></use></svg>Hosting + dominio incluidos</li>
+          <li><svg class="i"><use href="#i-check"></use></svg>Cambios de contenido mensuales</li>
+          <li><svg class="i"><use href="#i-check"></use></svg>Soporte continuo</li>
+          <li><svg class="i"><use href="#i-check"></use></svg>Dominio registrado a tu nombre</li>
+        </ul>
+        <a class="btn cta" href="#quote" data-package="Plan Web — $0 de entrada, $99/mes">Empieza con $0 de entrada <svg class="i"><use href="#i-chev"></use></svg></a>
+      </div>
+    </div></div>
+    <div class="gcard plan plan-alt" data-reveal="" data-delay=".1"><div class="gcard-in">
+      <div>
+        <p class="plan-top"><span class="badge alt">Acceso anticipado</span></p>
+        <p class="plan-name">Recepcionista IA</p>
+        <p class="price">$0 de entrada<small>Luego $299/mes · mínimo 12 meses</small></p>
+        <p class="tier-d">Todo lo del Plan Web, más una recepcionista IA que atiende el chat de tu web y tus llamadas 24/7, agenda citas, capta clientes potenciales y te envía un resumen de cada conversación.</p>
+      </div>
+      <div class="plan-r">
+        <ul class="feats">
+          <li><svg class="i"><use href="#i-check"></use></svg>Todo lo del Plan Web de $99</li>
+          <li><svg class="i"><use href="#i-check"></use></svg>La IA atiende el chat de la web 24/7</li>
+          <li><svg class="i"><use href="#i-check"></use></svg>La IA atiende llamadas 24/7</li>
+          <li><svg class="i"><use href="#i-check"></use></svg>Agenda citas y capta clientes</li>
+          <li><svg class="i"><use href="#i-check"></use></svg>Resúmenes de cada conversación por email</li>
+        </ul>
+        <p class="plan-note">Acceso anticipado — plazas limitadas.</p>
+        <a class="btn cta" href="#quote" data-package="Web + Recepcionista IA — $0 de entrada, $299/mes">Solicitar acceso anticipado <svg class="i"><use href="#i-chev"></use></svg></a>
+      </div>
+    </div></div>
+    </div>
     <div class="tiers">
       <div class="gcard tier" data-reveal=""><div class="gcard-in">
         <p class="tier-name"><span>Starter · Landing page</span></p>
@@ -628,7 +693,7 @@ footer{background:var(--ink);color:#fff;border-radius:2.5rem 2.5rem 0 0;overflow
         <a class="btn cta" href="#quote" data-package="Landing page — $599">Empezar</a>
       </div></div>
       <div class="gcard tier dark" data-reveal="" data-delay=".1"><div class="gcard-in">
-        <p class="tier-name"><span>Business · Web completa</span><span class="badge">La más elegida</span></p>
+        <p class="tier-name"><span>Business · Web completa</span></p>
         <p class="price">$1,997<small>Pago único · 7 días</small></p>
         <p class="tier-d">Una web premium completa: Inicio, Nosotros, Servicios, Galería, Contacto. Para restaurantes, estudios jurídicos e inmobiliarias.</p>
         <ul class="feats">
@@ -726,7 +791,9 @@ footer{background:var(--ink);color:#fff;border-radius:2.5rem 2.5rem 0 0;overflow
         <details><summary>¿Y si no me gusta cómo queda?<svg class="i"><use href="#i-plus"></use></svg></summary><p>No pagas ni un dólar hasta aprobar el diseño. Business y Premium incluyen cambios ilimitados; Starter incluye 2 rondas. Si después de los cambios de verdad no estás conforme, te devolvemos el 100%.</p></details>
         <details><summary>¿Quién escribe los textos?<svg class="i"><use href="#i-plus"></use></svg></summary><p>Nosotros. Nos das los datos clave en el brief y escribimos todos los textos, titulares y llamados a la acción. Si prefieres, también puedes mandarnos tus propios textos.</p></details>
         <details><summary>¿Mi web va a aparecer en Google?<svg class="i"><use href="#i-plus"></use></svg></summary><p>Todas las webs incluyen SEO en la página: títulos, descripciones, estructura de encabezados, textos alternativos de imágenes y datos estructurados. Business y Premium incluyen Google Analytics y Search Console.</p></details>
-        <details><summary>¿Qué pasa cuando la web ya está online?<svg class="i"><use href="#i-plus"></use></svg></summary><p>La web es 100% tuya. Te entregamos todos los accesos y un video explicativo. Puedes sumar el plan de mantenimiento mensual de $297/mes para actualizaciones, monitoreo y soporte.</p></details>
+        <details><summary>¿Cómo funciona el plan de $99/mes?<svg class="i"><use href="#i-plus"></use></svg></summary><p>$0 de entrada. Primero apruebas el diseño y luego pagas $99/mes con un mínimo de 12 meses — hosting, dominio, cambios de contenido mensuales y soporte incluidos. Después de 12 meses sigue mes a mes y puedes cancelar cuando quieras. El dominio queda registrado a tu nombre y, si algún día te vas, puedes comprar los archivos de la web con un pago único.</p></details>
+        <details><summary>¿Qué es el plan Web + Recepcionista IA de $299/mes?<svg class="i"><use href="#i-plus"></use></svg></summary><p>Todo lo del Plan Web de $99/mes, más una recepcionista IA que atiende el chat de tu web y tus llamadas 24/7, agenda citas, capta clientes potenciales y te envía un resumen por email. Mismas condiciones: $0 de entrada, mínimo 12 meses y luego mes a mes. Está en acceso anticipado con plazas limitadas, así que lo configuramos junto contigo.</p></details>
+        <details><summary>¿Qué pasa cuando la web ya está online?<svg class="i"><use href="#i-plus"></use></svg></summary><p>Con un paquete de pago único la web es completamente tuya. Te entregamos todos los accesos y un video explicativo. Suma el Plan de Mantenimiento Mensual a $297/mes para actualizaciones, monitoreo y soporte. En el plan de $99/mes, el hosting, las actualizaciones y el soporte ya están incluidos.</p></details>
       </div>
       <div class="gcard guar" data-reveal="" data-delay=".15"><div class="gcard-in">
         <p class="label">[ Garantía ]</p>
@@ -759,7 +826,7 @@ footer{background:var(--ink);color:#fff;border-radius:2.5rem 2.5rem 0 0;overflow
           <div class="field"><label for="f-pkg">¿Qué necesitas?</label>
             <select id="f-pkg" name="package">
               <option value="">Elige un servicio…</option>
-              <option>Landing page — $599</option><option>Web de varias páginas — $1,997</option><option>Tienda online — $2,997</option><option>Video y anuncios con IA</option><option>Series y personajes con IA</option><option>Todavía no sé, necesito consejo</option>
+              <option>Plan Web — $0 de entrada, $99/mes</option><option>Web + Recepcionista IA — $0 de entrada, $299/mes</option><option>Landing page — $599</option><option>Web de varias páginas — $1,997</option><option>Tienda online — $2,997</option><option>Video y anuncios con IA</option><option>Series y personajes con IA</option><option>Todavía no sé, necesito consejo</option>
             </select></div>
           <div class="field"><label for="f-budget">Tu presupuesto</label>
             <select id="f-budget" name="budget">
