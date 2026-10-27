@@ -67,7 +67,7 @@ button.primary{background:var(--fg);color:var(--bg);border-color:var(--fg)}
 .card button{padding:6px 10px;font-size:12.5px;align-self:flex-start}
 .side{display:flex;flex-direction:column;gap:16px;min-width:0}
 .box{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px 18px;display:flex;flex-direction:column;gap:12px;min-width:0}
-.box h3{margin:0;font:500 11px var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--accent2)}
+.box h2{margin:0;font:500 11px var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--accent2)}
 .form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .form .full{grid-column:1/-1}
 .f{display:flex;flex-direction:column;gap:4px;min-width:0}
@@ -92,6 +92,71 @@ footer b{color:var(--fg)}
 .sel{user-select:all;font-family:var(--mono);color:var(--accent2)}
 </style>
 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://ferrarastudio.net/demos/business-app.html#webpage",
+      "url": "https://ferrarastudio.net/demos/business-app.html",
+      "name": "Custom Business App Demo for Contractors — Ferrara Studio",
+      "description": "Interactive demo of a custom job-board app for a sample roofing company: jobs, quotes, follow-ups and review requests. Sample data, nothing is sent.",
+      "inLanguage": "en",
+      "isPartOf": {
+        "@id": "https://ferrarastudio.net/#website"
+      },
+      "publisher": {
+        "@id": "https://ferrarastudio.net/#org"
+      },
+      "about": {
+        "@id": "https://ferrarastudio.net/#business-apps"
+      },
+      "mainEntity": {
+        "@id": "https://ferrarastudio.net/#business-apps"
+      },
+      "primaryImageOfPage": {
+        "@type": "ImageObject",
+        "url": "https://ferrarastudio.net/assets/og.png"
+      }
+    },
+    {
+      "@type": "Service",
+      "@id": "https://ferrarastudio.net/#business-apps",
+      "name": "Custom business apps",
+      "serviceType": "Custom web app development",
+      "description": "Web apps built around how your business already works, such as a job board with quotes, automatic follow-ups and review requests. Works on phone and computer.",
+      "provider": {
+        "@id": "https://ferrarastudio.net/#org"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "United States"
+      },
+      "url": "https://ferrarastudio.net/demos/business-app.html"
+    },
+    {
+      "@type": [
+        "Organization",
+        "ProfessionalService"
+      ],
+      "@id": "https://ferrarastudio.net/#org",
+      "name": "Ferrara Studio",
+      "url": "https://ferrarastudio.net/",
+      "logo": "https://ferrarastudio.net/icon-512.png"
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://ferrarastudio.net/#website",
+      "url": "https://ferrarastudio.net/",
+      "name": "Ferrara Studio",
+      "publisher": {
+        "@id": "https://ferrarastudio.net/#org"
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
 <div class="wrap">
@@ -115,7 +180,7 @@ footer b{color:var(--fg)}
   <div class="main">
     <div class="board" id="board"></div>
     <div class="side">
-      <div class="box"><h3>New quote</h3>
+      <div class="box"><h2>New quote</h2>
         <div class="form">
           <div class="f full"><label for="qName">Customer</label><input id="qName" value="Maria Lopez"></div>
           <div class="f full"><label for="qAddr">Address</label><input id="qAddr" value="789 Demo Dr, Houston"></div>
@@ -128,7 +193,7 @@ footer b{color:var(--fg)}
         <div class="preview" id="qPrev"></div>
         <button type="button" class="primary" id="qSend">Create quote &amp; add to board</button>
       </div>
-      <div class="box"><h3>Automations</h3>
+      <div class="box"><h2>Automations</h2>
         <div class="rule"><input type="checkbox" id="r1" checked><label for="r1">Quote unanswered for 3 days → send a friendly follow-up<small>Stops as soon as the customer replies or books.</small></label></div>
         <div class="rule"><input type="checkbox" id="r2" checked><label for="r2">Job scheduled → text the customer the date and an "on my way" alert</label></div>
         <div class="rule"><input type="checkbox" id="r3" checked><label for="r3">Job done → ask for a Google review</label></div>
@@ -138,8 +203,8 @@ footer b{color:var(--fg)}
   </div>
 
   <div class="bottom">
-    <div class="box"><h3>Activity</h3><ul class="log" id="log"></ul></div>
-    <div class="box"><h3>Monday summary · sent to the owner</h3><div class="report" id="report"></div></div>
+    <div class="box"><h2>Activity</h2><ul class="log" id="log"></ul></div>
+    <div class="box"><h2>Monday summary · sent to the owner</h2><div class="report" id="report"></div></div>
   </div>
 
   <footer><span>Built around your workflow by <b>Ferrara Studio</b>. Works on phone and computer, nothing to install.</span><span><span class="sel">ferrarastudio.net</span> · <span class="sel">simon@ferrarastudio.net</span></span></footer>
