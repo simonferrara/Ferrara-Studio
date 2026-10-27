@@ -299,7 +299,11 @@ body.revealed .in{opacity:1;transform:none;}
 .plan .gcard-in::before{background:linear-gradient(to right,transparent,rgba(81,117,255,.8),transparent);}
 .plan .tier-name{color:rgba(255,255,255,.55);}
 .plan .price small{color:rgba(255,255,255,.55);}
-.plan .price-mo{font-size:.42em;letter-spacing:-.02em;margin-left:2px;}
+.plan-top{display:flex;justify-content:flex-end;font:400 10px var(--font-mono);letter-spacing:.2em;text-transform:uppercase;margin-bottom:-8px;}
+.plan .plan-name{font:500 clamp(32px,9vw,52px)/1.05 var(--font-raleway);letter-spacing:-.04em;}
+.plan .price{margin-top:10px;font:500 clamp(22px,6vw,28px)/1.1 var(--font-raleway);letter-spacing:-.03em;}
+.plan .price small{margin-top:12px;}
+.plan.plan-alt .plan-name,.plan.plan-alt .price{color:var(--ink);}
 .plan .tier-d{color:rgba(255,255,255,.65);max-width:520px;}
 .plan .feats{margin:0;}
 .plan .feats svg.i{color:#7f9bff;}
@@ -638,7 +642,8 @@ footer{background:var(--ink);color:#fff;border-radius:2.5rem 2.5rem 0 0;overflow
     <div class="plans">
     <div class="gcard plan" data-reveal=""><div class="gcard-in">
       <div>
-        <p class="tier-name"><span>Plan Web · Mensual</span><span class="badge">Recomendado</span></p>
+        <p class="plan-top"><span class="badge">Recomendado</span></p>
+        <p class="plan-name">Plan Web</p>
         <p class="price">$0 de entrada<small>Luego $99/mes · mínimo 12 meses</small></p>
         <p class="tier-d">Tu web a medida sin pagar nada por adelantado. Primero apruebas el diseño y luego pagas $99 al mes — hosting, dominio, cambios mensuales y soporte incluidos. Después de 12 meses sigue mes a mes; cancelas cuando quieras.</p>
       </div>
@@ -655,7 +660,8 @@ footer{background:var(--ink);color:#fff;border-radius:2.5rem 2.5rem 0 0;overflow
     </div></div>
     <div class="gcard plan plan-alt" data-reveal="" data-delay=".1"><div class="gcard-in">
       <div>
-        <p class="tier-name"><span>Web + Recepcionista IA · Mensual</span><span class="badge alt">Acceso anticipado</span></p>
+        <p class="plan-top"><span class="badge alt">Acceso anticipado</span></p>
+        <p class="plan-name">Recepcionista IA</p>
         <p class="price">$0 de entrada<small>Luego $299/mes · mínimo 12 meses</small></p>
         <p class="tier-d">Todo lo del Plan Web, más una recepcionista IA que atiende el chat de tu web y tus llamadas 24/7, agenda citas, capta clientes potenciales y te envía un resumen de cada conversación.</p>
       </div>
