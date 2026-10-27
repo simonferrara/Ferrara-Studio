@@ -1,0 +1,133 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><title>PDG Builders · Custom Homes &amp; Renovations in Bellaire, Houston</title><meta name="description" content="High-end custom homes with home automation and heated pools, and full renovations, in Bellaire and Houston. Led by Paul David Gerecht.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f2eb;--ink:#191714;--mut:#6c655b;--line:rgba(25,23,20,.14);--acc:#9b1c1f;--dark:#14120f;--cream:#f6f2eb;
+--serif:'Cormorant Garamond',serif;--sans:'Inter',sans-serif;--wrap:1240px}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font:400 17px/1.65 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;max-width:100%}a{color:inherit;text-decoration:none}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 clamp(20px,4vw,48px)}
+.eb{font:600 12px/1 var(--sans);letter-spacing:.28em;text-transform:uppercase;color:var(--acc)}
+h1,h2,h3{font-family:var(--serif);font-weight:500;letter-spacing:-.01em;line-height:1.04}
+h2{font-size:clamp(38px,5vw,72px)}h2 em,h1 em{font-style:italic}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:16px 26px;border-radius:2px;font:600 14px var(--sans);letter-spacing:.06em;text-transform:uppercase;transition:.25s}
+.btn--acc{background:var(--acc);color:#fff}.btn--acc:hover{filter:brightness(1.1)}
+.btn--line{border:1px solid currentColor}.btn--line:hover{background:rgba(255,255,255,.1)}
+/* nav */
+.nav{position:fixed;inset:0 0 auto;z-index:50;transition:background .35s,box-shadow .35s;color:#fff}
+.nav .wrap{display:flex;align-items:center;gap:28px;height:84px}
+.nav.solid{background:var(--bg);color:var(--ink);box-shadow:0 1px 0 var(--line)}
+.brand{margin-right:auto;display:flex;align-items:center;gap:12px}
+.brand img{height:46px;width:auto}.brand .lw{display:none}.nav.solid .brand .ld{display:none}.nav.solid .brand .lw{display:block}
+.brand b{font:600 22px/1 var(--serif);letter-spacing:.06em;text-transform:uppercase}.brand small{display:block;font:500 10px var(--sans);letter-spacing:.3em;text-transform:uppercase;opacity:.75;margin-top:5px}
+.nav nav a{font:500 13px var(--sans);letter-spacing:.14em;text-transform:uppercase;margin-left:26px;opacity:.9}
+.nav .btn{padding:12px 18px;font-size:12px}
+@media(max-width:900px){.nav nav{display:none}.nav .btn{display:none}.nav .wrap{height:70px}.brand img{height:38px}}
+/* hero */
+.hero{position:relative;min-height:100svh;color:#fff;overflow:hidden;background:var(--dark);display:flex;flex-direction:column;justify-content:flex-end;padding:130px 0 clamp(40px,8vh,90px)}
+.hero .sl{position:absolute;inset:0;opacity:0;transition:opacity 1.6s ease}.hero .sl.on{opacity:1}
+.hero .sl img{width:100%;height:100%;object-fit:cover;transform:scale(1.12);transition:transform 9s linear}.hero .sl.on img{transform:scale(1.0)}
+.hero:after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.45) 0%,rgba(0,0,0,.1) 35%,rgba(0,0,0,.65) 100%)}
+.hero .in{position:relative;z-index:2;width:100%}
+.hero .eb{color:#fff;opacity:.85}
+.hero h1{margin-top:20px;font-size:clamp(42px,6.4vw,100px);max-width:15ch}
+.hero p{margin-top:22px;max-width:560px;font-size:clamp(16px,1.4vw,19px);color:rgba(255,255,255,.88)}
+.hero .ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.hero .bar{display:flex;flex-wrap:wrap;gap:10px 34px;margin-top:44px;padding-top:22px;border-top:1px solid rgba(255,255,255,.28);font:500 13px var(--sans);letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.85)}
+.hero .dots{position:absolute;z-index:3;right:clamp(20px,4vw,48px);bottom:clamp(40px,9vh,96px);display:flex;gap:8px}
+.hero .dots i{width:28px;height:2px;background:rgba(255,255,255,.35)}.hero .dots i.on{background:#fff}
+@media(max-width:700px){.hero .dots{display:none}.hero .ctas{flex-direction:column}.hero .ctas .btn{justify-content:center}.hero .bar{display:none}.hero h1{font-size:44px}.hero p{font-size:16px}.hero{padding-bottom:110px}.brand b{font-size:16px}.brand small{font-size:9px}}
+/* statement */
+.stmt{padding:clamp(90px,14vw,170px) 0}
+.stmt q{display:block;font:500 clamp(30px,4.2vw,60px)/1.12 var(--serif);max-width:20ch;quotes:none}
+.stmt q em{color:var(--acc)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:30px;margin-top:70px;border-top:1px solid var(--line);padding-top:34px}
+.stats b{display:block;font:500 clamp(40px,4vw,58px)/1 var(--serif)}.stats span{display:block;margin-top:10px;font-size:14px;color:var(--mut)}
+/* work */
+.work{padding-bottom:clamp(60px,10vw,140px)}
+.work .hd{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:46px;flex-wrap:wrap}
+.work .hd p{max-width:420px;color:var(--mut)}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:clamp(12px,1.6vw,22px)}
+.grid figure{position:relative;overflow:hidden;background:#ddd}
+.grid figure img{width:100%;height:100%;object-fit:cover;transform:scale(1.08);transition:transform 1.2s cubic-bezier(.2,.7,.2,1)}
+.grid figure.in img{transform:scale(1)}
+.grid figcaption{position:absolute;left:16px;bottom:14px;font:500 12px var(--sans);letter-spacing:.16em;text-transform:uppercase;color:#fff;text-shadow:0 1px 10px rgba(0,0,0,.6)}
+.g-a{grid-column:span 8;aspect-ratio:16/10}.g-b{grid-column:span 4}.g-c{grid-column:span 5;aspect-ratio:4/5}.g-d{grid-column:span 7;aspect-ratio:7/5}.g-e{grid-column:span 6;aspect-ratio:3/2}.g-f{grid-column:span 12;aspect-ratio:21/9}
+@media(max-width:800px){.grid figure{grid-column:span 12!important;aspect-ratio:4/3!important}}
+/* feature (split) */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,6vw,90px);align-items:center;padding:clamp(70px,10vw,130px) 0}
+.split .ph{position:relative;overflow:hidden;aspect-ratio:4/5}.split .ph img{position:absolute;inset:-8% 0;width:100%;height:116%;object-fit:cover}
+.split p{margin-top:20px;color:var(--mut);max-width:500px}
+.split.rev .ph{order:2}
+@media(max-width:800px){.split{grid-template-columns:1fr}.split.rev .ph{order:0}}
+/* sketches */
+.sk{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:40px}.sk img{background:#fff;padding:10px;box-shadow:0 20px 40px -24px rgba(0,0,0,.35)}
+@media(max-width:800px){.sk{grid-template-columns:1fr}}
+/* dark band */
+.band{background:var(--dark);color:var(--cream);padding:clamp(80px,11vw,140px) 0}
+.band .eb{color:var(--acc2,var(--acc))}
+.svc{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:0;margin-top:50px;border-top:1px solid rgba(255,255,255,.16)}
+.svc div{padding:30px 26px 34px 0;border-bottom:1px solid rgba(255,255,255,.16)}
+.svc b{display:block;font:500 28px/1.15 var(--serif)}.svc span{display:block;margin-top:10px;font-size:15px;color:rgba(246,242,235,.7);max-width:34ch}
+.svc i{font:600 12px var(--sans);font-style:normal;letter-spacing:.2em;color:var(--acc2,var(--acc))}
+/* quote */
+.tq{padding:clamp(90px,12vw,150px) 0;text-align:center}
+.tq blockquote{font:500 clamp(28px,3.6vw,50px)/1.18 var(--serif);max-width:24ch;margin:26px auto 0;font-style:italic}
+.tq cite{display:block;margin-top:26px;font:600 13px var(--sans);letter-spacing:.18em;text-transform:uppercase;font-style:normal;color:var(--mut)}
+.tq .more{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;max-width:900px;margin:50px auto 0;text-align:left}
+.tq .more p{padding:26px;border:1px solid var(--line);font:500 20px/1.4 var(--serif);font-style:italic}.tq .more cite{margin-top:12px;font-size:11px}
+/* press */
+.press{display:flex;flex-wrap:wrap;justify-content:center;gap:16px 44px;margin-top:40px;font:500 clamp(18px,1.8vw,24px) var(--serif);color:var(--mut)}
+.covers{display:flex;justify-content:center;gap:24px;margin-top:44px;flex-wrap:wrap}.covers img{width:min(260px,40vw);box-shadow:0 30px 60px -30px rgba(0,0,0,.5)}
+/* list */
+.areas{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}.areas span{padding:10px 18px;border:1px solid var(--line);border-radius:99px;font-size:14px}
+.plist{margin-top:30px;columns:2;column-gap:40px}.plist li{list-style:none;padding:14px 0;border-bottom:1px solid var(--line);font:500 24px var(--serif);break-inside:avoid}
+@media(max-width:700px){.plist{columns:1}}
+/* contact */
+.contact{background:var(--dark);color:var(--cream);padding:clamp(80px,11vw,140px) 0}
+.contact .wrap{display:grid;grid-template-columns:1fr 1.1fr;gap:clamp(30px,6vw,90px)}
+.contact h2{font-size:clamp(40px,5vw,68px)}.contact .eb{color:var(--acc2,var(--acc))}
+.contact .info{margin-top:34px;display:grid;gap:18px;font-size:16px}.contact .info b{display:block;font:600 11px var(--sans);letter-spacing:.22em;text-transform:uppercase;color:rgba(246,242,235,.55);margin-bottom:4px}
+form{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+form label{display:grid;gap:8px;font:600 11px var(--sans);letter-spacing:.2em;text-transform:uppercase;color:rgba(246,242,235,.6)}
+form input,form select,form textarea{font:400 16px var(--sans);color:var(--cream);background:transparent;border:0;border-bottom:1px solid rgba(246,242,235,.3);padding:12px 0;outline:0}
+form select option{color:#111}form textarea{min-height:110px;resize:vertical}
+form .full{grid-column:1/-1}form .btn{grid-column:1/-1;justify-content:center;border:0;cursor:pointer;margin-top:10px}
+@media(max-width:800px){.contact .wrap{grid-template-columns:1fr}form{grid-template-columns:1fr}}
+footer{background:var(--dark);color:rgba(246,242,235,.6);border-top:1px solid rgba(246,242,235,.12);padding:30px 0 40px;font-size:13px}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
+/* reveal */
+.rv{opacity:0;transform:translateY(34px);transition:opacity 1s ease,transform 1s cubic-bezier(.2,.7,.2,1)}.rv.in{opacity:1;transform:none}
+.mcta{display:none}
+@media(max-width:700px){.mcta{display:flex;position:fixed;z-index:60;left:12px;right:12px;bottom:12px;gap:8px}.mcta a{flex:1;justify-content:center;padding:15px 10px;box-shadow:0 10px 30px -10px rgba(0,0,0,.5)}.mcta .btn--line{background:var(--bg);color:var(--ink);border-color:var(--bg)}footer{padding-bottom:96px}}
+@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none}.hero .sl img,.grid figure img{transition:none;transform:none}}
+:root{--acc:#7A5C3A;--bg:#F6F3EE;--dark:#1a1815;--cream:#F6F3EE;--acc2:#d2b48c}</style></head><body>
+<header class="nav"><div class="wrap"><a class="brand" href="#top"><span><b>PDG Builders</b><small>Bellaire · Houston</small></span></a>
+<nav><a href="#work">Work</a><a href="#services">Services</a><a href="#about">About</a><a href="#contact">Contact</a></nav>
+<a class="btn btn--acc" href="#contact">Get in touch</a></div></header>
+<section class="hero" id="top"><div class="sl"><img class="" src="img/15-1800.webp" srcset="img/15-900.webp 900w, img/15-1800.webp 1800w" sizes="100vw" alt="PDG Builders project" fetchpriority=high decoding="async"></div><div class="sl"><img class="" src="img/01-1800.webp" srcset="img/01-900.webp 900w, img/01-1800.webp 1800w" sizes="100vw" alt="PDG Builders project" loading=lazy decoding="async"></div><div class="sl"><img class="" src="img/11-1800.webp" srcset="img/11-900.webp 900w, img/11-1800.webp 1800w" sizes="100vw" alt="PDG Builders project" loading=lazy decoding="async"></div><div class="in wrap"><span class="eb">Bellaire · Houston</span><h1>Custom homes and renovations in <em>Bellaire.</em></h1><p>High-end custom homes with home automation and heated pools, and full renovations, led by Paul David Gerecht (MBA and MEng, Rice University).</p>
+<div class="ctas"><a class="btn btn--acc" href="#contact">Discuss your home</a></div><div class="bar"><span>Custom homes</span><span>Renovations</span><span>Home automation</span><span>Heated pools</span></div></div><div class="dots"><i></i><i></i><i></i></div></section>
+<section class="stmt wrap" id="about"><span class="eb rv">Linden Street</span><q class="rv" style="margin-top:22px">About <em>5,840 sq ft</em> on Linden Street, finished room by room.</q><div class="stats"><div class="rv"><b>5,840</b><span>Sq ft · Linden Street home</span></div><div class="rv"><b>Rice</b><span>MBA &amp; MEng · Paul David Gerecht</span></div><div class="rv"><b>3</b><span>Bellaire streets: Linden, Maple Court, Maple</span></div></div></section>
+<section class="work wrap" id="work"><div class="hd"><div class="rv"><span class="eb">Recent homes</span><h2 style="margin-top:16px">Light, wood and <em>quiet detail.</em></h2></div><p class="rv">Arched windows, beamed ceilings and wood floors in homes built for Bellaire families.</p></div><div class="grid"><figure class="g-a"><img class="" src="img/14-1800.webp" srcset="img/14-900.webp 900w, img/14-1800.webp 1800w" sizes="(max-width:800px) 100vw, 60vw" alt="Dining room" loading=lazy decoding="async"><figcaption>Dining room</figcaption></figure><figure class="g-b"><img class="" src="img/07-1800.webp" srcset="img/07-900.webp 900w, img/07-1800.webp 1800w" sizes="(max-width:800px) 100vw, 60vw" alt="Bar &amp; arches" loading=lazy decoding="async"><figcaption>Bar &amp; arches</figcaption></figure><figure class="g-c"><img class="" src="img/13-1800.webp" srcset="img/13-900.webp 900w, img/13-1800.webp 1800w" sizes="(max-width:800px) 100vw, 60vw" alt="Breakfast room" loading=lazy decoding="async"><figcaption>Breakfast room</figcaption></figure><figure class="g-d"><img class="" src="img/08-1800.webp" srcset="img/08-900.webp 900w, img/08-1800.webp 1800w" sizes="(max-width:800px) 100vw, 60vw" alt="Primary bath" loading=lazy decoding="async"><figcaption>Primary bath</figcaption></figure><figure class="g-e"><img class="" src="img/03-1800.webp" srcset="img/03-900.webp 900w, img/03-1800.webp 1800w" sizes="(max-width:800px) 100vw, 60vw" alt="Terrace" loading=lazy decoding="async"><figcaption>Terrace</figcaption></figure><figure class="g-e"><img class="" src="img/10-1800.webp" srcset="img/10-900.webp 900w, img/10-1800.webp 1800w" sizes="(max-width:800px) 100vw, 60vw" alt="Primary bedroom" loading=lazy decoding="async"><figcaption>Primary bedroom</figcaption></figure><figure class="g-f"><img class="" src="img/02-1800.webp" srcset="img/02-900.webp 900w, img/02-1800.webp 1800w" sizes="(max-width:800px) 100vw, 60vw" alt="Street view" loading=lazy decoding="async"><figcaption>Street view</figcaption></figure></div></section>
+<section class="wrap split"><div class="ph rv"><img data-px class="" src="img/11-1800.webp" srcset="img/11-900.webp 900w, img/11-1800.webp 1800w" sizes="(max-width:800px) 100vw, 50vw" alt="Arched windows, &lt;em&gt;paneled rooms.&lt;/em&gt;" loading=lazy decoding="async"></div><div class="rv"><span class="eb">Interiors</span><h2 style="margin-top:16px">Arched windows, <em>paneled rooms.</em></h2><p>Arched windows, paneled walls and wood floors: rooms designed around natural light.</p></div></section><section class="wrap" style="padding:clamp(70px,9vw,120px) clamp(20px,4vw,48px) 0"><span class="eb">Projects</span><h2 style="margin-top:16px">Bellaire <em>addresses.</em></h2><ul class="plist"><li class="rv">Linden Street · Bellaire</li><li class="rv">Maple Court · Bellaire</li><li class="rv">Maple Street · Bellaire</li></ul></section>
+<section class="band" id="services"><div class="wrap"><span class="eb rv">What we do</span><h2 class="rv" style="margin-top:16px">Built with an <em>engineer's eye.</em></h2><div class="svc"><div class="rv"><i>01</i><b>Custom homes</b><span>High-end homes designed and built for your lot.</span></div><div class="rv"><i>02</i><b>Renovations</b><span>Full renovations of existing homes.</span></div><div class="rv"><i>03</i><b>Home automation</b><span>Smart-home systems planned into the build.</span></div><div class="rv"><i>04</i><b>Heated pools</b><span>Pools designed as part of the house.</span></div></div></div></section>
+
+<section class="wrap" style="padding:clamp(40px,6vw,80px) clamp(20px,4vw,48px) clamp(90px,11vw,140px)"><span class="eb rv">Where we build</span><h2 class="rv" style="margin-top:16px">Bellaire <em>and Houston.</em></h2><div class="areas rv"><span>Bellaire</span><span>Houston</span></div></section>
+<section class="contact" id="contact"><div class="wrap"><div><span class="eb rv">Discuss your home</span><h2 class="rv" style="margin-top:16px">Tell us about <em>your home.</em></h2><div class="info rv"><div><b>Email</b><a href="mailto:info@pdgbuildersllc.com">info@pdgbuildersllc.com</a></div><div><b>Based in</b>Bellaire / Houston, Texas</div><div><b>President</b>Paul David Gerecht</div></div></div>
+<form class="rv" data-thanks="Thank you — we will be in touch"><label>Name<input autocomplete="name" required></label><label>Phone<input type="tel" autocomplete="tel"></label>
+<label class="full">Email<input type="email" autocomplete="email" required></label><label class="full">Project<select><option>Custom home</option><option>Renovation</option><option>Other</option></select></label>
+<label class="full">Tell us about it<textarea></textarea></label><button class="btn btn--acc">Discuss your home</button></form></div></section>
+<footer><div class="wrap"><span>© 2026 PDG Builders, LLC · Bellaire, Texas</span><span>Design sample by Ferrara Studio</span></div></footer><div class="mcta"><a class="btn btn--acc" href="#contact">Get in touch</a></div>
+<script>
+(()=>{const nav=document.querySelector('.nav');const on=()=>nav.classList.toggle('solid',scrollY>innerHeight*.7);on();addEventListener('scroll',on,{passive:true});
+const sl=[...document.querySelectorAll('.hero .sl')],dots=[...document.querySelectorAll('.hero .dots i')];let k=0;
+const show=i=>{sl.forEach((s,j)=>s.classList.toggle('on',j===i));dots.forEach((d,j)=>d.classList.toggle('on',j===i));};show(0);
+if(sl.length>1&&!matchMedia('(prefers-reduced-motion: reduce)').matches)setInterval(()=>{k=(k+1)%sl.length;show(k)},6000);
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.15});
+document.querySelectorAll('.rv,.grid figure').forEach(el=>io.observe(el));
+const px=[...document.querySelectorAll('[data-px]')];const pr=()=>{px.forEach(el=>{const r=el.parentElement.getBoundingClientRect();const p=(r.top+r.height/2-innerHeight/2)/innerHeight;el.style.transform=`translateY(${p*-7}%)`})};
+if(px.length){pr();addEventListener('scroll',()=>requestAnimationFrame(pr),{passive:true})}
+document.querySelectorAll('form').forEach(f=>f.addEventListener('submit',e=>{e.preventDefault();f.querySelector('button').textContent=f.dataset.thanks;}));})();
+</script></body></html>
