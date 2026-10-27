@@ -253,7 +253,6 @@
   "Website + AI Front Desk · Monthly": "Sito + Receptionist IA · Mensile",
   "Early access": "Accesso anticipato",
   "/mo": "/mese",
-  "$0 down · 12-month minimum": "$0 di anticipo · minimo 12 mesi",
   "Everything in the Website Plan, plus an AI front desk that answers your website chat and phone calls 24/7, books appointments, captures leads and sends you a summary of every conversation.": "Tutto il Piano Web, più una receptionist IA che risponde alla chat del sito e alle telefonate 24/7, fissa appuntamenti, raccoglie contatti e ti invia un riepilogo di ogni conversazione.",
   "Everything in the $99 Website Plan": "Tutto il Piano Web da $99",
   "AI answers website chat 24/7": "L'IA risponde alla chat del sito 24/7",
@@ -264,7 +263,8 @@
   "Request early access": "Richiedi l'accesso anticipato",
   "What is the $299/month Website + AI Front Desk plan?": "Cos'è il piano Sito + Receptionist IA da $299/mese?",
   "Everything in the $99/month Website Plan, plus an AI front desk that answers your website chat and phone calls 24/7, books appointments, captures leads and emails you a summary. Same terms: $0 down, 12-month minimum, then month to month. It's in early access with limited spots, so we set it up together with you.": "Tutto il Piano Web da $99/mese, più una receptionist IA che risponde alla chat del sito e alle telefonate 24/7, fissa appuntamenti, raccoglie contatti e ti invia un riepilogo via email. Stesse condizioni: $0 di anticipo, minimo 12 mesi, poi mese per mese. È in accesso anticipato con posti limitati, quindi lo configuriamo insieme a te.",
-  "Website + AI Front Desk — $0 down, $299/mo": "Sito + Receptionist IA — $0 di anticipo, $299/mese"
+  "Website + AI Front Desk — $0 down, $299/mo": "Sito + Receptionist IA — $0 di anticipo, $299/mese",
+  "Then $299/month · 12-month minimum": "Poi $299/mese · minimo 12 mesi"
  },
  "js": {
   "'Entering orbit'": "'Entrata in orbita'",
