@@ -6,12 +6,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>AI Front Desk Demo (AI receptionist) — Ferrara Studio</title>
-<meta name="description" content="Interactive demo of an AI front desk for a sample roofing company: a missed call gets a text back, a few questions and a booked slot. Nothing is sent.">
+<meta name="description" content="Interactive demo of an AI front desk for a sample roofing company: a website chat gets answered in seconds, a few qualifying questions, a booked slot and an email summary to the owner. Nothing is sent.">
 <link rel="canonical" href="https://ferrarastudio.net/demos/ai-front-desk.html">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://ferrarastudio.net/demos/ai-front-desk.html">
 <meta property="og:title" content="AI Front Desk Demo (AI receptionist) — Ferrara Studio">
-<meta property="og:description" content="Interactive demo of an AI front desk for a sample roofing company: a missed call gets a text back, a few questions and a booked slot. Nothing is sent.">
+<meta property="og:description" content="Interactive demo of an AI front desk for a sample roofing company: a website chat gets answered in seconds, a few qualifying questions, a booked slot and an email summary to the owner. Nothing is sent.">
 <meta property="og:image" content="https://ferrarastudio.net/assets/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/favicon.ico" sizes="48x48">
@@ -23,7 +23,7 @@
 :root{
   --bg:#060b24; --panel:#0d1640; --panel2:#111d52; --line:rgba(160,180,255,.18);
   --fg:#eef1ff; --muted:#9aa6d6; --accent:#5b84ff; --accent2:#8aa6ff;
-  --ok:#3ecf8e; --warn:#ffb547; --bubble-in:#1b2760; --bubble-out:#2f69ff; --wa-out:#1f7a5a;
+  --ok:#3ecf8e; --warn:#ffb547; --bubble-in:#1b2760; --bubble-out:#2f69ff;
   --display:'Raleway',Georgia,serif; --body:'Inter',system-ui,-apple-system,sans-serif; --mono:'JetBrains Mono',ui-monospace,monospace;
   color-scheme:dark;
 }
@@ -63,10 +63,8 @@ input[type=text]:focus-visible,button:focus-visible{outline:2px solid var(--acce
 .msg{max-width:82%;padding:9px 13px;border-radius:18px;font-size:14.5px;line-height:1.4;animation:pop .25s ease-out}
 .msg.in{align-self:flex-start;background:var(--bubble-in);border-bottom-left-radius:6px}
 .msg.out{align-self:flex-end;background:var(--bubble-out);border-bottom-right-radius:6px}
-.wa .msg.out{background:var(--wa-out)}
 .msg small{display:block;margin-top:3px;font:500 10px var(--mono);opacity:.7}
 .typing{align-self:flex-end;background:var(--bubble-out);border-radius:18px;padding:12px 14px;display:flex;gap:4px}
-.wa .typing{background:var(--wa-out)}
 .typing i{width:6px;height:6px;border-radius:50%;background:#fff;opacity:.6;animation:blink 1s infinite}
 .typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
 @keyframes pop{from{transform:translateY(6px);opacity:0}to{transform:none;opacity:1}}
@@ -107,33 +105,33 @@ footer b{color:var(--fg)}
 <div class="wrap">
   <header>
     <div class="eb">Ferrara Studio · AI systems</div>
-    <h1>The call you missed <em>just booked itself.</em></h1>
-    <p class="lede" id="lede">You're on a roof and the phone rings. Nobody answers, so the AI front desk texts the customer back in seconds, asks the right questions and books the inspection on your calendar. You get the summary.</p>
-    <div class="demo-note" id="note">Demo with a sample business and sample customer · no real messages are sent</div>
+    <h1>Nobody was free to answer. <em>The job still got booked.</em></h1>
+    <p class="lede" id="lede">You're on a roof and a customer opens the chat on your website. The AI front desk answers in seconds, asks the right questions and books the inspection on your calendar. You get the summary by email. Phone calls are answered the same way, 24/7.</p>
+    <div class="demo-note" id="note">Demo with a sample business and sample customer · nothing is sent</div>
   </header>
 
   <div class="controls">
     <div class="field"><label for="biz" id="bizLabel">Business name</label><input type="text" id="biz" value="Summit Ridge Roofing" maxlength="32"></div>
     <div class="field"><label id="chanLabel">Channel</label>
-      <div class="seg" role="group" aria-labelledby="chanLabel"><button type="button" id="enBtn" aria-pressed="true">SMS · English</button><button type="button" id="esBtn" aria-pressed="false">WhatsApp · Español</button></div></div>
-    <button class="play" type="button" id="play">▶ <span id="playTxt">Replay the call</span></button>
+      <div class="seg" role="group" aria-labelledby="chanLabel"><button type="button" id="enBtn" aria-pressed="true">Website chat · English</button><button type="button" id="esBtn" aria-pressed="false">Chat web · Español</button></div></div>
+    <button class="play" type="button" id="play">▶ <span id="playTxt">Replay the chat</span></button>
   </div>
 
   <div class="stage">
     <div class="phone" aria-label="Customer phone"><div class="screen" id="screen">
-      <div class="bar"><div class="avatar" id="av">S</div><div class="who"><b id="bizName">Summit Ridge Roofing</b><span id="chanTag">SMS · AI front desk</span></div></div>
+      <div class="bar"><div class="avatar" id="av">S</div><div class="who"><b id="bizName">Summit Ridge Roofing</b><span id="chanTag">Website chat · AI front desk</span></div></div>
       <div class="chat" id="chat" aria-live="polite"></div>
     </div></div>
 
     <div class="console">
       <div class="card"><h2 id="h-today">Today</h2>
         <div class="kpis">
-          <div class="kpi"><b id="k1">1</b><span id="k1l">missed call recovered</span></div>
+          <div class="kpi"><b id="k1">1</b><span id="k1l">website chat answered</span></div>
           <div class="kpi"><b id="k2">6 s</b><span id="k2l">to first reply</span></div>
           <div class="kpi"><b id="k3">1</b><span id="k3l">inspection booked</span></div>
         </div>
       </div>
-      <div class="card"><h2 id="h-lead">New lead · sent to the owner</h2><div id="lead"></div></div>
+      <div class="card"><h2 id="h-lead">New lead · emailed to the owner</h2><div id="lead"></div></div>
       <div class="card"><h2 id="h-cal">Calendar</h2><div class="cal" id="cal"></div></div>
       <div class="card"><h2 id="h-log">Activity</h2><ul class="log" id="log"></ul></div>
     </div>
@@ -145,51 +143,50 @@ footer b{color:var(--fg)}
 <script>
 const $=id=>document.getElementById(id);
 const S={
- en:{chan:'SMS · AI front desk',lede:"You're on a roof and the phone rings. Nobody answers, so the AI front desk texts the customer back in seconds, asks the right questions and books the inspection on your calendar. You get the summary.",
-  note:'Demo with a sample business and sample customer · no real messages are sent',bizL:'Business name',chanL:'Channel',play:'Replay the call',
-  k:['missed call recovered','to first reply','inspection booked'],h:['Today','New lead · sent to the owner','Calendar','Activity'],
+ en:{chan:'Website chat · AI front desk',lede:"You're on a roof and a customer opens the chat on your website. The AI front desk answers in seconds, asks the right questions and books the inspection on your calendar. You get the summary by email. Phone calls are answered the same way, 24/7.",
+  note:'Demo with a sample business and sample customer · nothing is sent',bizL:'Business name',chanL:'Channel',play:'Replay the chat',
+  k:['website chat answered','to first reply','inspection booked'],h:['Today','New lead · emailed to the owner','Calendar','Activity'],
   foot:'Available as a setup service from <b>Ferrara Studio</b>. Websites, AI video and AI systems.',
   steps:[
-   {t:'sys miss',x:'📞 Missed call · (281) 555-0142 · 2:41 PM'},
-   {t:'out',x:b=>`Hi, this is ${b}! Sorry we missed your call, the crew is on a job. What can we help you with?`,w:6},
+   {t:'sys',x:'💬 New chat on your website · 2:41 PM'},
+   {t:'out',x:b=>`Hi, this is the AI front desk at ${b}! The crew is out on a job, but I can help right now. What's going on?`,w:6},
    {t:'in',x:'Water is coming through my bedroom ceiling after last night\'s storm'},
    {t:'out',x:'So sorry about that. Is it leaking right now, and what\'s the address?',w:3},
    {t:'in',x:'A little, yes. 123 Sample St, Houston'},
    {t:'out',x:'Got it. We can inspect today at 4:30 PM or tomorrow at 8:00 AM. Which works better?',w:3},
    {t:'in',x:'Today 4:30 please'},
-   {t:'out',x:'Booked ✅ Today 4:30 PM at 123 Sample St. Our tech will text you when on the way. Reply STOP to opt out.',w:3},
+   {t:'out',x:'Booked ✅ Today 4:30 PM at 123 Sample St. The team has all the details and will see you then.',w:3},
   ],
-  lead:{who:'Sample customer · (281) 555-0142',what:'Roof leak after storm · active',where:'123 Sample St, Houston, TX',when:'Today 4:30 PM',hot:'Urgent',ok:'Booked',wait:'Qualifying…'},
+  lead:{who:'Sample customer · website chat',what:'Roof leak after storm · active',where:'123 Sample St, Houston, TX',when:'Today 4:30 PM',hot:'Urgent',ok:'Booked',wait:'Qualifying…'},
   dt:['Customer','Problem','Address','Inspection'],
   cal:[['1:00 PM','Gutter job · West Houston',1],['3:00 PM','Estimate · North Houston',1],['4:30 PM','',0],['6:00 PM','',0]],
   calNew:'Roof leak · Sample St',free:'Free',
-  log:[['2:41','Missed call from (281) 555-0142'],['2:41','AI texted back automatically'],['2:42','Lead qualified: active leak, Houston'],['2:43','Inspection booked for 4:30 PM'],['2:43','Summary texted to the owner'],['later','Job done → Google review request sent']]},
- es:{chan:'WhatsApp · recepcionista IA',lede:'Estás en una obra y suena el teléfono. Nadie atiende, así que la recepcionista con IA le escribe al cliente por WhatsApp en segundos, le hace las preguntas correctas y agenda la visita en tu calendario. Tú recibes el resumen.',
-  note:'Demo con un negocio y un cliente de ejemplo · no se envía ningún mensaje real',bizL:'Nombre del negocio',chanL:'Canal',play:'Ver la llamada otra vez',
-  k:['llamada perdida recuperada','hasta la primera respuesta','visita agendada'],h:['Hoy','Nuevo cliente · enviado al dueño','Calendario','Actividad'],
+  log:[['2:41','New chat started on your website'],['2:41','AI front desk replied in 6 seconds'],['2:42','Lead qualified: active leak, Houston'],['2:43','Inspection booked for 4:30 PM'],['2:43','Summary emailed to the owner'],['24/7','Phone calls are answered the same way']]},
+ es:{chan:'Chat web · recepcionista IA',lede:'Estás en una obra y un cliente abre el chat de tu web. La recepcionista con IA le responde en segundos, le hace las preguntas correctas y agenda la visita en tu calendario. Tú recibes el resumen por email. Las llamadas se atienden igual, 24/7.',
+  note:'Demo con un negocio y un cliente de ejemplo · no se envía nada',bizL:'Nombre del negocio',chanL:'Canal',play:'Ver el chat otra vez',
+  k:['chat de la web atendido','hasta la primera respuesta','visita agendada'],h:['Hoy','Nuevo cliente · enviado al dueño por email','Calendario','Actividad'],
   foot:'Disponible como servicio de instalación de <b>Ferrara Studio</b>. Webs, video con IA y sistemas con IA.',
   steps:[
-   {t:'sys miss',x:'📞 Llamada perdida · (281) 555-0142 · 14:41'},
-   {t:'out',x:b=>`¡Hola! Te escribimos de ${b}. Perdona que no pudimos atenderte, estamos en una obra. ¿En qué te podemos ayudar?`,w:6},
+   {t:'sys',x:'💬 Nuevo chat en tu web · 14:41'},
+   {t:'out',x:b=>`¡Hola! Soy la recepcionista IA de ${b}. El equipo está en una obra, pero te ayudo ahora mismo. ¿Qué ha pasado?`,w:6},
    {t:'in',x:'Hola, tengo una gotera en el techo del dormitorio desde la tormenta de anoche'},
    {t:'out',x:'Lo siento mucho. ¿Sigue entrando agua ahora mismo? ¿Y cuál es la dirección?',w:3},
    {t:'in',x:'Un poco, sí. 456 Example Ave, Houston, TX'},
    {t:'out',x:'Perfecto. Podemos pasar hoy a las 16:30 o mañana a las 8:00. ¿Qué te viene mejor?',w:3},
    {t:'in',x:'Hoy a las 16:30, por favor'},
-   {t:'out',x:'¡Agendado ✅! Hoy a las 16:30 en 456 Example Ave. El técnico te avisará cuando vaya en camino.',w:3},
+   {t:'out',x:'¡Agendado ✅! Hoy a las 16:30 en 456 Example Ave. El equipo ya tiene todos los detalles y te espera a esa hora.',w:3},
   ],
-  lead:{who:'Cliente de ejemplo · (281) 555-0142',what:'Gotera tras tormenta · activa',where:'456 Example Ave, Houston, TX',when:'Hoy 16:30',hot:'Urgente',ok:'Agendado',wait:'Calificando…'},
+  lead:{who:'Cliente de ejemplo · chat de la web',what:'Gotera tras tormenta · activa',where:'456 Example Ave, Houston, TX',when:'Hoy 16:30',hot:'Urgente',ok:'Agendado',wait:'Calificando…'},
   dt:['Cliente','Problema','Dirección','Visita'],
   cal:[['13:00','Canalones · West Houston',1],['15:00','Presupuesto · North Houston',1],['16:30','',0],['18:00','',0]],
   calNew:'Gotera · Example Ave',free:'Libre',
-  log:[['14:41','Llamada perdida del (281) 555-0142'],['14:41','La IA respondió por WhatsApp sola'],['14:42','Cliente calificado: gotera activa'],['14:43','Visita agendada a las 16:30'],['14:43','Resumen enviado al dueño'],['después','Trabajo terminado → pedido de reseña en Google']]}
+  log:[['14:41','Nuevo chat en tu web'],['14:41','La recepcionista IA respondió en 6 segundos'],['14:42','Cliente calificado: gotera activa'],['14:43','Visita agendada a las 16:30'],['14:43','Resumen enviado al dueño por email'],['24/7','Las llamadas se atienden igual']]}
 };
 let lang='en', step=8, timer=null, typingEl=null;
 const biz=()=>($('biz').value.trim()||'Your Business');
 function render(){
   const L=S[lang], b=biz();
   $('bizName').textContent=b; $('av').textContent=b[0].toUpperCase(); $('chanTag').textContent=L.chan;
-  $('screen').classList.toggle('wa',lang==='es');
   $('lede').textContent=L.lede; $('note').textContent=L.note; $('bizLabel').textContent=L.bizL; $('chanLabel').textContent=L.chanL; $('playTxt').textContent=L.play;
   ['k1l','k2l','k3l'].forEach((id,i)=>$(id).textContent=L.k[i]); ['h-today','h-lead','h-cal','h-log'].forEach((id,i)=>$(id).textContent=L.h[i]); $('foot').innerHTML=L.foot;
   // chat
