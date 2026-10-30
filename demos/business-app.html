@@ -99,7 +99,7 @@ footer b{color:var(--fg)}
     <div>
       <div class="eb">Ferrara Studio · Custom business apps</div>
       <h1>Your whole business, <em>one app.</em></h1>
-      <p class="lede">A web app built around how a roofing company already works: every job on one board, quotes in a minute, and the follow-ups and review requests sent automatically. Move a job and watch what happens.</p>
+      <p class="lede">A web app built around how a roofing company already works: every job on one board, quotes in a minute, and the follow-up and review-request emails sent automatically. Move a job and watch what happens.</p>
       <div class="note">Demo · sample business (Summit Ridge Roofing, a fictional Houston-area company) and sample customers · nothing is sent</div>
     </div>
     <div class="hbtns"><button type="button" id="sim">⏩ Skip ahead 3 days</button><button type="button" id="reset">Reset demo</button></div>
@@ -108,7 +108,7 @@ footer b{color:var(--fg)}
   <div class="kpis">
     <div class="kpi"><b id="kOpen">$0</b><span>in open quotes</span></div>
     <div class="kpi"><b id="kSched">0</b><span>jobs scheduled</span></div>
-    <div class="kpi"><b id="kAuto">0</b><span>messages sent automatically</span></div>
+    <div class="kpi"><b id="kAuto">0</b><span>emails sent automatically</span></div>
     <div class="kpi"><b id="kHours">0 h</b><span>admin time saved this week (est.)</span></div>
   </div>
 
@@ -129,10 +129,10 @@ footer b{color:var(--fg)}
         <button type="button" class="primary" id="qSend">Create quote &amp; add to board</button>
       </div>
       <div class="box"><h3>Automations</h3>
-        <div class="rule"><input type="checkbox" id="r1" checked><label for="r1">Quote unanswered for 3 days → send a friendly follow-up<small>Stops as soon as the customer replies or books.</small></label></div>
-        <div class="rule"><input type="checkbox" id="r2" checked><label for="r2">Job scheduled → text the customer the date and an "on my way" alert</label></div>
-        <div class="rule"><input type="checkbox" id="r3" checked><label for="r3">Job done → ask for a Google review</label></div>
-        <div class="rule"><input type="checkbox" id="r4" checked><label for="r4">Every Monday → weekly summary to the owner</label></div>
+        <div class="rule"><input type="checkbox" id="r1" checked><label for="r1">Quote unanswered for 3 days → send a friendly follow-up email<small>Stops as soon as the customer replies or books.</small></label></div>
+        <div class="rule"><input type="checkbox" id="r2" checked><label for="r2">Job scheduled → email the customer a confirmation and a reminder the day before</label></div>
+        <div class="rule"><input type="checkbox" id="r3" checked><label for="r3">Job done → email a Google review request</label></div>
+        <div class="rule"><input type="checkbox" id="r4" checked><label for="r4">Every Monday → weekly summary emailed to the owner</label></div>
       </div>
     </div>
   </div>
@@ -169,30 +169,30 @@ function renderQuote(){
   const q=quote(), name=$('qName').value.trim()||'there', first=name.split(' ')[0];
   $('qTotal').textContent=fmt(q.total);
   const what=q.type==='repair'?'leak repair':`${q.sq}-square roof replacement (${$('qMat').selectedOptions[0].text.toLowerCase()})`;
-  $('qPrev').textContent=`Text to ${name}:\nHi ${first}, it's Summit Ridge Roofing. Your quote for the ${what} at ${$('qAddr').value.trim()||'your address'} is ${fmt(q.total)}. Reply YES to book a date or ask us anything.`;
+  $('qPrev').textContent=`Email to ${name}:\nHi ${first}, it's Summit Ridge Roofing. Your quote for the ${what} at ${$('qAddr').value.trim()||'your address'} is ${fmt(q.total)}. Reply to this email to book a date or ask us anything.`;
 }
 function move(id){
   const j=S.jobs.find(x=>x.id===id), i=COLS.findIndex(c=>c[0]===j.col); if(i>=COLS.length-1) return;
   j.col=COLS[i+1][0]; j.age=0; S.flash=id;
   if(j.col==='quote'){ if(!j.value) j.value=REPAIR_BASE; addLog('🧾',`Quote sent to ${j.name}: ${fmt(j.value)}`); S.saved+=0.5; }
-  if(j.col==='sched'){ j.tags=['Next available: Tue 9:00 AM']; if(rule(2)){S.auto++;S.saved+=0.25;addLog('📅',`Auto-text to ${j.name}: "You're booked for Tue 9:00 AM. We'll text when we're on the way."`);} }
-  if(j.col==='done'){ j.tags=[]; if(rule(3)){S.auto++;S.saved+=0.25;j.tags=['Review requested'];addLog('⭐',`Auto-text to ${j.name}: "Thanks for choosing us! Would you leave a quick Google review?"`);} }
+  if(j.col==='sched'){ j.tags=['Next available: Tue 9:00 AM']; if(rule(2)){S.auto++;S.saved+=0.25;addLog('📅',`Auto-email to ${j.name}: "You're booked for Tue 9:00 AM. We'll send you a reminder the day before."`);} }
+  if(j.col==='done'){ j.tags=[]; if(rule(3)){S.auto++;S.saved+=0.25;j.tags=['Review requested'];addLog('⭐',`Auto-email to ${j.name}: "Thanks for choosing us! Would you leave a quick Google review?"`);} }
   render();
 }
 function skip(){
   S.day+=3; S.flash=null;
   S.jobs.forEach(j=>{j.age+=3;
     if(j.col==='quote'&&j.age>=3&&!j.tags.includes('Followed up')&&rule(1)){j.tags=['Followed up'];S.auto++;S.saved+=0.25;
-      addLog('💬',`Auto follow-up to ${j.name}: "Hi ${j.name.split(' ')[0]}, just checking in on your quote. Any questions? Happy to help."`);}});
-  if(S.jobs.some(j=>j.name==='Robert Hayes'&&j.col==='quote')){const r=S.jobs.find(j=>j.name==='Robert Hayes'); if(r.tags.includes('Followed up')){r.col='sched';r.tags=['Replied YES · Fri 10:00 AM'];addLog('✅','Robert Hayes replied YES to the follow-up and booked Fri 10:00 AM');}}
-  if(rule(4)) addLog('📊','Weekly summary sent to the owner');
+      addLog('✉️',`Auto follow-up email to ${j.name}: "Hi ${j.name.split(' ')[0]}, just checking in on your quote. Any questions? Happy to help."`);}});
+  if(S.jobs.some(j=>j.name==='Robert Hayes'&&j.col==='quote')){const r=S.jobs.find(j=>j.name==='Robert Hayes'); if(r.tags.includes('Followed up')){r.col='sched';r.tags=['Replied · Fri 10:00 AM'];addLog('✅','Robert Hayes replied to the follow-up email and booked Fri 10:00 AM');}}
+  if(rule(4)) addLog('📊','Weekly summary emailed to the owner');
   render();
 }
 function render(){
   $('board').innerHTML=COLS.map(([k,label])=>{const js=S.jobs.filter(j=>j.col===k);
     return `<section class="col" aria-label="${label}"><h2>${label}<span>${js.length}</span></h2>${js.map(j=>{
       const stale=j.col==='quote'&&j.age>=3&&!j.tags.includes('Followed up');
-      const tags=[...j.tags.map(t=>`<span class="tag ${/Review|YES|booked/i.test(t)?'ok':(/Followed/.test(t)?'warn':'')}">${t}</span>`),stale?'<span class="tag hot">No reply 3+ days</span>':''].join('');
+      const tags=[...j.tags.map(t=>`<span class="tag ${/Review|Replied|booked/i.test(t)?'ok':(/Followed/.test(t)?'warn':'')}">${t}</span>`),stale?'<span class="tag hot">No reply 3+ days</span>':''].join('');
       return `<article class="card ${S.flash===j.id?'flash':''}"><div class="t">${j.name}<span>${j.value?fmt(j.value):'—'}</span></div><div class="s">${j.job} · ${j.area}</div>${tags?`<div class="tags">${tags}</div>`:''}${k!=='done'?`<button type="button" data-id="${j.id}">Move to ${COLS[COLS.findIndex(c=>c[0]===k)+1][1]} →</button>`:''}</article>`;}).join('')}</section>`;}).join('');
   $('board').querySelectorAll('button[data-id]').forEach(b=>b.onclick=()=>move(+b.dataset.id));
   const open=S.jobs.filter(j=>j.col==='quote').reduce((a,j)=>a+j.value,0);
@@ -200,12 +200,12 @@ function render(){
   $('kAuto').textContent=S.auto; $('kHours').textContent=(1.5+S.saved).toFixed(1).replace('.0','')+' h';
   $('log').innerHTML=S.log.map(l=>`<li><time>${l[0]}</time><span class="ico">${l[1]}</span><span>${l[2]}</span></li>`).join('');
   const done=S.jobs.filter(j=>j.col==='done'), sched=S.jobs.filter(j=>j.col==='sched'), stuck=S.jobs.filter(j=>j.col==='quote'&&!j.tags.includes('Followed up')&&j.age>=3);
-  $('report').textContent=`Good morning! Here's your week at Summit Ridge Roofing:\n\n• ${done.length} job${done.length===1?'':'s'} completed (${fmt(done.reduce((a,j)=>a+j.value,0))})\n• ${sched.length} scheduled: ${sched.map(j=>j.name.split(' ')[0]).join(', ')||'none'}\n• ${fmt(open)} waiting in open quotes\n• ${S.auto} messages sent for you automatically\n${stuck.length?`• Needs you: ${stuck.map(j=>j.name).join(', ')} (no reply yet)`:'• Nothing is stuck. Nice.'}`;
+  $('report').textContent=`Good morning! Here's your week at Summit Ridge Roofing:\n\n• ${done.length} job${done.length===1?'':'s'} completed (${fmt(done.reduce((a,j)=>a+j.value,0))})\n• ${sched.length} scheduled: ${sched.map(j=>j.name.split(' ')[0]).join(', ')||'none'}\n• ${fmt(open)} waiting in open quotes\n• ${S.auto} emails sent for you automatically\n${stuck.length?`• Needs you: ${stuck.map(j=>j.name).join(', ')} (no reply yet)`:'• Nothing is stuck. Nice.'}`;
   renderQuote();
 }
 $('qSend').onclick=()=>{const q=quote(), name=$('qName').value.trim()||'New customer';
   S.jobs.push({id:nextId,name,job:q.type==='repair'?'Leak repair':`Roof replacement · ${q.sq} sq`,area:($('qAddr').value.split(',')[1]||'Houston').trim(),value:q.total,col:'quote',age:0,tags:[]});
-  S.flash=nextId++; addLog('🧾',`Quote created and texted to ${name}: ${fmt(q.total)}`); S.saved+=0.5; render();};
+  S.flash=nextId++; addLog('🧾',`Quote created and emailed to ${name}: ${fmt(q.total)}`); S.saved+=0.5; render();};
 ['qName','qAddr','qType','qMat','qSq','qTear'].forEach(id=>$(id).addEventListener('input',renderQuote));
 $('sim').onclick=skip; $('reset').onclick=()=>{S=SEED();nextId=6;render();};
 render();
