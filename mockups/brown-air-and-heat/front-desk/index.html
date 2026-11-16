@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>A front desk that answers at 2 AM | For Brown Air, by Ferrara Studio</title>
+<meta name="description" content="A private proposal for Brown Air Conditioning &amp; Heating: an AI front desk on your current website that answers every chat, in English or Spanish, at any hour.">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" type="image/png" href="/mockups/brown-air-and-heat/assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@800&amp;family=IBM+Plex+Mono&amp;family=IBM+Plex+Sans:wght@400;600&amp;display=swap">
+<link rel="stylesheet" href="/mockups/brown-air-and-heat/tokens.css">
+<link rel="stylesheet" href="/mockups/brown-air-and-heat/styles.css">
+<style>
+/* Proposal page: same tokens and components as the mockup, plus the pieces below. */
+body { padding-bottom: 0; }
+.pitch-top { display: flex; align-items: center; gap: var(--space-md); min-height: var(--bar-h); border-bottom: var(--rule-hair) solid var(--color-rule); }
+.pitch-top img { width: 4.875rem; height: 3.75rem; }
+.pitch-top p { margin-inline-start: auto; font-size: var(--text-sm); color: var(--color-muted); text-align: end; }
+.pitch-hero { padding-block: var(--space-2xl) var(--space-3xl); }
+.pitch-hero h1 { max-width: 16ch; }
+.pitch-hero .lead { margin-block-start: var(--space-lg); max-width: 36rem; color: var(--color-ink-2); }
+.shot { position: relative; margin: 0; }
+.shot img { width: 100%; border: var(--rule-bold) solid var(--color-ink); border-radius: var(--radius-md); }
+.shot figcaption { margin-block-start: var(--space-sm); font-size: var(--text-sm); color: var(--color-muted); }
+.shot__try { position: absolute; inset-inline-end: 4%; bottom: 14%; }
+.hours { margin-block-start: var(--space-xl); }
+.hours__bar { display: grid; grid-template-columns: repeat(168, minmax(0, 1fr)); height: 2.25rem; border: var(--rule-hair) solid var(--color-ink); border-radius: var(--radius-sm); overflow: hidden; }
+.hours__bar span { background: var(--color-ink-raised); }
+.hours__bar span.on { background: var(--color-accent); }
+.hours__key { display: flex; flex-wrap: wrap; gap: var(--space-xs) var(--space-lg); margin-block-start: var(--space-sm); font-size: var(--text-sm); color: var(--color-on-dark-muted); }
+.hours__key i { display: inline-block; width: 0.75rem; height: 0.75rem; margin-inline-end: var(--space-2xs); vertical-align: -0.05em; border-radius: var(--radius-sm); background: var(--color-ink-raised); outline: var(--rule-hair) solid var(--color-on-dark-rule); }
+.hours__key i.on { background: var(--color-accent); outline: 0; }
+.big { font-family: var(--font-display); font-weight: 800; font-size: var(--text-display); line-height: 1; color: var(--color-accent); font-variant-numeric: tabular-nums; }
+.night { display: grid; gap: var(--space-lg); margin-block-start: var(--space-xl); }
+.tabs { display: flex; flex-wrap: wrap; gap: var(--space-xs); }
+.tab { min-height: 2.75rem; padding: 0 var(--space-md); font: inherit; font-size: var(--text-sm); font-weight: 600; color: var(--color-ink); background: var(--color-paper); border: var(--rule-hair) solid var(--color-ink); border-radius: var(--radius-sm); cursor: pointer; white-space: nowrap; }
+.tab[aria-selected="true"] { background: var(--color-ink); color: var(--color-paper); }
+@media (hover: hover) { .tab:not([aria-selected="true"]):hover { background: var(--color-paper-3); } }
+.replay { display: grid; gap: var(--space-lg); }
+.replay__chat { display: flex; flex-direction: column; gap: var(--space-xs); min-height: 24rem; max-height: 34rem; overflow-y: auto; padding: var(--space-md); background: var(--color-paper-2); border: var(--rule-bold) solid var(--color-ink); border-radius: var(--radius-md); }
+.replay__time { align-self: center; font-size: var(--text-sm); color: var(--color-muted); }
+.replay__inbox h3 { margin-block-end: var(--space-sm); }
+.replay__inbox .fd-msg--owner { max-width: none; border-radius: var(--radius-md); padding: var(--space-md); }
+.replay__inbox .empty { color: var(--color-muted); font-size: var(--text-sm); }
+.replay__note { margin-block-start: var(--space-sm); font-size: var(--text-sm); color: var(--color-muted); }
+@media (min-width: 60rem) { .replay { grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); align-items: start; } }
+.calc { display: grid; gap: var(--space-md); }
+@media (min-width: 40rem) { .calc { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+.calc__out { margin-block-start: var(--space-lg); padding-block-start: var(--space-lg); border-top: var(--rule-bold) solid var(--color-ink); }
+.calc__out .big { color: var(--color-accent-deep); }
+.does { display: grid; gap: 0; margin-block-start: var(--space-lg); }
+.does li { padding-block: var(--space-md); border-top: var(--rule-hair) solid var(--color-rule); }
+.does li:first-child { border-top: var(--rule-bold) solid var(--color-ink); }
+.does p { margin-block-start: var(--space-2xs); color: var(--color-ink-2); }
+.steps-h { counter-reset: s; margin-block-start: var(--space-lg); }
+.steps-h li { counter-increment: s; display: grid; grid-template-columns: 2.5rem minmax(0, 1fr); gap: var(--space-sm); padding-block: var(--space-sm); border-top: var(--rule-hair) solid var(--color-on-dark-rule); }
+.steps-h li::before { content: counter(s); font-family: var(--font-display); font-weight: 800; font-size: var(--text-lg); line-height: 1; color: var(--color-accent); }
+.close { padding-block: var(--space-3xl); }
+.close h2 { max-width: 18ch; }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<p class="proofline">A private proposal from Ferrara Studio for Brown Air Conditioning &amp; Heating. Nothing on this page is live or connected.</p>
+<header class="wrap pitch-top">
+  <img src="/mockups/brown-air-and-heat/assets/logo.webp" width="156" height="120" alt="Brown Air Conditioning &amp; Heating">
+  <p>Prepared for the Brown Air team<br>by Ferrara Studio</p>
+</header>
+<main id="main">
+
+  <section class="pitch-hero" aria-labelledby="hero-h">
+    <div class="wrap split split--wide-first">
+      <div>
+        <h1 id="hero-h">Your website works. Let it answer at 2 AM.</h1>
+        <p class="lead">Brownairandheat.com already explains what you do and invites people to chat. The AI Front Desk makes sure every one of those chats gets a real answer, at any hour, in English or Spanish: the problem, the urgency, the name, number and address, and a request on your schedule, waiting in your inbox in the morning.</p>
+        <div class="hero__ctas">
+          <button class="btn btn--call" type="button" data-fd-open>Try it now</button>
+          <a class="btn" href="#night">Watch a night at Brown Air</a>
+        </div>
+        <p class="fine hero__fine">It sits on the site you already have. Nothing about your pages has to change.</p>
+      </div>
+      <figure class="shot">
+        <img src="/mockups/brown-air-and-heat/assets/their-site.webp" srcset="/assets/their-site-640.webp 640w, /assets/their-site.webp 1280w" sizes="(min-width: 60rem) 34rem, 100vw" width="1280" height="800" alt="The brownairandheat.com homepage as it looks today" fetchpriority="high">
+        <button class="btn btn--book shot__try" type="button" data-fd-open>Message us</button>
+        <figcaption>brownairandheat.com today. Press “Message us” to see the front desk working on it.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section section--desk on-dark" aria-labelledby="hours-h">
+    <div class="wrap">
+      <h2 class="sun" id="hours-h">Your office is open 45 hours a week. The week has 168.</h2>
+      <p class="soft measure flow-top">Each square is one hour, Monday to Sunday. Orange is when the office is staffed, Mon–Fri 8 AM to 5 PM, as posted on your site. Your on-call technician covers emergencies in the dark hours. The front desk covers everyone else who reaches out then.</p>
+      <div class="hours" aria-hidden="true"><div class="hours__bar" id="hours-bar"></div></div>
+      <p class="hours__key"><span><i class="on"></i>Office staffed: 45 hours</span><span><i></i>Office closed: 123 hours</span></p>
+    </div>
+  </section>
+
+  <section class="section" id="night" aria-labelledby="night-h">
+    <div class="wrap">
+      <h2 class="sun" id="night-h">A night at Brown Air</h2>
+      <p class="soft measure flow-top">Four kinds of message that arrive after 5 PM. Pick one and watch the front desk handle it. These are not recordings: the same engine that powers “Try it now” answers each message as you watch, and the summary on the right is what lands in your inbox.</p>
+      <div class="night">
+        <div class="tabs" role="tablist" aria-label="Sample conversations">
+          <button class="tab" role="tab" type="button" aria-selected="true" data-story="0">9:42 PM · No AC</button>
+          <button class="tab" role="tab" type="button" aria-selected="false" data-story="1">10:15 PM · Sin calefacción</button>
+          <button class="tab" role="tab" type="button" aria-selected="false" data-story="2">11:03 PM · Gas smell</button>
+          <button class="tab" role="tab" type="button" aria-selected="false" data-story="3">Sunday · “How much?”</button>
+        </div>
+        <div class="replay">
+          <div>
+            <div class="replay__chat" id="replay-chat" role="log" aria-live="polite" aria-label="Sample conversation"></div>
+            <p class="replay__note">Names, numbers and addresses in the samples are made up. Office status is simulated as closed.</p>
+          </div>
+          <div class="replay__inbox">
+            <h3>Your inbox the next morning</h3>
+            <div id="replay-inbox"><p class="empty">The summary appears here when the conversation ends.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--why" aria-labelledby="does-h">
+    <div class="wrap split">
+      <div>
+        <h2 class="sun" id="does-h">What it does, and what it never does</h2>
+        <ul class="does">
+          <li><h3>Answers every chat, at any hour</h3><p>Nights, weekends and the minutes when everyone in the office is on the phone.</p></li>
+          <li><h3>Speaks English and Spanish</h3><p>It switches the moment a customer writes in Spanish and stays there. Your summary always arrives in English.</p></li>
+          <li><h3>Flags emergencies</h3><p>No cooling in the heat or no heat in a freeze gets your on-call number straight away, with the details already taken.</p></li>
+          <li><h3>Puts safety first</h3><p>A gas smell or a carbon monoxide alarm gets one fixed message before anything else: leave the house, call 911 and the gas company.</p></li>
+          <li><h3>Never quotes a price</h3><p>A technician confirms the price before any work begins. The assistant turns “how much?” into a requested visit instead.</p></li>
+          <li><h3>Only says what your site says</h3><p>Hours, service area, services, license, financing. Anything else, it notes for your team and says someone will confirm.</p></li>
+        </ul>
+      </div>
+      <div>
+        <h2 id="calc-h">What a quiet night is worth to you</h2>
+        <p class="soft flow-top">Use your own numbers. Nothing here is our estimate, and nothing leaves this page.</p>
+        <form class="panel flow-top" id="calc" aria-labelledby="calc-h">
+          <div class="calc">
+            <div class="field"><label class="field__label" for="c-msgs">Messages after hours, per month</label><input class="input" id="c-msgs" type="number" min="0" step="1" inputmode="numeric" placeholder="e.g. 20"></div>
+            <div class="field"><label class="field__label" for="c-lost">Share that call someone else (%)</label><input class="input" id="c-lost" type="number" min="0" max="100" step="1" inputmode="numeric" placeholder="e.g. 30"></div>
+            <div class="field"><label class="field__label" for="c-close">Share you usually book (%)</label><input class="input" id="c-close" type="number" min="0" max="100" step="1" inputmode="numeric" placeholder="e.g. 50"></div>
+            <div class="field"><label class="field__label" for="c-job">Average job value ($)</label><input class="input" id="c-job" type="number" min="0" step="1" inputmode="numeric" placeholder="your figure"></div>
+          </div>
+          <div class="calc__out" aria-live="polite">
+            <p class="soft">Jobs a month that could stay with Brown Air instead of going elsewhere</p>
+            <p class="big" id="c-jobs">—</p>
+            <p class="soft flow-top">Work that represents, each month</p>
+            <p class="big" id="c-value">—</p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--desk on-dark" aria-labelledby="how-h">
+    <div class="wrap split split--rev">
+      <div>
+        <h2 class="sun" id="how-h">How it goes on your site</h2>
+        <ol class="steps-h">
+          <li><p><strong>We write its answers from your own pages:</strong> services, cities, hours, the on-call rules. You approve every line.</p></li>
+          <li><p><strong>You tell us where summaries go</strong> and who gets emergencies.</p></li>
+          <li><p><strong>One line of code goes on your current site.</strong> Your pages, your design and your other tools stay as they are.</p></li>
+          <li><p><strong>You read every conversation.</strong> Each one is saved, so you can see exactly what was said.</p></li>
+        </ol>
+      </div>
+      <div class="flow-lg">
+        <p class="quote">Every chat answered. Nothing promised that you didn’t approve.</p>
+        <p class="soft">The front desk works alongside your on-call technician. It answers the people who reach out after hours and hands you their details ready to act on.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="close" aria-labelledby="close-h">
+    <div class="wrap split">
+      <div>
+        <h2 class="sun" id="close-h">See it with your own questions</h2>
+        <p class="soft flow-top">Fifteen minutes on a call. We open this page together, you type the messages your customers really send, and we go through what it would take to put it on your site.</p>
+      </div>
+      <div class="flow-lg">
+        <p class="hero__ctas"><a class="btn btn--call" href="https://ferrarastudio.zohobookings.eu/ferrarastudio" target="_blank" rel="noopener">Book a 15-minute call</a><button class="btn" type="button" data-fd-open>Try it again</button></p>
+        <p class="soft">Or write to <a href="mailto:simon@ferrarastudio.net">simon@ferrarastudio.net</a>. Also prepared for you: <a href="/mockups/brown-air-and-heat/">a refreshed homepage concept</a> and <a href="/mockups/brown-air-and-heat/before-after.html">a one-page review of your site</a>.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+<footer class="colophon">
+  <div class="wrap">
+    <p>Prepared by <a href="https://ferrarastudio.net/" rel="noopener">Ferrara Studio</a> for <b>Brown Air Conditioning &amp; Heating</b>. The brownairandheat.com screenshot was taken on 16 November 2026. Business facts come from your website. The assistant on this page is a demonstration: it sends nothing and stores nothing.</p>
+  </div>
+</footer>
+<script src="/mockups/brown-air-and-heat/frontdesk.js" defer></script>
+<script>
+(() => {
+  'use strict';
+  const $ = (s) => document.querySelector(s);
+
+  /* 168-hour bar: Monday 00:00 to Sunday 23:00, office Mon–Fri 8–17. */
+  const bar = $('#hours-bar');
+  for (let d = 0; d < 7; d += 1) for (let h = 0; h < 24; h += 1) {
+    const s = document.createElement('span');
+    if (d < 5 && h >= 8 && h < 17) s.className = 'on';
+    bar.append(s);
+  }
+
+  /* Open the live assistant. */
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('[data-fd-open]')) { e.preventDefault(); window.BrownFrontDesk && window.BrownFrontDesk.open(); }
+  });
+
+  /* Calculator: the owner's numbers only. */
+  const num = (id) => { const v = parseFloat($(id).value); return Number.isFinite(v) && v >= 0 ? v : null; };
+  const money = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
+  const calc = () => {
+    const m = num('#c-msgs'), l = num('#c-lost'), c = num('#c-close'), j = num('#c-job');
+    if (m === null || l === null || c === null) { $('#c-jobs').textContent = '—'; $('#c-value').textContent = '—'; return; }
+    const jobs = m * Math.min(l, 100) / 100 * Math.min(c, 100) / 100;
+    $('#c-jobs').textContent = jobs < 10 ? jobs.toFixed(1) : Math.round(jobs).toString();
+    $('#c-value').textContent = j === null ? 'add your job value' : money.format(jobs * j);
+  };
+  $('#calc').addEventListener('input', calc);
+  $('#calc').addEventListener('submit', (e) => e.preventDefault());
+
+  /* "A night at Brown Air": the real engine answers scripted customer messages. */
+  const STORIES = [
+    { at: '2026-11-17T21:42:00-06:00', lines: ['My AC is blowing warm air and it’s 84 inside', 'Emergency, need help now', 'Dana Whitfield', '281-555-0142', '4100 Fairmont Pkwy, Pasadena 77504', 'Two kids at home, unit is about 12 years old', 'Yes, send it'] },
+    { at: '2026-11-17T22:15:00-06:00', lines: ['Hola, no tengo calefacción', 'Hoy o mañana', 'Rosa Delgado', '832-555-0177', '900 Main St, South Houston', 'Que me llamen', 'Por la mañana', 'Omitir', 'Sí, enviar'] },
+    { at: '2026-11-17T23:03:00-06:00', lines: ['I smell gas near the furnace', 'Luis Ortega', '281-555-0199', '1500 Southmore Ave, Pasadena', 'We are outside now', 'yes'] },
+    { at: '2026-11-22T14:20:00-06:00', lines: ['How much is a tune-up?', 'Sam Okafor', '281-555-0111', '22 Oak Dr, Deer Park 77536', 'Request a service window', 'First available', 'Skip', 'Yes, send it'] },
+  ];
+  const chat = $('#replay-chat');
+  const inbox = $('#replay-inbox');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let run = 0;
+  const wait = (ms) => new Promise((r) => setTimeout(r, reduce ? 0 : ms));
+  const bubble = (kind, html, text) => {
+    const el = document.createElement('div');
+    el.className = `fd-msg fd-msg--${kind}`;
+    if (text !== undefined) el.textContent = text; else el.innerHTML = html; // engine output is escaped by the engine
+    chat.append(el);
+    chat.scrollTop = chat.scrollHeight;
+    return el;
+  };
+
+  async function play(i) {
+    const id = ++run;
+    const E = window.BrownFrontDeskEngine;
+    if (!E) return;
+    const story = STORIES[i];
+    const now = new Date(story.at);
+    chat.replaceChildren();
+    inbox.innerHTML = '<p class="empty">The summary appears here when the conversation ends.</p>';
+    const stamp = document.createElement('p');
+    stamp.className = 'replay__time';
+    stamp.textContent = now.toLocaleString('en-US', { timeZone: 'America/Chicago', weekday: 'long', hour: 'numeric', minute: '2-digit' }) + ' · office closed';
+    chat.append(stamp);
+    const s = E.createSession({ now, afterHours: true });
+    const show = async (res) => {
+      for (const m of res.messages) {
+        if (id !== run) return false;
+        if (m.kind === 'owner') { inbox.replaceChildren(); const o = document.createElement('div'); o.className = 'fd-msg fd-msg--owner'; o.innerHTML = m.html; inbox.append(o); continue; }
+        if (m.kind === 'note') continue;
+        await wait(520);
+        if (id !== run) return false;
+        bubble(m.kind, m.html);
+      }
+      return true;
+    };
+    if (!(await show(E.start(s)))) return;
+    for (const line of story.lines) {
+      await wait(700);
+      if (id !== run) return;
+      bubble('user', null, line);
+      if (!(await show(E.reply(s, line)))) return;
+    }
+  }
+
+  const tabs = [...document.querySelectorAll('.tab')];
+  const select = (t) => {
+    tabs.forEach((x) => x.setAttribute('aria-selected', String(x === t)));
+    play(Number(t.dataset.story));
+  };
+  tabs.forEach((t) => t.addEventListener('click', () => select(t)));
+
+  // Start the first story when the section comes into view, once.
+  const start = () => { if (window.BrownFrontDeskEngine) play(0); else setTimeout(start, 100); };
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((es) => { if (es.some((e) => e.isIntersecting)) { io.disconnect(); start(); } }, { threshold: 0.25 });
+    io.observe($('#night'));
+  } else start();
+})();
+</script>
+</body>
+</html>
