@@ -197,7 +197,7 @@
         warranty: 'Sí, podemos reparar y dar servicio a su sistema aunque ya no tenga garantía.',
         commercial: 'Sí, instalamos, reparamos y damos mantenimiento a sistemas comerciales.',
         lifespan: 'La mayoría de los sistemas de aire acondicionado duran de 10 a 15 años con el mantenimiento adecuado.',
-        careers: 'Estamos contratando. Vea la <a href="/careers">página de empleo</a> para postularse.',
+        careers: 'Estamos contratando. Vea la <a href="/mockups/brown-air-and-heat/careers/">página de empleo</a> para postularse.',
         spanish: 'Sí, puedo ayudarle en español.',
       },
     },
