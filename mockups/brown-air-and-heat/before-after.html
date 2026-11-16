@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Brown Air: before and after</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@800&amp;family=IBM+Plex+Sans:wght@400;600&amp;display=swap">
+<style>
+/* One-page summary for the prospect. Same tokens as site/tokens.css, trimmed to what this page uses. */
+:root {
+  --color-paper: oklch(97.5% 0.008 70);
+  --color-paper-2: oklch(95% 0.014 68);
+  --color-rule: oklch(80% 0.022 60);
+  --color-ink: oklch(19% 0.016 40);
+  --color-ink-2: oklch(33% 0.022 45);
+  --color-muted: oklch(47% 0.022 52);
+  --color-accent: oklch(69% 0.195 42);
+  --color-accent-deep: oklch(41% 0.119 34);
+  --color-success: oklch(42% 0.10 150);
+  --color-error: oklch(48% 0.185 27);
+  --font-display: "Big Shoulders Display", Impact, "Arial Narrow", sans-serif;
+  --font-body: "IBM Plex Sans", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --space-2xs: 0.25rem; --space-xs: 0.5rem; --space-sm: 0.75rem; --space-md: 1rem; --space-lg: 1.5rem; --space-xl: 2.5rem;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { overflow-x: clip; }
+body { margin: 0; overflow-x: clip; background: var(--color-paper); color: var(--color-ink); font-family: var(--font-body); font-size: 0.875rem; line-height: 1.5; }
+.sheet { width: min(100% - 2rem, 60rem); margin-inline: auto; padding-block: var(--space-lg) var(--space-xl); }
+h1, h2, th { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; letter-spacing: 0.01em; margin: 0; overflow-wrap: anywhere; min-width: 0; }
+h1 { font-size: clamp(1.75rem, 3vw + 1rem, 2.5rem); line-height: 1.04; }
+h2 { font-size: 1.25rem; line-height: 1.1; }
+p, ul { margin: 0; }
+ul { padding-inline-start: 1.1rem; }
+li + li { margin-block-start: var(--space-2xs); }
+strong { font-weight: 600; }
+.meta { margin-block-start: var(--space-xs); color: var(--color-muted); }
+.sun { display: block; width: 1.75rem; height: 0.875rem; border-radius: 1.75rem 1.75rem 0 0; background: var(--color-accent); margin-block-end: var(--space-xs); }
+table { width: 100%; border-collapse: collapse; margin-block-start: var(--space-lg); table-layout: fixed; }
+th { font-size: 1rem; text-align: start; padding: var(--space-xs) var(--space-sm); border-bottom: 2px solid var(--color-ink); }
+th:first-child, td:first-child { width: 17%; padding-inline-start: 0; }
+td { vertical-align: top; padding: var(--space-sm); border-bottom: 1px solid var(--color-rule); }
+td:first-child { font-family: var(--font-display); font-weight: 800; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.01em; }
+td p + p { margin-block-start: var(--space-xs); }
+td .scores p { margin-block-start: 0; }
+td.after { background: var(--color-paper-2); }
+.bad { color: var(--color-error); font-weight: 600; }
+.good { color: var(--color-success); font-weight: 600; }
+.scores { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-xs) var(--space-md); margin-block-start: var(--space-xs); font-variant-numeric: tabular-nums; }
+.scores span { display: block; color: var(--color-muted); font-size: 0.75rem; white-space: nowrap; }
+.scores b { font-family: var(--font-display); font-size: 1.5rem; line-height: 1.1; font-weight: 800; }
+.split { display: grid; gap: var(--space-lg); margin-block-start: var(--space-lg); }
+.note { margin-block-start: var(--space-lg); padding-block-start: var(--space-sm); border-top: 1px solid var(--color-rule); color: var(--color-muted); font-size: 0.75rem; }
+@media (min-width: 44rem) { .split { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+@media (max-width: 43.99rem) {
+  table, tbody, tr, td { display: block; width: 100%; }
+  thead { display: none; }
+  td:first-child { width: 100%; padding-block-end: 0; border-bottom: 0; }
+  td { padding-inline: 0; }
+  td.after { padding-inline: var(--space-sm); }
+  td[data-label]::before { content: attr(data-label); display: block; font-weight: 600; color: var(--color-muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; margin-block-end: var(--space-2xs); }
+}
+/* Print: tuned to fit one Letter or A4 page. */
+@page { margin: 10mm; }
+@media print {
+  body { font-size: 8.4pt; line-height: 1.36; }
+  .sheet { width: 100%; padding: 0; }
+  h1 { font-size: 20pt; }
+  h2 { font-size: 11.5pt; }
+  table { margin-block-start: 10pt; }
+  th, td:first-child { font-size: 10pt; }
+  td { padding: 5pt 8pt; }
+  li + li { margin-block-start: 1.5pt; }
+  .meta { margin-block-start: 3pt; }
+  .scores { gap: 2pt 8pt; }
+  .scores b { font-size: 15pt; }
+  .scores span, .note { font-size: 7.2pt; }
+  .split { margin-block-start: 10pt; gap: 16pt; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .note { margin-block-start: 8pt; padding-block-start: 5pt; }
+  td.after { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+</style>
+</head>
+<body>
+<main class="sheet">
+  <header>
+    <span class="sun" aria-hidden="true"></span>
+    <h1>Brown Air Conditioning &amp; Heating: the website, before and after</h1>
+    <p class="meta">Prepared by Ferrara Studio · 16 November 2026 · compares brownairandheat.com as it is today with the mockup</p>
+  </header>
+
+  <table>
+    <thead>
+      <tr><th scope="col"><span aria-hidden="true">&nbsp;</span></th><th scope="col">Today</th><th scope="col">In the mockup</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1. Broken links</td>
+        <td data-label="Today">
+          <p>On a phone, <span class="bad">six of the ten quick links in the footer</span> open “404 Not Found”: Residential, Commercial, Service Areas, Blog, Contact and Careers. On a desktop the footer’s Blog link is dead and Careers is spelled “Carrers”.</p>
+          <p>The homepage code carries <span class="bad">40 dead addresses</span> in all, out of 126, among them /FAQs/, /careers/ and /blog-226412. Some sit in menu copies visitors rarely see but Google still reads. Three more links are mistyped.</p>
+        </td>
+        <td class="after" data-label="In the mockup">
+          <p><span class="good">FAQ, Careers and Blog are working pages</span> at /faq, /careers and /blog, built from content Brown Air already has: eight of its FAQs, its three open roles and core values with an application form, and its three blog posts.</p>
+          <p>All 62 old addresses we tested, including the 40 dead ones, now land on a working page. Every link, anchor and file on the four pages was checked: 66, <span class="good">0 broken</span>.</p>
+        </td>
+      </tr>
+      <tr>
+        <td>2. Calling and booking on a phone</td>
+        <td data-label="Today">
+          <p>One call button, at the top of the page. It scrolls out of reach on a page about twelve screens long.</p>
+          <p>There is no booking form on the homepage: the quote button opens a separate page. The homepage has no main headline for Google to read.</p>
+        </td>
+        <td class="after" data-label="In the mockup">
+          <p><span class="good">“Call 281-998-2665” stays fixed</span> at the bottom of every screen and in the header: one tap from anywhere on the site.</p>
+          <p>The booking form is on the homepage with four required fields, and “Book” beside each service fills in the problem for you. The headline reads “AC &amp; heating repair in Pasadena, TX”.</p>
+        </td>
+      </tr>
+      <tr>
+        <td>3. Speed and quality on a phone</td>
+        <td data-label="Today">
+          <div class="scores">
+            <p><b>45</b><span>Performance</span></p><p><b>88</b><span>Accessibility</span></p><p><b>92</b><span>Best practices</span></p><p><b>100</b><span>SEO</span></p>
+          </div>
+          <p>Main content appears in 4.0 s and the layout jumps while loading (shift score 0.395; Google’s limit for “good” is 0.1). The page weighs 1.8 MB over 97 requests.</p>
+        </td>
+        <td class="after" data-label="In the mockup">
+          <div class="scores">
+            <p><b>100</b><span>Performance</span></p><p><b>100</b><span>Accessibility</span></p><p><b>100</b><span>Best practices</span></p><p><b>100</b><span>SEO</span></p>
+          </div>
+          <p>Main content appears in 1.4 s and nothing jumps (0.001). The page weighs 0.1 MB over 12 requests. It also carries HVAC-business details for Google: address, hours, phone and the 27 cities served.</p>
+        </td>
+      </tr>
+      <tr>
+        <td>4. After hours</td>
+        <td data-label="Today">
+          <p>The office is staffed Monday to Friday, 8 to 5: <strong>45 of the 168 hours in a week</strong>. For the other 123, a customer can phone the on-call line, fill in a form or leave a message in the chat box.</p>
+          <p>Who picks up after 5 PM, and how fast, is our first question.</p>
+        </td>
+        <td class="after" data-label="In the mockup">
+          <p><span class="good">The AI Front Desk answers at any hour</span>, by website chat, in English or Spanish.</p>
+          <p>It takes the name, phone, address, problem and urgency, requests a service window, and sends the owner a summary by email. It never quotes a price: a technician confirms that.</p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="split">
+    <section>
+      <h2>What the Front Desk would catch after hours</h2>
+      <ul class="meta">
+        <li><strong>A “no cooling” message at 9 PM.</strong> Flagged as an emergency and sent to the on-call technician with the name, number and address already taken.</li>
+        <li><strong>A gas smell or carbon monoxide alarm.</strong> Told at once to leave the house and call 911 and the gas company.</li>
+        <li><strong>A customer who writes in Spanish.</strong> Answered in Spanish from the first message.</li>
+        <li><strong>“How much is a tune-up?”</strong> No number given. The visit gets requested instead.</li>
+        <li><strong>The visitor who would rather type than call,</strong> at any hour.</li>
+      </ul>
+    </section>
+    <section>
+      <h2>Kept exactly as it is</h2>
+      <ul class="meta">
+        <li>The Brown logo, the orange and the brown.</li>
+        <li>The phone number, address, hours and license number.</li>
+        <li>Every claim on the page: all of it comes from the current site. Nothing was invented, and no reviews were written or copied.</li>
+        <li>Anything we could not confirm is marked in yellow in the mockup and listed for you to approve.</li>
+      </ul>
+    </section>
+  </div>
+
+  <p class="note">How this was measured. Links: every address linked from the brownairandheat.com homepage was requested on 16 November 2026, and the visible menus and footers were read at phone (375 px) and desktop (1280 px) widths. Speed and quality: Google Lighthouse 13.6, mobile profile, one run each that day; the current site live, the mockup on a local test server. Scores move a few points between runs. The AI Front Desk in the mockup is a scripted demonstration and sends nothing.</p>
+</main>
+</body>
+</html>

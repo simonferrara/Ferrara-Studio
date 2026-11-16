@@ -1,0 +1,112 @@
+/* Design tokens — Brown Air Conditioning & Heating mockup (Ferrara Studio)
+ * Every colour, font, size, space, radius, easing and z-index used by styles.css
+ * lives here. Anchored on the client's own brand: logo orange #FF6211 and the
+ * site's brown #7F2C1A, converted to OKLCH. Contrast pairs were checked with
+ * WCAG 2.1 ratios (see docs/PLACEHOLDERS.md → "Design notes").
+ */
+:root {
+  /* ---- colour: surfaces, warm-tinted toward the brand orange ---- */
+  --color-paper:            oklch(97.5% 0.008 70);
+  --color-paper-2:          oklch(95% 0.014 68);
+  --color-paper-3:          oklch(91.5% 0.020 66);
+  --color-rule:             oklch(80% 0.022 60);
+  --color-rule-2:           oklch(87.5% 0.016 62);
+  --color-rule-strong:      oklch(58% 0.025 55);   /* form-field borders, 4:1 on paper */
+
+  /* ---- colour: text ---- */
+  --color-ink:              oklch(19% 0.016 40);   /* the logo's black, warmed */
+  --color-ink-2:            oklch(33% 0.022 45);
+  --color-neutral:          oklch(42% 0.020 50);
+  --color-muted:            oklch(47% 0.022 52);   /* 5.3:1 or better on every paper step */
+
+  /* ---- colour: dark surfaces ---- */
+  --color-ink-raised:       oklch(25% 0.018 40);
+  --color-on-dark-muted:    oklch(80% 0.020 60);
+  --color-on-dark-rule:     oklch(36% 0.020 45);
+
+  /* ---- colour: accent (logo orange) and its deep shade (site brown) ---- */
+  --color-accent:           oklch(69% 0.195 42);
+  --color-accent-hover:     oklch(74% 0.165 48);
+  --color-accent-press:     oklch(64% 0.190 41);
+  --color-accent-ink:       var(--color-ink);      /* text on accent fill, 6.2:1 */
+  --color-accent-deep:      oklch(41% 0.119 34);
+  --color-accent-deep-hover: oklch(35% 0.105 34);
+  --color-accent-deep-ink:  var(--color-paper);    /* text on deep fill, 8.7:1 */
+  --color-focus:            oklch(50% 0.155 40);   /* 6:1 on paper */
+  --color-focus-on-dark:    var(--color-accent);   /* 6.2:1 on ink */
+
+  /* ---- colour: status ---- */
+  --color-error:            oklch(48% 0.185 27);
+  --color-error-bg:         oklch(95% 0.022 27);
+  --color-success:          oklch(42% 0.10 150);
+  --color-success-bg:       oklch(95% 0.035 150);
+
+  /* ---- colour: proof marks (mockup-only placeholders and demo notes) ---- */
+  --color-proof:            oklch(93% 0.10 98);
+  --color-proof-rule:       oklch(58% 0.11 88);
+
+  /* ---- colour: overlays (alpha is a modifier, not a palette colour) ---- */
+  --color-shadow:           oklch(19% 0.016 40 / 0.16);
+  --color-scrim:            oklch(19% 0.016 40 / 0.55);
+
+  /* ---- type ---- */
+  --font-display: "Big Shoulders Display", "Big Shoulders Fallback", Impact, "Arial Narrow", sans-serif;
+  --font-body:    "IBM Plex Sans", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --font-mono:    "IBM Plex Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+
+  --text-sm:      0.875rem;
+  --text-base:    clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
+  --text-label:   1.125rem;                        /* buttons and nav links, set in the display face */
+  --text-lg:      1.5rem;
+  --text-h2:      clamp(2rem, 2.6vw + 1.25rem, 3.25rem);
+  --text-display: clamp(2.75rem, 5vw + 1rem, 5.25rem);
+
+  --leading-display: 1.04;
+  --leading-tight:   1.2;
+  --leading-body:    1.6;
+  --tracking-display: 0.005em;
+  --tracking-label:   0.08em;
+  --measure:         62ch;
+
+  /* ---- space: 4pt scale, named by role ---- */
+  --space-3xs: 0.125rem;
+  --space-2xs: 0.25rem;
+  --space-xs:  0.5rem;
+  --space-sm:  0.75rem;
+  --space-md:  1rem;
+  --space-lg:  1.5rem;
+  --space-xl:  2.5rem;
+  --space-2xl: 4rem;
+  --space-3xl: 6rem;
+  --space-4xl: 9rem;
+
+  /* ---- layout ---- */
+  --page-max:    72rem;
+  --page-gutter: clamp(1rem, 4vw, 2.5rem);
+  --banner-h:    2.75rem;                          /* 44px: the dismiss button is a full touch target */
+  --bar-h:       4.5rem;
+  --callbar-h:   4rem;
+  --control-h:   3rem;
+
+  /* ---- shape ---- */
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --rule-hair: 1px;
+  --rule-bold: 2px;
+
+  /* ---- motion ---- */
+  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in:     cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-micro: 120ms;
+  --dur-short: 220ms;
+  --dur-long:  420ms;
+
+  /* ---- depth ---- */
+  --z-base:     1;
+  --z-raised:   10;
+  --z-dropdown: 100;
+  --z-sticky:   200;
+  --z-modal:    400;
+  --z-toast:    500;
+}
