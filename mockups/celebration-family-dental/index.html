@@ -15,7 +15,8 @@
 <style>
 /* Homepage concept in Spanish for Celebration Family Dental of Carrollton, prepared by Ferrara Studio.
    Text based on the practice's own English website (services, doctor bio, team, testimonials, hours, insurance),
-   translated for Spanish-speaking patients in Texas. No practice photos used: illustration and CSS 3D only. */
+   translated for Spanish-speaking patients in Texas. The only photo is Dr. Shekhadiya's portrait from the practice's own site
+   (celebrationfamilydentaltx.com/assets/images/index-doctors-a.jpg); everything else is illustration and CSS 3D. */
 :root{
   --navy:#0a1d3d;--navy2:#10305f;--blue:#1677c4;--blue2:#0f5f9f;--sky:#e8f2fb;
   --green:#7ec45f;--green2:#69b04b;--mint:#e3f4da;
@@ -192,13 +193,17 @@ nav.menu a:hover{background:var(--sky);color:var(--blue)}
 /* Doctor */
 .doc-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:64px;align-items:center}
 .cred-stage{perspective:1100px}
-.cred{position:relative;border-radius:28px;padding:34px;min-height:400px;background:radial-gradient(500px 300px at 90% 0%,rgba(126,196,95,.35),transparent 60%),linear-gradient(150deg,var(--navy) 0%,#123a73 100%);color:#fff;overflow:hidden;box-shadow:0 40px 80px -40px rgba(10,29,61,.75);transform-style:preserve-3d}
-.cred .mono{width:112px;height:112px;border-radius:30px;background:linear-gradient(140deg,#fff,#dbe9f6);color:var(--navy);display:grid;place-items:center;font:700 2.6rem var(--serif);box-shadow:0 20px 40px -14px rgba(0,0,0,.55);transform:translateZ(60px)}
-.cred h3{color:#fff;font-size:1.7rem;margin:26px 0 4px;transform:translateZ(40px)}
-.cred .deg{color:#c5d4e8;transform:translateZ(30px)}
-.badges{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px;transform:translateZ(50px)}
+.cred{position:relative;border-radius:28px;padding:0;background:radial-gradient(500px 300px at 90% 0%,rgba(126,196,95,.35),transparent 60%),linear-gradient(150deg,var(--navy) 0%,#123a73 100%);color:#fff;overflow:hidden;box-shadow:0 40px 80px -40px rgba(10,29,61,.75);transform-style:preserve-3d}
+.cred .photo{position:relative;aspect-ratio:6/5;background:#dfe7ef}
+.cred .photo img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 20%}
+.cred .photo:after{content:"";position:absolute;left:0;right:0;bottom:0;height:45%;background:linear-gradient(to top,#0f2f5f 0%,rgba(15,47,95,0) 100%)}
+.photo-tag{position:absolute;top:16px;left:16px;z-index:1;padding:7px 13px;border-radius:999px;background:rgba(255,255,255,.92);color:var(--navy);font-weight:800;font-size:.8rem;letter-spacing:.04em;box-shadow:0 8px 20px -8px rgba(0,0,0,.45)}
+.cred-body{position:relative;padding:4px 30px 30px;margin-top:-34px;z-index:1}
+.cred h3{color:#fff;font-size:1.7rem;margin:0 0 4px}
+.cred .deg{color:#c5d4e8}
+.badges{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
 .badges span{padding:9px 14px;border-radius:12px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);font-weight:700;font-size:.86rem}
-.cred .big-tooth{position:absolute;right:-60px;bottom:-60px;width:260px;opacity:.12;transform:translateZ(-30px) rotate(-14deg)}
+.cred .big-tooth{position:absolute;right:-50px;bottom:-60px;width:220px;opacity:.1;transform:rotate(-14deg);pointer-events:none;z-index:-1}
 .doc-list{list-style:none;display:grid;gap:14px;margin:26px 0 0}
 .doc-list li{display:flex;gap:14px;align-items:flex-start;color:#34465e}
 .doc-list li svg{flex:none;width:24px;height:24px;color:var(--green2);margin-top:1px}
@@ -557,11 +562,13 @@ footer a{color:#fff}
   <div class="doc-grid">
     <div class="cred-stage rv">
       <div class="cred tilt">
-        <div class="mono">RS</div>
-        <h3>Dr. Rajiv Shekhadiya</h3>
-        <p class="deg">Doctor en Cirugía Dental (DDS) · Universidad de Nueva York</p>
-        <div class="badges"><span>American Dental Association</span><span>Texas Dental Association</span><span>Dallas County Dental Society</span></div>
-        <svg class="big-tooth" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tooth"/></svg>
+        <div class="photo"><img src="img/dr-shekhadiya.jpg" width="960" height="800" loading="lazy" decoding="async" alt="Dr. Rajiv Shekhadiya, dentista de Celebration Family Dental of Carrollton"><span class="photo-tag">DDS · NYU</span></div>
+        <div class="cred-body">
+          <h3>Dr. Rajiv Shekhadiya</h3>
+          <p class="deg">Doctor en Cirugía Dental (DDS) · Universidad de Nueva York</p>
+          <div class="badges"><span>American Dental Association</span><span>Texas Dental Association</span><span>Dallas County Dental Society</span></div>
+          <svg class="big-tooth" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tooth"/></svg>
+        </div>
       </div>
     </div>
     <div class="rv" data-d="120">
